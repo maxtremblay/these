@@ -4,7 +4,7 @@
 % Paquets utilisés
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[greek, english, frenchb]{babel}
+\usepackage[greek, english, french]{babel}
 \usepackage[squaren,Gray]{SIunits}
 \usepackage{graphicx,listings,color,comment}
 \usepackage{microtype}
@@ -28,6 +28,7 @@
 \usepackage{xspace}
 \usepackage{pdflscape}
 \usepackage{xstring}
+\usepackage{lstautogobble}
 
 
 %=============================================================================%
@@ -54,7 +55,7 @@
 \setlength{\parskip}{2ex plus 0.5ex minus 0.2ex}
 
 % Header/Footer plus propres
-\usepackage[plainheadsepline,nouppercase]{scrlayer-scrpage}
+\usepackage[plainheadsepline,markcase=ignoreuppercase]{scrlayer-scrpage}
 \pagestyle{scrheadings}
 %\renewcommand{\chaptermark}[1]{\markboth{{\thechapter. #1}}{}}
 %\renewcommand{\sectionmark}[1]{}}

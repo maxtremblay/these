@@ -15,16 +15,15 @@
     }
     {
         \newcommand{\sep}{, }
-    }
-        \usepackage{filecontents}
-        \begin{filecontents*}{\jobname.xmpdata}
-                \Title          {\@title}
-                \Author         {\@author}
-                \Subject        {\ResumeCourt}
-                \Org            {\Organisation}
-                \Keywords       {\MotsClefs}
-                \PublicationType{book}
-        \end{filecontents*}
+    }%
+        \begin{filecontents*}[overwrite]{\jobname.xmpdata}
+\Title          {\@title}
+\Author         {\@author}
+\Subject        {\ResumeCourt}
+\Org            {\Organisation}
+\Keywords       {\MotsClefs}
+\PublicationType{book}
+        \end{filecontents*}%
         % Couleurs moins intenses, https://ethanschoonover.com/solarized/
         \definecolor{solblue}{HTML}{268bd2}
         \definecolor{solred}{HTML}{dc322f}
@@ -41,14 +40,10 @@
             pdftitle={\@title},
             pdfsubject={\ResumeCourt},
             pdfkeywords={\MotsClefs},
-            hyperindex=true,
-            bookmarks=true,
-            pdfa,
-            %pdftex,
+            % pdfa,
             colorlinks=true,
             breaklinks=true,
             urlcolor=solmagenta,
-            %linkcolor=solblue!85!black, % A little darker
             linkcolor=solblue,
             citecolor=solcyan,
             bookmarksopen=true,
