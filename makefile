@@ -1,4 +1,4 @@
-filename=memoire
+filename=these
 .PHONY: clean all pvc bibtex pdf read fast final draft
 
 SHELL=/bin/bash
@@ -9,8 +9,8 @@ INTMOD = -interaction=batchmode
 MKFLAGS = -pdf -pdflatex="$(PDFLTX) $(INTMOD)"
 DRFTFLGS = -pdf -pdflatex="$(PDFLTX) $(INTMOD) -draftmode %O %S && touch %D"
 EBMK = tex4ebook
-EPUB2FLAGS = -st -f epub -c epub2.cfg -e epub2.mk4
-EPUB3FLAGS = -st -f epub3 -c epub3.cfg
+EPUB2FLAGS = -st -f epub -c config/epub2.cfg -e config/epub2.mk4
+EPUB3FLAGS = -st -f epub3 -c config/epub3.cfg
 EBDRAFT = -m draft
 EBMATHML = "mathml" # "mathml" for mathml, else leave blank
 RM = rm
@@ -57,17 +57,17 @@ epub3_latex_draft:
 
 
 clean:
-	$(MK) -CA
+	$(MK) -c
 	-$(RM) -f *.aux *.pyg *.bbl *.brf *.fls *~ *.bak *.bibliography
-	-$(RM) -rf _minted-memoire
+	-$(RM) -rf _minted-these
 	-$(RM) -f ${filename}.xmpdata
 	-$(RM) -f pdfa.xmpi
 	-$(RM) -f content.opf *.xhtml *.html ${filename}.{4ct,4tc,css,epub,idv,lg,ncx,out.ps,tmp,xref}
 	-$(RM) -f $(filename)*.png
 	-$(RM) -f $(filename)*.svg
 	-$(RM) -f Figures/*_ebook.svg
-	-$(RM) -rf memoire-epub3/
-	-$(RM) -rf memoire-epub/
+	-$(RM) -rf these-epub3/
+	-$(RM) -rf these-epub/
 
 read:
 	evince ${filename}.pdf 

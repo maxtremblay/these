@@ -1,5 +1,6 @@
 \documentclass[titlepage,openright,letterpaper,12pt]{book}
-\usepackage{entete,commandes} % Load les packages et définit des commandes.
+\usepackage{config/entete}
+\usepackage{config/commandes} % Load les packages et définit des commandes.
 
 %=============================================================================%
 
@@ -36,7 +37,7 @@
 \MotsClefs      {Mots-Clefs \sep Pertinents \sep avec séparateurs}
 
 % On cache le code exécuté dans ce fichier parce qu'il est laid et impertinent.
-\input{switchboard.tex}
+\input{config/switchboard.tex}
 
 %=============================================================================%
 
@@ -44,26 +45,26 @@
 
 %=============================================================================%
 % Titre
-\input{titlepage.tex}
+\input{sources/titlepage.tex}
 
 \frontmatter % Pagination de préambule
 
 % Jury
-\input{jury.tex}
+\input{sources/jury.tex}
 
 % Dédicace
-\input{dedicace.tex}
+\input{sources/dedicace.tex}
 \thispagestyle{empty}
 
 % Sommaire
 \clearpage  % Mets le sommaire à la bonne page dans la TOC
 \chapter*{Sommaire}
 \addcontentsline{toc}{chapter}{Sommaire}
-\input{sommaire.tex}
+\input{sources/sommaire.tex}
 
 % Remerciements
 \chapter*{Remerciements}
-\input{remerciements.tex}
+\input{sources/remerciements.tex}
 
 % Tables des matières/Figures
 {
@@ -83,23 +84,20 @@
 % \include serait préférable à \input à partir d'ici, mais MiKTeX sur Windows
 % n'aime pas les \cite dans un \include. Fonctionne parfaitement sur TeXLive.
 
-\input{introduction}
+\include{sources/introduction.tex}
 
-\input{theorie}
-
-\input{resultats}
-
-\input{conclusion}
-
+\include{sources/theorie.tex}
+\include{sources/resultats.tex}
+\include{sources/conclusion.tex}
 %-----------------------------------------------------------------------------%
 
 \singlespacing
 
-\input{annexe}
+\include{sources/annexe.tex}
 
 %=============================================================================%
 
 % Voir switchboard.tex pour le bibliographystyle selon le type de document.
-\bibliography{memoire}        % Le fichier de bibliographie est memoire.bib.
+\bibliography{references}        % Le fichier de bibliographie est memoire.bib.
 
 \end{document}
