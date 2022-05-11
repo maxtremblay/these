@@ -29,7 +29,7 @@
 %=============================================================================%
 
 \title{
-    Une odyssée de la communication classique à la tolérance aux fautes quantique
+  Une odyssée de la communication classique à la tolérance aux fautes quantique
 } % Pour la page de titre/jury.
 \author{Maxime Tremblay}  % Idem
 \Organisation{UNIVERSITÉ de SHERBROOKE}
@@ -39,7 +39,7 @@
 \MotsClefs{Mots-Clefs \sep Pertinents \sep avec séparateurs}
 
 % On cache le code exécuté dans ce fichier parce qu'il est laid et impertinent.
-\input{config/switchboard.tex}
+  \input{config/switchboard.tex}
 
 %=============================================================================%
 
@@ -59,13 +59,9 @@
 \thispagestyle{empty}
 
 % Sommaire
-\clearpage  % Mets le sommaire à la bonne page dans la TOC
-\chapter*{Sommaire}
-\addcontentsline{toc}{chapter}{Sommaire}
 \input{sources/sommaire.tex}
 
 % Remerciements
-\chapter*{Remerciements}
 \input{sources/remerciements.tex}
 
 % Tables des matières/Figures
@@ -83,15 +79,20 @@
 
 %-----------------------------------------------------------------------------%
 
-% \include serait préférable à \input à partir d'ici, mais MiKTeX sur Windows
-% n'aime pas les \cite dans un \include. Fonctionne parfaitement sur TeXLive.
-
 \include{sources/introduction.tex}
 
-\include{sources/theorie.tex}
-\include{sources/resultats.tex}
+\include{sources/codes_polaires.tex}
+
+\include{sources/construction_codes_sat.tex}
+
+\include{sources/tolerances_fautes.tex}
+
 \include{sources/conclusion.tex}
+
 %-----------------------------------------------------------------------------%
+
+% Voir switchboard.tex pour le bibliographystyle selon le type de document.
+\bibliography{references}        % Le fichier de bibliographie est memoire.bib.
 
 \singlespacing
 
@@ -99,7 +100,5 @@
 
 %=============================================================================%
 
-% Voir switchboard.tex pour le bibliographystyle selon le type de document.
-\bibliography{references}        % Le fichier de bibliographie est memoire.bib.
 
 \end{document}
