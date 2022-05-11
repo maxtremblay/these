@@ -3,7 +3,46 @@
 
 \chapter{Étude des codes polaires convolutifs}
 
-\section{Communication classique et corrections d'erreurs}
+Le problème de communication classique est définie comme suit.
+Nous avons deux acteurs, 
+que nous nommerons Arthur et Béatrice pour faire changement\footnote{
+  Une recherche en ligne vous démontrera que beaucoup d'attention a été donnée 
+  à Alice et Bob. 
+},
+qui veulent échanger de l'information.
+Dans notre cas, 
+supposons qu'Arthur cherchent à envoyer un message à Béatrice qui se trouve
+des kilomètres plus loin.
+Pour ce faire,
+Arthur utilise son téléphone cellulaire et envoie un texto à Béatrice.
+Une fois le message composé,
+celui-ci est converti en une séquence de nombres binaires (des 0 et des 1)
+qui sera transmise via des ondes radios jusqu'au téléphone de Béatrice
+qui devra reconvertir la séquence de 0 et de 1 en message intelligible.
+
+L'histoire ne s'arrête pas là puisque lors de la transmission du signal
+dans l'atmosphère, il est fort probable que celui-ci soit corrompu en 
+raison d'une interaction indésirée.
+La solution à ce problème est de transmettre une séquence de nombres binaires
+plus longue que ce qui est nécessaire en espérant que l'information supplémentaire
+nous aide à retrouver le message initial en cas d'erreur.
+
+Dans ce chapitre,
+je vais d'abord reformuler ce problème dans un langage mathématique plus formel.  
+Par la suite, 
+je vais présenter les réseaux de tenseurs,
+un outil mathématique qui va m'être très utile pour décrire les codes polaires 
+ainsi qu'une généralisation de ceux, les codes polaires convolutifs.
+Ces codes sont très importants puisque les codes polaires sont au coeur 
+de la technologie de communication 5G et que toutes améliorations de ceux-ci
+a un grand potentiel d'application.
+À cet effet, le chapitre se termine par une présentation d'un article scientifique
+dans lequel j'identifie les régimes où les performances des codes polaires convolutifs sont 
+les plus impressionnantes.
+
+\section{Communication classique et correction d'erreurs}
+
+
 
 \section{Réseaux de tenseurs}
 
