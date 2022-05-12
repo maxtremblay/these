@@ -68,6 +68,7 @@ clean:
 	-$(RM) -f Figures/*_ebook.svg
 	-$(RM) -rf these-epub3/
 	-$(RM) -rf these-epub/
+	-$(RM) -rf sources/*.aux
 
 read:
 	evince ${filename}.pdf 

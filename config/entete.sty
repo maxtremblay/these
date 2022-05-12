@@ -11,6 +11,7 @@
 \usepackage{geometry}  % Loadé dans switchboard, selon la version que l'on fait.
 \usepackage[usenames,dvipsnames,svgnames,x11names]{xcolor}
 \usepackage{mathtools,amsmath,amssymb,bm,upgreek}%,esint}
+\usepackage{physics}
 \usepackage{multirow,multicol,comment,array,listings,url}
 \usepackage{subfigure}
 \usepackage{caption}
@@ -58,52 +59,7 @@
 \usepackage[plainheadsepline,markcase=ignoreuppercase]{scrlayer-scrpage}
 \pagestyle{scrheadings}
 %\renewcommand{\chaptermark}[1]{\markboth{{\thechapter. #1}}{}}
-%\renewcommand{\sectionmark}[1]{}}
-
-% Apparence des chapitres/(sous(-sous)-)sections.
-\newcommand\chapterstring{Chapitre}
-\usepackage{titlesec}
-% Fix for titlesec 2.10.1, doesn't change anything for 2.10.2+ (a priori)
-\makeatletter
-\patchcmd{\ttlh@hang}{\parindent\z@}{\parindent\z@\leavevmode}{}{}
-\patchcmd{\ttlh@hang}{\noindent}{}{}{}
-\makeatother
-% chapitres
-\titleformat{\chapter}[display] {\bfseries\color{black}} {\filright
-\enspace \Large \chapterstring~\thechapter} {14pt} {\Huge\filcenter}
-% sections
-\titleformat{\section}{\vspace{0mm plus 2cm}\addpenalty{-1000}\Large\bfseries}{\thesection}{1em}{}
-% sous-sections
-\titleformat{\subsection}{\addpenalty{-500}\large\bfseries}{\thesubsection}{1em}{} 
-% sous-sous-sections
-\titleformat{\subsubsection}{\penalty-500\vspace{0pt plus 2pt}{}\bfseries}{\thesubsubsection}{}{}[\vspace{-14pt}]
-
-
-% Séquestres les Floats à la section courante.
-% Évite d'avoir une image dans la section après celle définie.
-\let\oldsection\section
-\renewcommand{\section}[1]{\FloatBarrier\oldsection{#1}\FloatBarrier}
-
-%% Idem pour les sous-section, mais pas tjrs jolie pour petite sous-section.
-%\let\oldsubsection\subsection
-%\renewcommand{\subsection}[1]{\FloatBarrier\oldsubsection{#1}\FloatBarrier}
-
-%=============================================================================%
-
-
-%% Minted listings style
-%% Jolie listing de code, e.g. \inputminted{pyhton}{test.py}
-%\renewcommand{\theFancyVerbLine}{
-%  \ttfamily\textcolor[rgb]{0.5,0.5,0.5}{\tiny\arabic{FancyVerbLine}}}
-%\usemintedstyle{default}
-
-
-%=============================================================================%
-% On ré-implémente les commandes utilisées pour générer les tables/listes et la 
-% bibliographie dans le but d'avoir les bons numéros de pages dans les 
-% bookmarks pdf et la table des matière.
-
-% Redefining the way TOC/LOF/LOT/BIB are built to have right pdfbookmark page.
+%\renewcommand{\sectionmark}[1]{}defining the way TOC/LOF/LOT/BIB are built to have right pdfbookmark page.
 \renewcommand{\tableofcontents}
              {
                 \clearpage
