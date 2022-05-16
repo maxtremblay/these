@@ -153,6 +153,36 @@ avec l'entropie binaire $H_2(p) = -p \log(p) - (1 - p)\log(1 - p)$~\footnote{
   De plus, les concepts importants de la théorie de l'information, dont l'entropie, 
   sont présentés à l'Annexe~\ref{chap:theo_info}.
 }. 
+La Figure~\ref{fig:capacite_canal} illustre que la capacité du canal symmétrique binaire 
+est nulle à $p = 0.5$.
+En effet, un canal ayant une probabilité d'erreur de $0.5$ retourne 
+chacune des séquences de bits avec la même probabilité 
+et cela, peu importe le message transmis.
+Un tel canal est donc inutilisable.
+En contrepartie, la capacité est maximale à $p = 0$ et $p = 1$.
+Lorsque la probabilité d'erreur est nulle,
+il n'y a aucun avantage à utiliser un code correcteur 
+et il suffit de transmettre le message directement.
+Par contre, il est un peu plus surprenant que la capacité soit maximale lorsque la probabilité
+d'erreur est de 1.
+Cependant, en utilisant un tel canal, 
+il suffit de renverser chacun des bits reçus pour retrouver le message transmis sans erreur.
+De même, 
+un canal avec une probabilité d'erreur $1 - p$ est équivalent à un canal de probabilité d'erreur $p$
+après avoir renversés tous les bits reçus.
+C'est pourquoi, 
+les études numériques de cette thèse se concentre sur des plages de probabilités entre 0 et 0.5.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics{figures/capacite_canal.pdf}
+  \end{center}
+  \caption{Capacité du canal binaire symmétrique selon la probabilité d'erreur}
+  \label{fig:capacite_canal}
+\end{figure}
+
+
+
 Il est important de noté que l'article de Shannon n'inclut aucune construction de codes 
 correcteurs permettant d'atteindre la capacité du canal binaire symmétrique.
 En effet, les codes polaires sont les premiers codes correcteurs découverts 
