@@ -26,7 +26,7 @@ dans l'atmosphère, il est fort probable que celui-ci soit corrompu en
 raison d'une interaction indésirée.
 La solution à ce problème est de transmettre une séquence de nombres binaires
 plus longue que ce qui est nécessaire en espérant que l'information supplémentaire
-nous aide à retrouver le message initial en cas d'erreur.
+  nous aide à retrouver le message initial en cas d'erreur.
 
 Dans ce chapitre,
 je vais d'abord reformuler ce problème dans un langage mathématique plus formel.  
@@ -57,7 +57,7 @@ Dans cette thèse,
 je vais me limiter à une définiton simple d'un canal bruité,
 bien qu'il soit possible de généraliser cette notion. 
 Le canal bruité que je considère est le canal symmétrique binaire.
-Celui-ci est une fonction probabiliste $\mathcal \canal_p: \bit -> \bit$
+Celui-ci est une fonction probabiliste $\mathcal \canal_p: \bit \to \bit$
 qui, après avoir reçu le bit $b$ comme entrée, 
 retourne le même bit $b$ avec probabilité $1 - p$ et retourne le
 bit opposé $1 + b$ avec probabilité $p$.
@@ -147,7 +147,7 @@ il est prouvé~\cite{shannon_mathematical_1948} que la capacité est
 \begin{equation}
   \capacite(\canal_p) = 1 - H_2(p)
 \end{equation}
-avec l'entropie binaire $H_2(p) = -p \log(p) - (1 - p)\log(1 - p)$.\footnote{
+avec l'entropie binaire $H_2(p) = -p \log(p) - (1 - p)\log(1 - p)$~\footnote{
   Pour alléger le texte, je n'inclus pas les preuves qui se retrouvent facilement 
   dans la littérature.
   De plus, les concepts importants de la théorie de l'information, dont l'entropie, 
@@ -167,6 +167,9 @@ Cet outil mathématique me permettera alors d'exprimer de façon plus concise la
 de ces codes et les algorithmes de décodage correspondant.
 
 \section{Réseaux de tenseurs}
+
+
+
 
 \section{Codes polaires}
 
