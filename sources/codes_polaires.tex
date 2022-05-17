@@ -181,8 +181,6 @@ les études numériques de cette thèse se concentre sur des plages de probabili
   \label{fig:capacite_canal}
 \end{figure}
 
-
-
 Il est important de noté que l'article de Shannon n'inclut aucune construction de codes 
 correcteurs permettant d'atteindre la capacité du canal binaire symmétrique.
 En effet, les codes polaires sont les premiers codes correcteurs découverts 
@@ -197,12 +195,123 @@ Cet outil mathématique me permettera alors d'exprimer de façon plus concise la
 de ces codes et les algorithmes de décodage correspondant.
 
 \section{Réseaux de tenseurs}
+\label{sec:reseaux_tenseurs}
+
+Il existe plusieurs articles d'introductions aux réseaux de tenseurs CITATIONS RÉSEAUX DE TENSEURS
+qui couvre plusieurs applications de cet outil principalement en physique du solide,
+mais également pour des domaines comme l'informatique quantique et l'apprentissage automatique. 
+Pour ma part, 
+je vais me limiter à introduire les notions essentielles à la construction des 
+codes polaires et des codes polaires convolutifs.
+Pour cela, 
+je vais considéré les réseaux de tenseurs comme un outil graphique pour représenter 
+des problèmes d'algèbre linéaire et je ne discuterai pas des considérations plus physiques 
+(corrélations, entropie, etc) qui accompagnent généralement une introduction du sujet.
+J'invite toute personne intéressée d'en apprendre plus sur le sujet à consulter les ouvrages 
+cités précédemment.
+
+Intuitivement, 
+un tenseur est la généralisation d'une matrice.
+En effet,
+tout comme une matrice, 
+un tenseur peut être compris comme une boite de nombres identifier par une liste d'indices. 
+Pour les matrices,
+il suffit d'une paire d'indices pour identifier un élément,
+alors qu'un nombre arbitraire d'indices peuvent être utiliser pour un tenseur. 
+Le rang d'un tenseur est le nombre d'indices utilisé pour identifier un élément.
+Par exemple, 
+un scalaire est un tenseur de rang 0, 
+un vecteur est un tenseur de rang 1 
+et une matrice est un tenseur de rang 2.
+
+Une des opérations parmi les plus importantes sur les tenseurs est la contraction.
+La contraction de deux tenseurs est la généralisation du produit matricielle.
+Avant de définir la contraction,
+il est intéressant de revenir un peu sur le produit matricielle.
+
+Pour une matrice $A$ de dimension $l \times m$ et une matrice $B$ de dimension $m \times n$,
+les éléments du produit matricielle $C = AB$ sont donnés par
+\begin{equation}
+  C_{ij} = \sum_{k=0}^{m - 1} A_{ik} B_{kj}.
+\end{equation}
+Chacun des éléments de $C$ est obtenu en faisant 
+la somme sur le second indice de $A$ et le premier de $B$ 
+en fixant la valeur des indices restant.
+Le dernier indice de $A$ et le premier indice de $B$ forment 
+alors un indice common de la paire $(A, B)$.
+La contraction de deux tenseurs de rang arbitraire est définie 
+de la même façon.
+Par exemple, 
+le tenseur $C$ dont les éléments sont
+\begin{equation}
+  C_{hijkl} = \sum_{r} A_{hrij} B_{klr}
+\end{equation}
+est la contraction du tenseur $A$, de rang 4,
+et du tenseur $B$, de rang 3, 
+ayant comme indice commun,
+le deuxième indice de $A$ et le troisième de $B$\footnote{
+En pratique, pour calculer la contraction de deux tenseurs, 
+une série d'opérations de remodelage et de permutation des indices 
+est effectuée pour représenter les tenseurs comme des matrices et 
+ainsi profiter des nombreuses optimisations développées pour les algorithmes
+de multiplication matricielle.
+Je considère cependant qu'il s'agit d'un détail d'implémentation 
+et je ne m'attenderai pas sur ce point.}.
+Une contraction n'est pas limitée à un seul indice commun.
+En effet,
+pour les mêmes tenseurs $A$ et $B$ le tenseur $D$ ayant les éléments
+\begin{equation}
+  D_{hik} = \sum_{r} \sum_{s} A_{hris} B_{ksr}
+  \label{eq:contraction_somme}
+\end{equation}
+est une contraction de deux indices de $A$ et $B$.
+
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics{figures/contraction_reseau}
+  \end{center}
+  \caption{
+    La contraction d'un réseau de deux tenseurs 
+    correspondant à l'Équation~\eqref{eq:contraction_somme}.
+  }
+  \label{fig:contraction_reseau}
+\end{figure}
+
+Dans les Sections~\ref{sec:codes_polaires} et~\ref{sec:codes_polaires_conv},
+j'utiliserai plusieurs dizaines voir centaines de tenseurs pour 
+représenter des distributions de probabilité.
+Dans ce cas, 
+la notation de l'Équation~\eqref{eq:contraction_somme} devient inutilisable 
+en raison du nombre trop important de tenseurs et d'indices.
+Pour contourner ce problème,
+j'utiliserai une notation graphique pour les tenseurs.
+C'est cette représentation graphique qui porte le nom de réseaux de tenseurs.
+
+Un réseau de tenseur est défini par un graphe $G = (\tenseurs, \aretes)$ où $\tenseurs$ 
+est un ensemble de tenseurs et $\aretes \subseteq (\tenseurs \times \tenseurs) \cup \tilde{\tenseurs}$ 
+est un ensemble d'arêtes fermées, $\tenseurs \times \tenseurs$, reliant deux tenseurs 
+et d'arêtes ouvertes, $\tilde \tenseurs = \qty{\qty{T} : T \in \tenseurs}$, comprenant un seul tenseur.
+Une arête $a \in \aretes$ est connectée à un tenseur si $T \in \tenseurs$ si $T \in a$.
+Le rang d'un tenseur $T \in \tenseurs$ correspond au degré de $T$ dans $G$,
+soit le nombre d'arêtes connectées à $T$.
+Ainsi, chaque arête connectée à $T$ correspond à un indice de $T$.
+
+Une arête fermée correspond à un indice commun entre deux tenseurs à contracter.
+Suite à la contraction d'un indice commun,
+le réseau est modifié.
+
+
+
+La Figure~\ref{fig:contraction_reseau} illustre la contraction d'un réseau de deux tenseurs
+
 
 
 
 
 \section{Codes polaires}
+\label{sec:codes_polaires}
 
 \section{Codes polaires convolutifs}
+\label{sec:codes_polaires_conv}
 
 \section{Article : Comparaison de la profondeur et la largeur des codes polaires convolutifs}
