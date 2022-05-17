@@ -101,7 +101,7 @@ et un élément de $C$ est nommé mot-code.
   \end{center}
 \end{table}
 
-Le Tableau~\ref{tab:exemple_encodage} illustre un exemple de code correcteur
+Le tableau~\ref{tab:exemple_encodage} illustre un exemple de code correcteur
 encodant 2 bits logiques à l'aide de 6 bits physiques.
 En utilisant ce code correcteur,
 Béatrice est en mesure de retrouver le message initial qu'Arthur lui a
@@ -151,9 +151,9 @@ avec l'entropie binaire $H_2(p) = -p \log(p) - (1 - p)\log(1 - p)$~\footnote{
   Pour alléger le texte, je n'inclus pas les preuves qui se retrouvent facilement 
   dans la littérature.
   De plus, les concepts importants de la théorie de l'information, dont l'entropie, 
-  sont présentés à l'Annexe~\ref{chap:theo_info}.
+  sont présentés à l'annexe~\ref{chap:theo_info}.
 }. 
-La Figure~\ref{fig:capacite_canal} illustre que la capacité du canal symmétrique binaire 
+La figure~\ref{fig:capacite_canal} illustre que la capacité du canal symmétrique binaire 
 est nulle à $p = 0.5$.
 En effet, un canal ayant une probabilité d'erreur de $0.5$ retourne 
 chacune des séquences de bits avec la même probabilité 
@@ -197,27 +197,28 @@ de ces codes et les algorithmes de décodage correspondant.
 \section{Réseaux de tenseurs}
 \label{sec:reseaux_tenseurs}
 
-Il existe plusieurs articles d'introductions aux réseaux de tenseurs CITATIONS RÉSEAUX DE TENSEURS
-qui couvre plusieurs applications de cet outil principalement en physique du solide,
-mais également pour des domaines comme l'informatique quantique et l'apprentissage automatique. 
-Pour ma part, 
+Les réseaux de tenseurs sont une représentation graphique de problèmes d'algèbre linéaire
+particulièrement utile pour des systèmes de grandes tailles.
+Dans cette thèse, 
 je vais me limiter à introduire les notions essentielles à la construction des 
 codes polaires et des codes polaires convolutifs.
 Pour cela, 
-je vais considéré les réseaux de tenseurs comme un outil graphique pour représenter 
-des problèmes d'algèbre linéaire et je ne discuterai pas des considérations plus physiques 
-(corrélations, entropie, etc) qui accompagnent généralement une introduction du sujet.
-J'invite toute personne intéressée d'en apprendre plus sur le sujet à consulter les ouvrages 
-cités précédemment.
+je vais me concentrer sur les réseaux de tenseurs comme un outil d'algèbre linéaire 
+et je ne discuterai pas des considérations plus physiques (corrélations, entropie, etc) 
+qui accompagnent généralement une introduction du sujet.
+Pour plus de détails,
+il existe plusieurs articles d'introduction aux réseaux de tenseurs CITATIONS RÉSEAUX DE TENSEURS
+qui couvrent de nombreuses applications de cet outil principalement en physique du solide,
+mais également pour des domaines comme l'informatique quantique et l'apprentissage automatique. 
 
 Intuitivement, 
 un tenseur est la généralisation d'une matrice.
 En effet,
 tout comme une matrice, 
-un tenseur peut être compris comme une boite de nombres identifier par une liste d'indices. 
+un tenseur peut être compris comme une boite de nombres identifiés par une liste d'indices. 
 Pour les matrices,
 il suffit d'une paire d'indices pour identifier un élément,
-alors qu'un nombre arbitraire d'indices peuvent être utiliser pour un tenseur. 
+alors qu'un nombre arbitraire d'indices peut être utilisé pour un tenseur. 
 Le rang d'un tenseur est le nombre d'indices utilisé pour identifier un élément.
 Par exemple, 
 un scalaire est un tenseur de rang 0, 
@@ -238,17 +239,17 @@ Chacun des éléments de $C$ est obtenu en faisant
 la somme sur le second indice de $A$ et le premier de $B$ 
 en fixant la valeur des indices restant.
 Le dernier indice de $A$ et le premier indice de $B$ forment 
-alors un indice common de la paire $(A, B)$.
-La contraction de deux tenseurs de rang arbitraire est définie 
+alors un indice commun de la paire $(A, B)$.
+La contraction de deux tenseurs de rangs arbitraires est définie 
 de la même façon.
 Par exemple, 
-le tenseur $C$ dont les éléments sont
+le tenseur $C$, dont les éléments sont
 \begin{equation}
-  C_{hijkl} = \sum_{r} A_{hrij} B_{klr}
+  C_{hijkl} = \sum_{r} A_{hrij} B_{klr},
 \end{equation}
-est la contraction du tenseur $A$, de rang 4,
-et du tenseur $B$, de rang 3, 
-ayant comme indice commun,
+est la contraction du tenseur $A$ de rang 4
+et du tenseur $B$ de rang 3, 
+ayant comme indice commun
 le deuxième indice de $A$ et le troisième de $B$\footnote{
 En pratique, pour calculer la contraction de deux tenseurs, 
 une série d'opérations de remodelage et de permutation des indices 
@@ -257,7 +258,7 @@ ainsi profiter des nombreuses optimisations développées pour les algorithmes
 de multiplication matricielle.
 Je considère cependant qu'il s'agit d'un détail d'implémentation 
 et je ne m'attenderai pas sur ce point.}.
-Une contraction n'est pas limitée à un seul indice commun.
+Une contraction n'est pas limitée à un seul indice.
 En effet,
 pour les mêmes tenseurs $A$ et $B$ le tenseur $D$ ayant les éléments
 \begin{equation}
@@ -271,41 +272,55 @@ est une contraction de deux indices de $A$ et $B$.
     \includegraphics{figures/contraction_reseau}
   \end{center}
   \caption{
-    La contraction d'un réseau de deux tenseurs 
-    correspondant à l'Équation~\eqref{eq:contraction_somme}.
+    La contraction de deux tenseurs d'un réseau.
+    Cette contraction des tenseurs bleus à la droite du réseau
+    en un nouveau tenseur de rang 3 correspond à l'équation~\eqref{eq:contraction_somme}.
   }
   \label{fig:contraction_reseau}
 \end{figure}
 
-Dans les Sections~\ref{sec:codes_polaires} et~\ref{sec:codes_polaires_conv},
+Dans les sections~\ref{sec:codes_polaires} et~\ref{sec:codes_polaires_conv},
 j'utiliserai plusieurs dizaines voir centaines de tenseurs pour 
 représenter des distributions de probabilité.
 Dans ce cas, 
-la notation de l'Équation~\eqref{eq:contraction_somme} devient inutilisable 
+la notation de sommation devient inutilisable 
 en raison du nombre trop important de tenseurs et d'indices.
 Pour contourner ce problème,
 j'utiliserai une notation graphique pour les tenseurs.
 C'est cette représentation graphique qui porte le nom de réseaux de tenseurs.
 
-Un réseau de tenseur est défini par un graphe $G = (\tenseurs, \aretes)$ où $\tenseurs$ 
+Un réseau de tenseur est défini par un graphe $G = (\tenseurs, \aretes)$\footnote{Je fais 
+un rappel des notions de théorie des graphes à l'annexe~\ref{chap:theo_graphe}.} où $\tenseurs$ 
 est un ensemble de tenseurs et $\aretes \subseteq (\tenseurs \times \tenseurs) \cup \tilde{\tenseurs}$ 
 est un ensemble d'arêtes fermées, $\tenseurs \times \tenseurs$, reliant deux tenseurs 
 et d'arêtes ouvertes, $\tilde \tenseurs = \qty{\qty{T} : T \in \tenseurs}$, comprenant un seul tenseur.
-Une arête $a \in \aretes$ est connectée à un tenseur si $T \in \tenseurs$ si $T \in a$.
+Une arête $a \in \aretes$ est connectée à un tenseur $T \in \tenseurs$ si $T \in a$.
 Le rang d'un tenseur $T \in \tenseurs$ correspond au degré de $T$ dans $G$,
 soit le nombre d'arêtes connectées à $T$.
 Ainsi, chaque arête connectée à $T$ correspond à un indice de $T$.
 
 Une arête fermée correspond à un indice commun entre deux tenseurs à contracter.
-Suite à la contraction d'un indice commun,
-le réseau est modifié.
-
-
-
-La Figure~\ref{fig:contraction_reseau} illustre la contraction d'un réseau de deux tenseurs
-
-
-
+Suite à la contraction d'un indice commun, le réseau est modifié comme 
+illustré à la figure~\ref{fig:contraction_reseau}.
+Lors de la contraction d'une paire de tenseurs dans un réseau,
+le nombre d'arêtes ouvertes du réseau est conservé.
+La contraction d'un réseau de tenseurs est ainsi une séquence de contractions 
+de paires de tenseurs jusqu'à ce qu'il ne reste qu'un seul tenseur avec des arêtes ouvertes.
+Pour ce faire, 
+il est important de considéré l'ordre des contractions pour minimiser la taille 
+des tenseurs intermédiaires puisque cela peut avoir un impact considérable sur la mémoire
+requise et le temps de calcul.
+En effet,
+il est possible que ces deux quantités augmentent exponentiellement avec le nombre 
+de tenseurs et d'arêtes dans le réseau initial.
+Trouver l'ordre de contraction optimal est un problème appartenent 
+à la classe de complexité $\sharp P$\footnote{Je fais un rappel des notions de la 
+théorie de la complexité à l'annexe~\ref{chap:complexite_calcul}. Dans ce cas, 
+il est suffisant de comprendre qu'il s'agit d'un problème très difficile même 
+en utilisant une grande quantité de ressources numériques.}. CITATION.
+Heureusement,
+pour les codes polaires et les codes polaires convolutifs,
+un ordre de contraction efficace se présente naturellement.
 
 
 \section{Codes polaires}
@@ -315,3 +330,23 @@ La Figure~\ref{fig:contraction_reseau} illustre la contraction d'un réseau de d
 \label{sec:codes_polaires_conv}
 
 \section{Article : Comparaison de la profondeur et la largeur des codes polaires convolutifs}
+
+Cet article ayant pour titre original \textit{Depth versus Breadth in Convolutional Polar Codes}
+a été publié en 2018 dans la cadre de la conférence \textit{IEEE Information Theory Workshop}.
+Dans celui-ci,
+nous comparons plusieurs généralisations des codes polaires basées sur la construction 
+des codes polaires convolutifs CITATION DAVID ET ANDREW.
+Ces généralisations varient la largeur des codes polaires en utilisant des portes 
+de polarisation à plus de 2 qubits 
+et varient la profondeur en ajoutant des couches convolutives 
+de portes de polarisation à chaque niveau.
+Ces deux modifications ne changent la complexité que par un facteur multiplicatif constant.
+
+Le résultat principal de l'article est qu'augmenter la largeur des codes 
+nuit aux performances alors qu'augmenter la profondeur augmente les performances.
+Lorsque le nombre d'opérations nécessaires au décodage est pris en compte,
+il est optimal de choisir une largeur et une profondeur de 2.
+
+
+
+\includepdf[pages=-]{articles/conv_polar_codes.pdf}
