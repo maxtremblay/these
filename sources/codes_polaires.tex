@@ -24,9 +24,12 @@ Cependant,
 l'histoire ne s'arrête pas là puisque lors de la transmission du signal
 dans l'atmosphère, il est fort probable que celui-ci soit corrompu en 
 raison d'une interaction indésirée.
-La solution à ce problème est de transmettre une séquence de nombres binaires
+En autre, 
+cela peut être causé par la présence d'autres ondes ou d'un obstacle 
+sur le trajet du signal.
+La solution à ce problème est alors de transmettre une séquence de nombres binaires
 plus longue que ce qui est nécessaire en espérant que l'information supplémentaire
-  nous aide à retrouver le message initial en cas d'erreur.
+nous aide à retrouver le message initial en cas d'erreur.
 
 Dans ce chapitre,
 je vais d'abord reformuler ce problème dans un langage mathématique plus formel.  
@@ -35,7 +38,7 @@ je vais présenter les réseaux de tenseurs,
 un outil mathématique qui va m'être très utile pour décrire les codes polaires 
 ainsi qu'une généralisation de ces derniers, les codes polaires convolutifs.
 Ces codes sont très importants puisque les codes polaires sont au coeur 
-de la technologie de communication 5G et que toutes améliorations de ceux-ci
+de la technologie de communication 5G~\cite{bioglio_design_2021} et que toutes améliorations de ceux-ci
 a un grand potentiel d'application.
 À cet effet, le chapitre se termine par une présentation d'un article scientifique
 dans lequel j'identifie les régimes où les performances des codes polaires convolutifs sont 
@@ -44,19 +47,19 @@ les plus impressionnantes.
 \section{Communication classique et correction d'erreurs}
 
 L'unité fondamentale de l'information est le bit.
-Un bit prend la value 0 ou 1 et correspond à la quantité 
+Un bit prend la valeur 0 ou 1 et correspond à la quantité 
 d'information acquiérie après avoir appris la réponse 
 à une question ayant deux choix de réponses (oui et non par exemple).
 Formellement, un bit est un élément du corps fini de cardinalité 2 noté $\bit = \qty{0, 1}$.
 La multiplication dans $\bit$ est définie comme à l'habitude
-et l'addition est définie module 2, soit que $1 + 1 = 0$.
+et l'addition est définie modulo 2, soit que $1 + 1 = 0$.
 
 Je m'intéresse au cas où Arthur veut transmettre une séquence 
 de $k$ bits $\vb{x} \in \bit^k$ en utilisant un canal bruité $\canal$.
 Dans cette thèse,
 je vais me limiter à une définiton simple d'un canal bruité,
 bien qu'il soit possible de généraliser cette notion. 
-Le canal bruité que je considère est le canal symmétrique binaire.
+Le canal bruité que je considère est le canal binaire symétrique.
 Celui-ci est une fonction probabiliste $\mathcal \canal_p: \bit \to \bit$
 qui, après avoir reçu le bit $b$ comme entrée, 
 retourne le même bit $b$ avec probabilité $1 - p$ et retourne le
@@ -139,21 +142,38 @@ erreur logique tend vers 0 lorsque $n \to \infty$.
 Autrement dit,
 pour un canal de capacité $\capacite$, 
 il existe une famille de codes $\qty{C_i}_{i\in\mathbb N}$ avec 
-$\max_{i} k_i / n_i = \capacite$ telle que la probabilité d'une erreur de 
+$k_i / n_i \to \capacite$ telle que la probabilité d'une erreur de 
 décodage décroit exponentiellement avec $i$.
 
-Pour le canal symmétrique binaire $\canal_p$, 
-il est prouvé~\cite{shannon_mathematical_1948} que la capacité est 
+La capacité d'un canal est calculé à partir de l'information mutuelle~\footnote{
+  Les concepts importants de la théorie de l'information, dont l'entropie
+  et l'information mutuelle sont présentés à l'annexe~\ref{chap:theo_info}.
+} 
+selon
+\begin{equation}
+  \capacite = \max_{\Pr_X(x)} I(X ; Y),
+\end{equation}
+avec $X$ la variable aléatoire transmise et $Y$ la variable aléatoire reçue.
+Dans ce cas,
+l'information mutuelle $I(X ; Y)$ est interprété comme la fraction maximale
+de bits non erronés qui peuvent être reçus par bit envoyé.
+Cette quantité dépend généralement de la probabilité d'envoyer chaque bit
+et il est alors optimal de choisir la probabilité qui maximise l'information mutuelle.
+Lors de l'introduction aux codes polaires à la fin de ce chapitre,
+j'utiliserai l'information mutuelle pour comparer la performance de divers canaux.
+
+Pour le canal binaire symétrique $\canal_p$, 
+il est prouvé~\cite{shannon_mathematical_1948} que l'information mutuelle
+est maximisée par une probabilité uniforme sur $X$. 
+La capacité est alors
 \begin{equation}
   \capacite(\canal_p) = 1 - H_2(p)
 \end{equation}
 avec l'entropie binaire $H_2(p) = -p \log(p) - (1 - p)\log(1 - p)$~\footnote{
   Pour alléger le texte, je n'inclus pas les preuves qui se retrouvent facilement 
   dans la littérature.
-  De plus, les concepts importants de la théorie de l'information, dont l'entropie, 
-  sont présentés à l'annexe~\ref{chap:theo_info}.
 }. 
-La figure~\ref{fig:capacite_canal} illustre que la capacité du canal symmétrique binaire 
+La figure~\ref{fig:capacite_canal} illustre que la capacité du canal binaire symétrique 
 est nulle à $p = 0.5$.
 En effet, un canal ayant une probabilité d'erreur de $0.5$ retourne 
 chacune des séquences de bits avec la même probabilité 
@@ -177,12 +197,12 @@ les études numériques de cette thèse se concentre sur des plages de probabili
   \begin{center}
     \includegraphics{figures/capacite_canal.pdf}
   \end{center}
-  \caption{Capacité du canal binaire symmétrique selon la probabilité d'erreur}
+  \caption{Capacité du canal binaire symétrique selon la probabilité d'erreur}
   \label{fig:capacite_canal}
 \end{figure}
 
 Il est important de noté que l'article de Shannon n'inclut aucune construction de codes 
-correcteurs permettant d'atteindre la capacité du canal binaire symmétrique.
+correcteurs permettant d'atteindre la capacité du canal binaire symétrique.
 En effet, les codes polaires sont les premiers codes correcteurs découverts 
 pour lesquels il existe un algorithme de décodage efficace permettant d'atteindre 
 la capacité d'un canal~\cite{arikan_channel_2009}. 
@@ -207,8 +227,7 @@ je vais me concentrer sur les réseaux de tenseurs comme un outil d'algèbre lin
 et je ne discuterai pas des considérations plus physiques (corrélations, entropie, etc) 
 qui accompagnent généralement une introduction du sujet.
 Pour plus de détails,
-il existe plusieurs articles d'introduction aux réseaux de tenseurs CITATIONS RÉSEAUX DE TENSEURS
-qui couvrent de nombreuses applications de cet outil principalement en physique du solide,
+il existe plusieurs articles d'introduction~\cite{bridgeman_hand-waving_2017, baker_methodes_2021} aux réseaux de tenseurs qui couvrent de nombreuses applications de cet outil principalement en physique du solide,
 mais également pour des domaines comme l'informatique quantique et l'apprentissage automatique. 
 
 Intuitivement, 
@@ -221,9 +240,9 @@ il suffit d'une paire d'indices pour identifier un élément,
 alors qu'un nombre arbitraire d'indices peut être utilisé pour un tenseur. 
 Le rang d'un tenseur est le nombre d'indices utilisé pour identifier un élément.
 Par exemple, 
-un scalaire est un tenseur de rang 0, 
-un vecteur est un tenseur de rang 1 
-et une matrice est un tenseur de rang 2.
+un scalaire $s$ est un tenseur de rang 0, 
+un vecteur $v_i$ est un tenseur de rang 1 
+et une matrice $m_{ij}$ est un tenseur de rang 2.
 
 Une des opérations parmi les plus importantes sur les tenseurs est la contraction.
 La contraction de deux tenseurs est la généralisation du produit matricielle.
@@ -317,7 +336,7 @@ Trouver l'ordre de contraction optimal est un problème appartenent
 à la classe de complexité $\sharp P$\footnote{Je fais un rappel des notions de la 
 théorie de la complexité à l'annexe~\ref{chap:complexite_calcul}. Dans ce cas, 
 il est suffisant de comprendre qu'il s'agit d'un problème très difficile même 
-en utilisant une grande quantité de ressources numériques.}. CITATION.
+en utilisant une grande quantité de ressources numériques.}~\cite{biamonte_tensor_2015}. 
 Heureusement,
 pour les codes polaires et les codes polaires convolutifs,
 un ordre de contraction efficace se présente naturellement.
@@ -326,10 +345,148 @@ un ordre de contraction efficace se présente naturellement.
 \section{Codes polaires}
 \label{sec:codes_polaires}
 
+
+C'est en 2009 que Arikan introduit les codes polaires~\cite{arikan_channel_2009}.
+Le concept fondamentale derrière la construction des codes polaires est la polarisation
+des canaux bruités.
+Cette technique permet de convertir deux canaux bruités similaires en un canal moins bruité
+et un canal plus bruité.
+Ainsi,
+un ensemble de canaux presque sans bruit et un ensemble presque inutilisable
+sont obtenues en répétant itérativement cette approche à partir de plusieurs canaux similaires.
+Ce qui est remarquable est que la fraction de canaux de faible bruit créés ainsi
+tend vers la capacité des canaux initiaux.
+En combinant cela au fait qu'il existe un algorithme efficace de décodage des codes polaires,
+nous obtenons une famille de codes aux performances très prometteuse.
+Dans le reste de cette section,
+je vais d'abord décrire plus en détail la procéssus de polarisation des canaux avant
+d'introduire la construction des codes polaires.
+Finalement, je vais présenter un décodeur pour ces codes.
+Je ferai tout cela en utilisant le formaliste des réseaux de tenseurs.
+
+\begin{figure}[t]
+  \begin{center}
+    \includegraphics{figures/polarisation.pdf}
+  \end{center}
+  \caption{Polarisation d'une paire de canaux}
+  \label{fig:polarisation}
+\end{figure}
+
+Je vais décrire un canal à partir de sa fonction de poids. 
+Ainsi,
+le canal binaire symétrique $\canal_p$ est représenté par la fonction de poids
+\begin{equation}
+  W(y|x) =
+  \begin{cases}
+    1 - p & \text{si } x = y,\\
+    p & \text{si } x \neq y.\\
+  \end{cases}
+\end{equation}
+Cette fonction représente la probabilité de recevoir $y$ si $x$ a été transmis.
+
+Pour la construction des codes polaires,
+des canaux plus généraux $W(\vb y | x)$,
+où $\vb y \in \qty{0, 1}^m$ est un vecteur de $m$ bits,
+sont considérés.
+De plus, 
+l'analyse se limite aux canaux composés de canaux binaires symétriques.
+Dans ce cas, l'information mutuelle d'un canal décrit par $W(\vb y | x)$
+est maximisée par une probabilité uniforme des valeurs de $x$.
+La capacité est alors~\footnote{
+  Sauf indication contraire, les logarithmes dans cette thèse sont calculés en base 2.
+}
+\begin{align}
+  \capacite(W) 
+  = I(X ; Y)
+  &= \sum_{\vb y \in \qty{0, 1}^m}\sum_{x \in \qty{0, 1}} 
+  \Pr(x, y) \log\qty(\frac{\Pr(x, y)}{\Pr(x) \Pr(y)})\notag\\
+  &= \sum_{\vb y \in \qty{0, 1}^m}\sum_{x \in \qty{0, 1}} 
+  \frac{1}{2}W(\vb y | x) \log\qty(\frac{2 W(\vb y | x)}{W(\vb y | 0) + W(\vb y | 1)})
+  \label{eq:capacite_symetrique}
+\end{align}
+puisque $\Pr(x = 0) = \Pr(x = 1) = 1/2$.
+
+La première étape de la polarisation est de combiner 
+deux copies du canal binaire symétrique $W_1$ en un nouveau canal à 2 bits selon 
+\begin{equation}
+  W_2(\vb y_1^2 | \vb u_1^2) = W_1(y_2 | u_2) W_1(y_1 | u_1 + u_2),
+\end{equation}
+comme illustré à la figure~\ref{fig:polarisation}.
+Dans cette section, je suis la littérature sur la correction d'erreurs
+classique et j'utilise la notation $\vb x_i^j = (x_i, x_{i + 1}, \ldots x_j)$.
+Le canal $W_2$ est obtenu en transformant l'entrée $(u_1, u_2)$ vers $(u_1 + u_2, u_2)$.
+Cette transformation est l'analogue classique de la porte logique CNOT très utilisée 
+en informatique quantique.
+
+Le canal $W_2$ est ensuite décomposé en un mauvais canal $W_2^{(1)}$ et un bon canal $W_2^{(2)}$.
+Pour ce faire,
+les bits $u_1$ et $u_2$ sont transmis de façon successive.
+D'abord, 
+le bit $u_1$ est transmis en ignorant la valeur de $u_2$. 
+Le mauvais canal,
+\begin{equation}
+  W_2^{(1)}(\vb y_1^2 | u_1) 
+  = \sum_{u_2 \in \qty{0, 1}} W_2(\vb y_1^2 | u_1^2) 
+  = \frac{1}{2}\sum_{u_2 \in \qty{0, 1}} W_1(y_2 | u_2) W_1(y_1 | u_1 + u_2),
+\end{equation}
+est obtenu en supposant qu'il est équiprobable que $u_2 = 0$ et $u_2 = 1$.
+
+Pour retrouver la valeur de $u_1$ transmise par ce canal, 
+la valeur de $u_2$ est estimée selon $W_1(y_2 | u_2)$. 
+La probabilité de succès est de $1 - p$. 
+Ensuite, 
+la valeur de $u_1$ est estimée selon $W(y_1 | u_1 + u_2)$.
+En supposant la bonne valeur de $u_2$, 
+la probabilité de succès de cette étape est également de $1 - p$.
+Ainsi, la probabilité totale de succès est de $(1 - p)^2 = 1 - 2p + p^2$,
+ce qui est inférieure à la probabilité de succès $1 - p$ de $W$.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics{figures/capacite_polarisation.pdf}
+  \end{center}
+  \caption{Comparaison de la capacité des canaux polarisés.}
+  \label{fig:capacite_polarisation}
+\end{figure}
+
+Le bon canal est construit en supposant que la valeur de $u_1$ est connue,
+soit parce qu'elle est fixée initialement ou qu'elle a été retrouvée avec succès
+après l'utilisation du mauvais canal.
+La fonction de poids du bon canal est alors
+\begin{equation}
+  W_2^{(2)}(\vb y_1^2, u_1 | u_2) 
+  = W_2(\vb y_1^2 | u_1^2) 
+  = W_1(y_2 | u_2) W_1(y_1 | u_1 + u_2),
+\end{equation}
+où la valeur de $u_1$ est connue. 
+Dans le cas où $u_1 = 0$, 
+utiliser ce canal est équivalent à envoyer deux copies de $u_2$. 
+Ainsi, 
+s'il y a une seule erreur, alors $y_1 \neq y_2$ et il est possible de détecter l'erreur.
+Une erreur doit donc affecter chacun des bits pour que celle-ci ne soit pas détecter.
+Cela a une probabilité $p^2$ ce qui est bien inférieure à la probabilité d'erreur $p$ du
+canal $W_1$.
+Une logique similaire s'applique lorsque $u_1 = 1$.
+
+La capacité des différents canaux est calculée à partir 
+de l'équation~\eqref{eq:capacite_symetrique}
+et est illustrée à la figure~\ref{fig:capacite_polarisation}.
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Codes polaires convolutifs}
 \label{sec:codes_polaires_conv}
 
-\section{Article : Comparaison de la profondeur et la largeur des codes polaires convolutifs}
+\section{Article : Comparaison de la profondeur et de la largeur des codes polaires convolutifs}
 
 Cet article ayant pour titre original \textit{Depth versus Breadth in Convolutional Polar Codes}
 a été publié en 2018 dans la cadre de la conférence \textit{IEEE Information Theory Workshop}.
