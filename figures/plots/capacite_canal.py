@@ -1,6 +1,11 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
+import sys
+
+output = sys.argv[1]
+
+
 
 probs = np.linspace(0, 1)
 
@@ -19,7 +24,7 @@ plt.xlabel("Probabilité d'erreur")
 plt.ylabel("Capacité")
 sns.despine()
 plt.tight_layout()
-plt.savefig("../capacite_canal.pdf")
+plt.savefig(output)
 
 
 

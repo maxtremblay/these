@@ -1,6 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import seaborn as sns
+import sys
+
+output = sys.argv[1]
 
 
 def plog(p):
@@ -62,7 +65,7 @@ plt.ylabel("Capacité")
 plt.legend(frameon=False)
 sns.despine()
 plt.tight_layout()
-plt.savefig("../capacite_polarisation.pdf")
+plt.savefig(output)
 
 
 
