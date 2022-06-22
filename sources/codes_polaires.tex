@@ -21,15 +21,16 @@ qui sera transmise via des ondes radios jusqu'au téléphone de Béatrice
 qui devra reconvertir la séquence de 0 et de 1 en message intelligible.
 
 Cependant, 
-l'histoire ne s'arrête pas là puisque lors de la transmission du signal
-dans l'atmosphère, il est fort probable que celui-ci soit corrompu en 
+l'histoire ne s'arrête pas là,
+puisque lors de la transmission du signal dans l'atmosphère,
+il est fort probable que celui-ci soit corrompu en 
 raison d'une interaction indésirée.
 En autre, 
 cela peut être causé par la présence d'autres ondes ou d'un obstacle 
 sur le trajet du signal.
 La solution à ce problème est alors de transmettre une séquence de nombres binaires
 plus longue que ce qui est nécessaire en espérant que l'information supplémentaire
-nous aide à retrouver le message initial en cas d'erreur.
+nous aide à retrouver le message initial malgré la présence d'erreurs.
 
 Dans ce chapitre,
 je vais d'abord reformuler ce problème dans un langage mathématique plus formel.  
@@ -110,7 +111,7 @@ En utilisant ce code correcteur,
 Béatrice est en mesure de retrouver le message initial qu'Arthur lui a
 envoyé s'il y a au plus une erreur qui affecte les 6 bits transmis. 
 Par exemple, si le message 01 est transmis à l'aide du mot-code 
-101010 et que la séquence 111010 est reçu, 
+101010 et que la séquence 111010 est reçue, 
 il est aisé, en comparant cette séquence avec les différents 
 mots-codes, d'identifier le message envoyé. 
 Par contre, 
@@ -205,8 +206,8 @@ les études numériques de cette thèse se concentre sur des plages de probabili
   \label{fig:capacite_canal}
 \end{figure}
 
-Il est important de noté que l'article de Shannon n'inclut aucune construction de codes 
-correcteurs permettant d'atteindre la capacité du canal binaire symétrique.
+Il est important de noter que l'article de Shannon n'inclut aucune construction de codes 
+correcteurs efficacement décodable permettant d'atteindre la capacité du canal binaire symétrique.
 En effet, les codes polaires sont les premiers codes correcteurs découverts 
 pour lesquels il existe un algorithme de décodage efficace permettant d'atteindre 
 la capacité d'un canal~\cite{arikan_channel_2009}. 
@@ -304,7 +305,7 @@ ces derniers doivent avoir la même dimension.
   \label{fig:contraction_reseau}
 \end{figure}
 
-Dans les sections~\ref{sec:codes_polaires} et~\ref{sec:codes_polaires_conv},
+À la section~\ref{sec:codes_polaires} et dans l'article associé à la thèse,
 j'utiliserai plusieurs dizaines voir centaines de tenseurs pour 
 représenter des distributions de probabilité.
 Dans ce cas, 
@@ -324,8 +325,8 @@ Le rang d'un tenseur $T \in \tenseurs$ correspond au degré de $T$ dans $G$,
 soit le nombre d'arêtes connectées à $T$.
 Ainsi, chaque arête connectée à $T$ correspond à un indice de $T$.
 
-Une arête fermée correspond à un indice commun entre deux tenseurs à contracter.
-Suite à la contraction d'un indice commun, le réseau est modifié comme 
+Une arête fermée correspond à une paire d'indice à contracter entre deux tenseurs.
+Suite à la contraction de ces indices, le réseau est modifié comme 
 illustré à la figure~\ref{fig:contraction_reseau}.
 Lors de la contraction d'une paire de tenseurs dans un réseau,
 le nombre d'arêtes ouvertes du réseau est conservé.
@@ -338,7 +339,7 @@ requise et le temps de calcul.
 En effet,
 il est possible que ces deux quantités augmentent exponentiellement avec le nombre 
 de tenseurs et d'arêtes dans le réseau initial.
-Trouver l'ordre de contraction optimal est un problème appartenent 
+Trouver l'ordre de contraction optimal est un problème appartenant 
 à la classe de complexité $\sharp P$\footnote{Je fais un rappel des notions de la 
 théorie de la complexité à l'annexe~\ref{chap:complexite_calcul}. Dans ce cas, 
 il est suffisant de comprendre qu'il s'agit d'un problème très difficile même 
@@ -375,7 +376,7 @@ Je vais décrire un canal à partir de sa fonction de poids.
 Ainsi,
 le canal binaire symétrique $\canal_p$ est représenté par la fonction de poids
 \begin{equation}
-  W(y|x) =
+  W_1(y|x) =
   \begin{cases}
     1 - p & \text{si } x = y,\\
     p & \text{si } x \neq y.\\
@@ -433,7 +434,7 @@ en informatique quantique.
 Comme de l'information sur le bit $u_2$ est transmise via les deux canaux initiaux et 
 que seule de l'information partielle est transmise sur $u_1$ par le premier canal,
 il est intuitif de croire que le bit $u_2$ sera mieux protégé des erreurs. 
-C'est cet intuition que je vais maintenant formaliser.
+C'est cette intuition que je vais maintenant formaliser.
 
 Le canal $W_2$ est décomposé en un mauvais canal $W_2^{(1)}$ et un bon canal $W_2^{(2)}$.
 Pour ce faire,
@@ -443,7 +444,7 @@ le bit $u_1$ est transmis en ignorant la valeur de $u_2$.
 Le mauvais canal,
 \begin{equation}
   W_2^{(1)}(\vb y_1^2 | u_1) 
-  = \sum_{u_2 \in \qty{0, 1}} W_2(\vb y_1^2 | u_1^2) 
+  = \sum_{u_2 \in \qty{0, 1}} W_2(\vb y_1^2 | u_1^2) \Pr(u_2)
   = \frac{1}{2}\sum_{u_2 \in \qty{0, 1}} W_1(y_2 | u_2) W_1(y_1 | u_1 + u_2),
 \end{equation}
 est obtenu en supposant qu'il est équiprobable que $u_2 = 0$ et $u_2 = 1$.
@@ -488,7 +489,7 @@ de l'équation~\eqref{eq:capacite_symetrique}
 et est illustrée à la figure~\ref{fig:capacite_polarisation}.
 À l'exception des cas où la correction d'erreurs est inutile,
 soit lorsque $p = 0$, $p =0.5$ ou $p = 1$,
-il est clair, selon la figure, qu'il y a un avantage a utilise le bon canal $W_2^{(2)}$.
+il est clair, selon la figure, qu'il y a un avantage à utiliser le bon canal $W_2^{(2)}$.
 Par exemple, pour $p = 0.2$, la capacité de celui-ci est près du double 
 de la capacité initiale et plus de 4 fois supérieure à la capacitié du mauvais canal $W_2^{(1)}$.
 
@@ -529,8 +530,18 @@ d'abord les $n$ canaux $W_1$ en un seul canal,
 \end{equation}
 où $\vb x_1^n = G_n \cdot \vb u_1^n$.
 Le circuit d'encodage $G_n$ est obtenu de manière récursive à partir de la relation illustrée
-à la figure~\ref{fig:circuit_code_polaire} et en considérant $G_1$ comme le circuit identité
-sur un seul bit.
+à la figure~\ref{fig:circuit_code_polaire} et en considérant 
+\begin{equation}
+  G_2 = 
+  \begin{pmatrix}
+    1 & 1 \\
+    1 & 0
+  \end{pmatrix}.
+\end{equation}
+Pour ajouter un niveau de polarisation,
+le bit d'indice $1 \leq i \leq 2^{m-1}$ et le bit 
+d'indice $i + 2^{m-1}$ sont connectés à l'aide de la
+transformation $G_2$ correspondant à la porte CNOT.
 
 Par la suite,
 le canal $W_N$ est décomposé en une série de canaux,
@@ -538,6 +549,7 @@ le canal $W_N$ est décomposé en une série de canaux,
   W_n^{(i)}(\vb y_1^n, \vb u_1^{i - 1} | u_i) 
   = \frac{1}{2^{n - i}}
   \sum_{u_{i+1}^n \in \qty{0, 1}^{n - i}} W_n(\vb y_1^n | \vb u_1^n),
+  \label{eq:canal_polarise}
 \end{equation}
 permettant la transmission d'un bit.
 Ainsi, 
@@ -545,8 +557,8 @@ le bit $u_i$ est transmis en connaissant la valeur des bits précédents et en
 ignorant la valeur des bits suivants de probabilité uniforme.
 Il reste alors à trouver l'ensemble des canaux ayant les plus grandes capacités
 et de fixer la valeur des autres bits à 0.
-Cela engendre un protocole de communication permettant d'envoyer $k \to n(1 - H_2(p))$
-encodés à l'aide de $n = 2^m$ bits, ce qui est optimal pour le 
+Cela engendre un protocole de communication permettant d'envoyer des messages de
+$k \to n(1 - H_2(p))$ bits encodés à l'aide de $n = 2^m$ bits, ce qui est optimal pour le 
 canal binaire symétrique.
 
 Il est évident que le bit $u_n$ est le mieux protégé puisqu'il se retrouve
@@ -556,8 +568,9 @@ le bit $u_1$ est le plus bruyant, car il est toujours du mauvais côté.
 Cependant, 
 il est plus difficile d'ordonner les bits centraux qui se retrouve parfois du bon côté
 et parfois du mauvais.
-Il est tentant d'essayer de calculer la capacité de chaque canaux et des les ordonnées
-ainsi, mais ce calcul implique la somme de $2^n$ termes pour chacun des canaux. 
+Il est tentant d'essayer de calculer la capacité de chacun des canaux et des les ordonner
+ainsi.
+Cependant, ce calcul implique la somme de $2^n$ termes pour chacun des canaux. 
 Il est alors impossible de faire ce calcul en un temps raisonnable.
 Il existe quelques façons de contourner ce problème.
 D'abord Arikan~\cite{arikan_channel_2009} propose d'utiliser le paramètre de Bhattacharyya,
@@ -583,6 +596,13 @@ pour choisir les canaux.
 \subsection{Décodage par réseaux de tenseurs}
 
 Dans cette section,
+je présente un décodeur par réseaux de tenseurs pour les codes polaires 
+inspiré du décodeur à annulation successive introduit par Arikan~\cite{arikan_channel_2009}.
+Ce décodeur par réseaux de tenseurs à d'abord été présenté par Ferris 
+et Poulin~\cite{ferris_branching_2014} et c'est ce qui a permi 
+la construction des codes polaires convolutifs étudiés dans l'article associé à cette thèse.
+
+Pour la suite, 
 je définie un code polaire en fonction du nombre de niveaux de polarisation $m$
 et d'un ensemble de bits $\mathcal F$ dont la valeur est fixée à 0.
 Chacun des $n = 2^m$ bits d'un tel code sont décodés de manière successive.
@@ -596,7 +616,7 @@ Dans le cas contraire,
 il est possible de construire un réseau de tenseurs contractable en temps $\bigO(n)$
 pour obtenir un vecteur dont les éléments sont $W_n^{(i)}(\vb y_1^n, \vb u_1^{i-1} | 0)$
 et $W_n^{(i)}(\vb y_1^n, \vb u_1^{i-1} | 1)$.
-Il suffit alors d'assigner de choisir 
+Il suffit alors de choisir 
 \begin{equation}
   u_i = \max_{u_i' \in \qty{0,1}} W_n^{(i)}(\vb y_1^n, \vb u_1^{i-1} | u_i').
 \end{equation}
@@ -607,8 +627,8 @@ pour décoder chacun de ces bits.
 D'abord, 
 un réseau de tenseur général est construit
 pour l'entièreté du décodage.
-Lors du décodage de chacun des bits,
-ce réseau se simplifie en un réseau de tenseurs en forme d'arbre.
+Celui-ci se simplifie en un réseau de tenseurs en forme d'arbre
+lors du décodage de chacun des bits,
 Le réseau général est composé de quatre tenseurs de bases,
 soit les deux vecteurs
 \begin{align}
@@ -616,8 +636,6 @@ soit les deux vecteurs
   =\begin{pmatrix}1\\0\end{pmatrix},
   &&\vcenter{\hbox{\includegraphics{figures/tenseur_1.pdf}}}
   =\begin{pmatrix}0\\1\end{pmatrix},
-  % &&\vcenter{\hbox{\includegraphics{figures/tenseur_e.pdf}}}
-  % =\begin{pmatrix}1\\1\end{pmatrix},
   \label{eq:tenseurs_01}
 \end{align}
 et les deux tenseurs de rang supérieur
@@ -633,6 +651,7 @@ et les deux tenseurs de rang supérieur
   \end{cases}
   \label{eq:tenseurs_cp}
 \end{align}
+Les éléments de ses vecteurs sont tous des nombres réels et non des éléments de $\bit$.
 
 \begin{figure}
   \begin{center}
@@ -672,10 +691,57 @@ où les valeurs de $\vb u_1^n$ correspondent aux indices ouverts du réseau.
   \end{center}
   \caption[Exemple de simplification de la contraction d'un code polaire]{
     Exemple de simplification de la contraction pour un code polaire à 3 niveaux de polarisation.
-    Les transformations de la forme $(u_1, u_2) \to (v_1, v_2)$ sont données à l'équation REF.
+    Les transformations utilisées sont données à l'équation~\eqref{eq:simplification_codes_polaires}.
   }
   \label{fig:simplification_codes_polaires}
 \end{figure}
+
+Pour obtenir le canal polarisé de l'équation~\ref{eq:canal_polarise},
+un vecteur parmi les deux choix présentés à l'équation~\ref{eq:tenseurs_01}
+est connecté à chacun des indices ouverts correspondant aux bits $\vb u_1^{i-1}$
+selon les valeurs (0 ou 1) précédemment décodées.
+Le vecteur 
+\begin{equation}
+  \vcenter{\hbox{\includegraphics{figures/tenseur_e.pdf}}}
+  =\begin{pmatrix}1\\1\end{pmatrix}
+\end{equation}
+est connecté aux indices ouverts des bits $\vb u_{i+1}^{n}$ pour sommer
+sur les valeurs encore inconnues.
+Ce vecteur ne prend pas en compte la normalisation,
+mais cela ne fait que multiplier les éléments du réseau de tenseur
+contracté par une constante globale n'ayant pas d'impact sur la calcul de
+la valeur maximum.
+
+Il est possible de simplifier ce réseau de tenseur à l'aide des relations
+\begin{align}
+  &\figeq{contraction_cnot_e_e} = \figeq{tenseurs_e_e},
+  &&\figeq{contraction_cnot_u_v} = \figeq{tenseurs_u_w},
+  \label{eq:simplification_codes_polaires}
+\end{align}
+où $u, v \in \qty{0, 1}$ et $w = u + v$ tel qu'illustré à la 
+figure~\ref{fig:simplification_codes_polaires}.
+Le résultat de ces simplifications sera toujours un réseau de tenseurs
+en forme d'arbre~\cite{ferris_branching_2014} puisqu'au niveau de polarisation
+$l$, seulement $2^{m - l}$ ne peuvent pas être simplifiés.
+
+L'avantage des réseaux de tenseurs en forme d'arbre est qu'il est possible de 
+les contracter efficacement~\cite{arad_quantum_2010}.
+Dans le cas présent,
+il suffit de contracter le réseau de tenseur en partant du premier niveau de polarisation
+vers le dernier comme illustré à la figure~\ref{fig:contraction_codes_polaires}.
+Le coût de cette contraction est de $\bigO(2^m)$.
+Ainsi,
+le coût total du décodage pour un code de $n = 2^m$ est au plus $\bigO(n^2)$ puisque 
+$n$ bits doivent être décodés.
+Cependant,
+il est possible de faire mieux en observant que les réseaux simplifiés partagent des sous-réseaux
+communs.
+Par exemple,
+lors du décodage des bits $u_1$ et $u_2$, 
+seule la contraction au dernier niveau de polarisation est différente puisque les 
+vecteurs associés aux bits $\vb u_3^n$ restent inchangés et engendrent les même simplifications.
+En réutilisant les calculs déjà effectués,
+le coût du décodage devient $\bigO(n\log(n))$~\cite{ferris_branching_2014, arikan_channel_2009}.
 
 \begin{figure}
   \begin{center}
@@ -691,32 +757,84 @@ où les valeurs de $\vb u_1^n$ correspondent aux indices ouverts du réseau.
   }
   \label{fig:contraction_codes_polaires}
 \end{figure}
-\section{Codes polaires convolutifs}
-\label{sec:codes_polaires_conv}
+
+Le coût du décodeur par réseaux de tenseurs est similaire au décodeur par annulation successive introduit
+en même temps que les codes polaires.
+Ces décodeurs combinés au fait qu'il est possible de transmettre de l'information à 
+un rendement $1 - H_2(p)$ font des codes polaires les premiers codes correcteurs permettant 
+d'atteindre la capacité d'un canal tout en étant efficacement décodable.
 
 \section{Comparaison de la profondeur et de la largeur des codes polaires convolutifs}
 
-Dans celui-ci,
-nous comparons plusieurs généralisations des codes polaires basées sur la construction 
-des codes polaires convolutifs CITATION DAVID ET ANDREW.
-Ces généralisations varient la largeur des codes polaires en utilisant des portes 
-de polarisation à plus de 2 qubits 
-et varient la profondeur en ajoutant des couches convolutives 
-de portes de polarisation à chaque niveau.
-Ces deux modifications ne changent la complexité que par un facteur multiplicatif constant.
+Les codes polaires convolutifs sont une généralisation des codes polaires.
+Ferris et Poulin~\cite{ferris_branching_2014} ont introduit ces codes
+en se basant sur la structure en arbre du réseau de tenseurs pour 
+chacune des étapes du décodage.
+En effet, 
+toutes les modifications aux circuits des codes polaires qui permettent
+de conserver cette structure engendrent une famille de codes décodable
+avec un coût $\bigO(n \log(n))$.
+La première modification proposée est d'ajouter 
+une couche de portes CNOT décalée de 1 bit à chaque niveau de polarisation.
+La figure 1a de l'article joint à cette thèse illustre bien cette construction.
 
-Le résultat principal de l'article est qu'augmenter la largeur des codes 
-nuit aux performances alors qu'augmenter la profondeur augmente les performances.
-Lorsque le nombre d'opérations nécessaires au décodage est pris en compte,
-il est optimal de choisir une largeur et une profondeur de 2.
+Par la suite,
+dans le cadre de cette thèse,
+j'ai généralisé cette construction de deux façons.
+D'abord,
+j'ai ajouté des couches de portes à chaque niveau de polarisation.
+La profondeur (\textit{depth}) d'un code polaire convolutif est
+alors le nombre de couches par niveau.
+Ensuite, j'ai remplacé la porte CNOT qui
+permet de polariser deux canaux par des portes qui permettent de polariser plusieurs 
+canaux simultanément.
+La largeur (\textit{breadth}) d'un code polaire convolutif est le nombre de
+canaux polarisés par porte.
+Pour une largeur $b$, 
+la transformation
+\begin{equation}
+  (u_1, u_2, \ldots, u_{b-1}, u_b) 
+  \to 
+  (u_1 + u_2, u_2 + u_3, \ldots, u_{b-1} + u_b, u_b) 
+\end{equation}
+est utilisée.
 
-\subsection{Motivation du projet}
+La figure 1 de l'article présente plusieurs exemples de ces deux généralisations.
+On y voit également qu'un code polaire régulier est équivalent à un code polaire convolutif
+de profondeur 1 et de largeur 2.
 
-\subsection{Résultat principal}
+Dans l'article,
+je compare l'impact de la profondeur et de largeur sur les performances des codes.
+De plus, 
+bien que la coût du décodage de chacun de ces codes soit de $\bigO(n \log(n))$,
+augmenter la profondeur ou la largeur augmente la coût d'un facteur multiplicatif constant.
+Ainsi,
+considérant les performances impressionnantes des codes polaires,
+il est important de comprendre comment cette augmentation du coût de décodage 
+se compare à l'augmentation des performances
+afin d'estimer s'il est rentable de généraliser ces codes.
+
+Je réponds à cette question à montrant d'abord que la performance des codes 
+augmentent avec la profondeur et diminue avec la largeur.
+Suite à cela, une étude du coût de décodage permet de conclure qu'il est optimal
+d'utiliser des codes de profondeur et largeur 2 puisque le gain de performance 
+pour des profondeurs plus élévées est moins appréciable.
+
+\subsection{Contribution}
+
+Pour cet article,
+j'ai implémenté, 
+assisté par Benjamin Bourassa, 
+un logiciel qui permet de simuler le décodage des codes polaires convolutifs.
+Par la suite,
+j'ai effectué les simulations Monte Carlo qui ont permis d'évaluer la performance
+des divers codes correcteurs et j'ai fait l'analyse de ces résultats.
+J'ai également écrit l'article avec l'aide du professeur David Poulin
+qui a supervisé l'ensemble du projet.
 
 \subsection{Article}
+
 Cet article ayant pour titre original \textit{Depth versus Breadth in Convolutional Polar Codes}
 a été publié en 2018 dans la cadre de la conférence \textit{IEEE Information Theory Workshop}.
-
 
 \includepdf[pages=-]{articles/conv_polar_codes.pdf}
