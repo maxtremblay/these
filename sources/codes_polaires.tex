@@ -247,6 +247,8 @@ Par exemple,
 un scalaire $s$ est un tenseur de rang 0, 
 un vecteur $v_i$ est un tenseur de rang 1 
 et une matrice $m_{ij}$ est un tenseur de rang 2.
+De plus,
+la dimension d'un indice est le nombre de valeurs que celui-ci peut prendre.
 
 Une des opérations parmi les plus importantes sur les tenseurs est la contraction.
 La contraction de deux tenseurs est la généralisation du produit matricielle.
@@ -261,8 +263,6 @@ les éléments du produit matricielle $C = AB$ sont donnés par
 Chacun des éléments de $C$ est obtenu en faisant 
 la somme sur le second indice de $A$ et le premier de $B$ 
 en fixant la valeur des indices restant.
-Le dernier indice de $A$ et le premier indice de $B$ forment 
-alors un indice commun de la paire $(A, B)$.
 La contraction de deux tenseurs de rangs arbitraires est définie 
 de la même façon.
 Par exemple, 
@@ -270,17 +270,16 @@ le tenseur $C$, dont les éléments sont
 \begin{equation}
   C_{hijkl} = \sum_{r} A_{hrij} B_{klr},
 \end{equation}
-est la contraction du tenseur $A$ de rang 4
-et du tenseur $B$ de rang 3, 
-ayant comme indice commun
-le deuxième indice de $A$ et le troisième de $B$\footnote{
+est la contraction du deuxième indice du tenseur $A$ de rang 4
+et du troisième indice du tenseur $B$ de rang 3\footnote{
 En pratique, pour calculer la contraction de deux tenseurs, 
 une série d'opérations de remodelage et de permutation des indices 
 est effectuée pour représenter les tenseurs comme des matrices et 
 ainsi profiter des nombreuses optimisations développées pour les algorithmes
 de multiplication matricielle.
 Je considère cependant qu'il s'agit d'un détail d'implémentation 
-et je ne m'attenderai pas sur ce point.}.
+et je ne m'attenderai pas sur ce point.
+}.
 Une contraction n'est pas limitée à un seul indice.
 En effet,
 pour les mêmes tenseurs $A$ et $B$ le tenseur $D$ ayant les éléments
@@ -288,7 +287,10 @@ pour les mêmes tenseurs $A$ et $B$ le tenseur $D$ ayant les éléments
   D_{hik} = \sum_{r} \sum_{s} A_{hris} B_{ksr}
   \label{eq:contraction_somme}
 \end{equation}
-est une contraction de deux indices de $A$ et $B$.
+est une contraction de deux paires d'indices de $A$ et $B$.
+Cependant,
+pour contracter une paire d'indices,
+ces derniers doivent avoir la même dimension. 
 
 \begin{figure}[t]
   \begin{center}
@@ -454,7 +456,7 @@ la valeur de $u_1$ est estimée selon $W(y_1 | u_1 + u_2)$.
 En supposant la bonne valeur de $u_2$, 
 la probabilité de succès de cette étape est également de $1 - p$.
 Ainsi, la probabilité totale de succès est de $(1 - p)^2$,
-ce qui est inférieure à la probabilité de succès $1 - p$ de $W$.
+ce qui est inférieure à la probabilité de succès $1 - p$ de $W_1$.
 
 \begin{figure}
   \begin{center}
@@ -525,9 +527,9 @@ d'abord les $n$ canaux $W_1$ en un seul canal,
 \begin{equation}
   W_n(\vb y_1^n | \vb u_1^n) = \prod_{i=0}^n W_1(y_i | x_i),
 \end{equation}
-où $\vb x_1^n = C_n \cdot \vb u_1^n$.
-Le circuit d'encodage $C_n$ est obtenu de manière récursive à partir de la relation illustrée
-à la figure~\ref{fig:circuit_code_polaire} et en considérant $C_1$ comme le circuit identité
+où $\vb x_1^n = G_n \cdot \vb u_1^n$.
+Le circuit d'encodage $G_n$ est obtenu de manière récursive à partir de la relation illustrée
+à la figure~\ref{fig:circuit_code_polaire} et en considérant $G_1$ comme le circuit identité
 sur un seul bit.
 
 Par la suite,
@@ -577,25 +579,118 @@ Dans l'article associé à cette thèse,
 je présente une autre approche plus simple, 
 mais un peu moins précise, 
 pour choisir les canaux.
-Pour la suite, 
-je vais définir un code polaire en fonction du nombre de niveaux de polarisation $m$
-et d'un ensemble de bits $\mathcal F$ dont la valeur est fixée à 0.
-
 
 \subsection{Décodage par réseaux de tenseurs}
 
+Dans cette section,
+je définie un code polaire en fonction du nombre de niveaux de polarisation $m$
+et d'un ensemble de bits $\mathcal F$ dont la valeur est fixée à 0.
+Chacun des $n = 2^m$ bits d'un tel code sont décodés de manière successive.
+C'est-à-dire, 
+après avoir reçu le message $\vb y$,
+pour trouver la séquence de bit $\vb u$ la plus probable,
+le bit $u_1$ est décodé, suivit du bit $u_2$ et ainsi de suite jusqu'à décoder le bit $u_n$.
+Dans le cas où $i \in \mathcal F$, 
+il est inutile de décoder le bit $u_i$ et il suffit de lui assigner la valeur fixe $0$.
+Dans le cas contraire,
+il est possible de construire un réseau de tenseurs contractable en temps $\bigO(n)$
+pour obtenir un vecteur dont les éléments sont $W_n^{(i)}(\vb y_1^n, \vb u_1^{i-1} | 0)$
+et $W_n^{(i)}(\vb y_1^n, \vb u_1^{i-1} | 1)$.
+Il suffit alors d'assigner de choisir 
+\begin{equation}
+  u_i = \max_{u_i' \in \qty{0,1}} W_n^{(i)}(\vb y_1^n, \vb u_1^{i-1} | u_i').
+\end{equation}
+Dans le reste de cette section,
+je vais décrire comment construire et contracter le réseau de tenseur
+pour décoder chacun de ces bits.
+
+D'abord, 
+un réseau de tenseur général est construit
+pour l'entièreté du décodage.
+Lors du décodage de chacun des bits,
+ce réseau se simplifie en un réseau de tenseurs en forme d'arbre.
+Le réseau général est composé de quatre tenseurs de bases,
+soit les deux vecteurs
+\begin{align}
+  &\vcenter{\hbox{\includegraphics{figures/tenseur_0.pdf}}}
+  =\begin{pmatrix}1\\0\end{pmatrix},
+  &&\vcenter{\hbox{\includegraphics{figures/tenseur_1.pdf}}}
+  =\begin{pmatrix}0\\1\end{pmatrix},
+  % &&\vcenter{\hbox{\includegraphics{figures/tenseur_e.pdf}}}
+  % =\begin{pmatrix}1\\1\end{pmatrix},
+  \label{eq:tenseurs_01}
+\end{align}
+et les deux tenseurs de rang supérieur
+\begin{align}
+  &\vcenter{\hbox{\includegraphics{figures/tenseur_w.pdf}}}
+  =
+  \begin{pmatrix}1 - p & p \\ p & 1 - p\end{pmatrix}, 
+  &&\vcenter{\hbox{\includegraphics{figures/tenseur_cnot.pdf}}}
+  =
+  \begin{cases}
+    1 & \text{si } i = j, k \neq l, \\
+    0 & \text{sinon}.
+  \end{cases}
+  \label{eq:tenseurs_cp}
+\end{align}
+
 \begin{figure}
   \begin{center}
-    \includegraphics[scale=1.3]{figures/decodage_codes_polaires.pdf}
+    \includegraphics[scale=1.3]{figures/reseau_tenseurs_codes_polaires.pdf}
   \end{center}
-  \caption[Circuit des codes polaires]{
-    Circuit d'encodage pour les codes polaires.
-    À gauche, la relation de récurrence pour ajouter un niveau de polarisation.
-    À droite, la transmission de 8 bits encodés à l'aide de trois niveaux de polarisation.
+  \caption[Exemple d'un réseau de tenseur pour décoder un code polaire]{
+    Réseau de tenseurs pour le décodage d'un code polaire à 3 niveaux de polarisation.
   }
-  \label{fig:decodage_codes_polaires}
+  \label{fig:reseau_tenseurs_codes_polaires}
 \end{figure}
 
+Pour $y_i \in \qty{0, 1}$,
+la fonction de poids $W_1$ s'obtient par la contraction
+\begin{equation}
+  \vcenter{\hbox{\includegraphics{figures/contraction_y_w.pdf}}}
+  =
+  \begin{pmatrix}
+    W_1(y_i | 0) \\
+    W_1(y_i | 1)
+  \end{pmatrix}
+  =
+  \begin{cases}
+    \begin{pmatrix}1 - p\\p\end{pmatrix} & \text{si } y_i = 0, \\[0.7cm]
+    \begin{pmatrix}p\\1-p\end{pmatrix} & \text{si } y_i = 1.
+  \end{cases}
+\end{equation}
+La réseau complet est alors obtenu en connectant les contractions $W \cdot y_i$
+au circuit d'encodage du code où les portes CNOT sont remplacées par le tenseur 
+de rang 4 de l'équation~\eqref{eq:tenseurs_cp} comme illustré à la 
+figure~\ref{fig:reseau_tenseurs_codes_polaires}.
+Le réseau résultant correspond alors à la fonction de poids $W_n(\vb y_1^n | \vb u_1^n)$
+où les valeurs de $\vb u_1^n$ correspondent aux indices ouverts du réseau.
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=1.3]{figures/simplification_codes_polaires.pdf}
+  \end{center}
+  \caption[Exemple de simplification de la contraction d'un code polaire]{
+    Exemple de simplification de la contraction pour un code polaire à 3 niveaux de polarisation.
+    Les transformations de la forme $(u_1, u_2) \to (v_1, v_2)$ sont données à l'équation REF.
+  }
+  \label{fig:simplification_codes_polaires}
+\end{figure}
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=1.3]{figures/contraction_codes_polaires.pdf}
+  \end{center}
+  \caption[Exemple de contraction d'un code polaire]{
+    Exemple de contraction d'un réseau de tenseurs en forme d'arbre 
+    pour un code polaire à 3 niveaux de polarisation.
+    À chaque étape, les tenseurs de rang 4 du niveau inférieur sont contractés
+    avec trois vecteurs.
+    À la première étape, 
+    les tenseurs correspondant aux paires $W$ et $y_i$ sont déjà contractée.
+  }
+  \label{fig:contraction_codes_polaires}
+\end{figure}
 \section{Codes polaires convolutifs}
 \label{sec:codes_polaires_conv}
 
@@ -622,7 +717,6 @@ il est optimal de choisir une largeur et une profondeur de 2.
 \subsection{Article}
 Cet article ayant pour titre original \textit{Depth versus Breadth in Convolutional Polar Codes}
 a été publié en 2018 dans la cadre de la conférence \textit{IEEE Information Theory Workshop}.
-
 
 
 \includepdf[pages=-]{articles/conv_polar_codes.pdf}
