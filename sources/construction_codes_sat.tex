@@ -110,42 +110,129 @@ et des régimes pour lesquels la tâche est beaucoup plus ardue.
 Cela, bien que surprenant, est un comportement attendu pour ce type de problème.
 
 Je reviendrai sur ce fait plus loin dans ce chapitre
-après avoir présenteré le formaliste des codes stabilisateurs.
+après avoir présenteré le formaliste des canaux bruités quantiques 
+et des codes stabilisateurs.
 Finalement,
 je présenterai l'article expliquant la construction et 
 mettant de l'avant les résultats de ce projet.
 
-\section{Codes stabilisateurs et correction d'erreurs quantique}
+\section{Correction d'erreurs quantique}
+
+\subsection{Canaux bruités quantiques}
+
+Un état quantique est généralement représenté par un opérateur de densité $\rho$
+de trace unité.
+Une évolution arbitraire d'un état $\rho$ vers un état $\rho'$
+c'est-à-dire une combinaison d'opérations unitaires,
+de mesures et d'interactions avec l'environnement, 
+est représentée par une application
+\begin{align}
+  \rho' = \mathcal{E}(\rho).
+\end{align}
+Pour décrire plus précisément cette transformation,
+j'utiliserai les opérateurs de Krauss.
+Dans ce cas,
+l'application est définie comme
+\begin{align}
+  \mathcal{E}(\rho) = \sum_{k} E_k \rho E_k^\dag,
+\end{align}
+avec la condition que 
+\begin{align}
+  \sum_k E_k^\dag E_k = I.
+\end{align}
+Cette dernière permet d'assurer que $\tr(\mathcal{E}(\rho)) = 1$.
+
+Dans leur excellent livre d'introduction à l'informatique quantique de 
+Neilsen et Chuang~\cite{nielsen_quantum_2010} motivent en détails 
+cette définition générale pour l'évolution d'un état quantique.
+Ainsi, je me limite à une justification intuitive de cette définition
+et j'invite les personnes intéressées à consulter le huitième chapitre de ce livre.
+
+De façon générale,
+l'état $\rho$ évolue au sein d'un environnement dont les états de bases 
+sont $\qty{\ket{e_0}, \ket{e_1}, \ldots}$.
+Au début d'une expérience (ou d'un calcul),
+le système et l'environnement sont dans un état de produit tensoriel,
+c'est-à-dire, un état sans intrication.
+De plus, il est suffisant de considérer que l'environnement est dans l'état 
+pur $\ket{e_0}$.
+En effet,
+si ce n'est pas le cas, il suffit de choisir un environnement plus grand jusqu'à 
+obtenir un état pur.
+Ainsi,
+l'état initial du système et de l'environnement est $\rho \otimes \op{e_0}$.
+
+Par la suite,
+un opérateur unitaire $U$ est appliqué sur le système et l'environnement suivit d'une
+mesure de l'environnement sans connaitre le résultat.
+Le circuit correspondant est illustré à la figure~\ref{fig:circuit_canal_quantique}.
+Ainsi, l'état final du système est
+\begin{equation}
+  \mathcal{E}(\rho) 
+  = \tr_{\text{env}}\qty(U(\rho \otimes \op{e_0})U^\dag)
+  = \sum_k \bra{e_k}U(\rho \otimes \op{e_0}) U^\dag \ket{e_k}
+  = \sum_k E_k \rho E_k^\dag
+\end{equation}
+avec $E_k = \mel{e_k}{U}{e_0}$.
+Ainsi,
+l'application $\mathcal{E}$ représente la transformation de l'état d'un système quantique
+lorsque celui-ci intéragit avec son environnement et que l'on ignore l'état final
+de l'environnement.
+
+Une autre interprétation est suite à l'application $\mathcal E$,
+le système se retrouve dans l'état $\rho_k \propto E_k \rho E_k^\dag$
+avec probabilité $p_k = \tr(E_k \rho E_k^\dag)$.
+Il est alors possible d'écrire l'application comme
+\begin{align}
+  \mathcal E(\rho) = \sum_k p_k \rho_k.
+\end{align}
+Cette formulation montre clairement l'utilité de $\mathcal E$ pour
+représenter un canal bruité quantique.
+De façon similaire à un canal bruité classique,
+un canal quantique transforme un premier état 
+vers un second état choisi aléatoirement.
+
+Dans cette thèse,
+je me limite aux canaux bruités quantiques avec des opérateurs 
+de Krauss $E_k$ proportionnels aux opérateurs de Pauli.
+Les opérateurs de Pauli pour un seul qubit sont 
+\begin{align}
+  &I = \op{0}{0} + \op{1}{1}, 
+  &&Y = -i\op{0}{1} + i\op{1}{0}, \notag \\
+  &X = \op{0}{1} + \op{1}{0}, 
+  &&Z = \op{0}{0} - \op{1}{1}.
+\end{align}
+Le groupe~\footnote{Je fais un rappel des notions de théorie des groupes à l'annexe~\ref{chap:theo_groupes}}
+de Pauli $\mathcal P_n$ de $n$ qubits est un groupe multiplicatif sur 
+l'ensemble des opérateurs $\qty{I, X, Y, Z}^n$ avec une phase parmi $\qty{1, i, -1, -i}$.
+Dans ce cas,
+le canal s'écrit généralement comme
+\begin{align}
+  \mathcal E(\rho) = \sum_{Q \in \mathcal P_n} p_Q Q\rho Q.
+\end{align}
+
+
+\begin{figure}
+  \begin{center}
+    \includegraphics{figures/circuit_canal_quantique.pdf}
+  \end{center}
+  \caption[Représentation en circuit d'un canal quantique]{
+    Représentation en circuit d'un canal quantique.
+    Le résultat de la mesure est ignoré.
+  }
+  \label{fig:circuit_canal_quantique}
+\end{figure}
+
+
+
+
+\subsection{Codes stabilisateurs}
 
 L'une des meilleures ressources pour une présentation complète du formalisme des codes
 stabilisateurs est la thèse de doctorat de Gottesman~\cite{gottesman_stabilizer_1997}.
 Dans cette section,
 je me limiterai plutôt aux concepts essentiels à la compréhension des travaux et de l'article associé.
 
-Tout d'abord,
-un état quantique est décrit par un élément de norme unité 
-d'un espace de Hilbert $\mathcal H$ complexe
-et j'utiliserai la notation de Dirac pour représenter ces éléments.
-Par exemple, l'état général d'un qubit est une combinaison linéaire normalisée 
-des états de base $\ket{0}$ et $\ket{1}$.
-C'est-à-dire qu'un état arbitraire s'écrit comme
-\begin{equation}
-	a_0\ket{0} + a_1\ket{1},
-\end{equation}
-où $a_0, a_1$ sont des nombres complexes tels que $|a_0|^2 + |a_1|^2 = 1$.
-
-Les états quantiques sont reliés entre eux par des transformations unitaires.
-Ainsi, pour tout état quantique $\ket{\psi} \in \mathcal H$ et rotation unitaire $U$,
-nous avons que $U\ket{\psi} \in \mathcal H$.
-Dans le cas d'un seul qubit,
-les rotations unitaires correspondent au groupe SU(2) dont la base correspond aux opérateurs 
-de Pauli 
-\begin{align}
-  &I = \op{0} + \op{1},
-  &X = \op{0}{1} + \op{1}{0}, \notag\\
-  &Y = -i\op{0}{1} + i\op{1}{0},
-  &Z = \op{0} - \op{1}.
-\end{align}
 
 
 \subsection{Théorème du seuil et évaluation de la performance des codes correcteurs quantiques}
