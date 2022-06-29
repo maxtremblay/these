@@ -16,34 +16,76 @@ il est peu probable que le contenu du texto reste inchangé lors de la réceptio
 C'est ce problème qui a motivé le premier projet de recherche de cette thèse.
 Sous la supervision du professeur David Poulin, 
 j'ai étudié une généralisation des codes polaires,
-une technologie au cœur du protocole de communication de 5\textsuperscript{ième} génération (5G). 
+une technologie au cœur du protocole de télécommunication de 5\textsuperscript{ième} génération (5G). 
 Pour cela, j'ai utilisé les réseaux de tenseurs, des outils
 mathématiques initialement développés pour étudier les matériaux quantiques.
 L'avantage de cette approche est qu'elle permet une représentation graphique
 intuitive du problème, ce qui facilite grandement le développement des algorithmes.
+Grace à cela,
+je pû étudier l'impact deux paramètres clés sur la performance des 
+codes polaire convolutifs.
+En considérant le temps d'exécution des protocoles,
+j'ai identifié les valeurs de paramètres qui permettent de mieux protéger 
+l'information à un coût raisonnable.
+Ce résultat permet ainsi de mieux comprendre comment améliorer les performances
+des codes polaires ce qui a un grand potentiel d'application en raison
+de l'importance de ces derniers.
+
 Cette idée d'utiliser des outils mathématiques graphiques pour étudier des
 problèmes de protection de l'information sera le fil conducteur pour le reste de
 la thèse. Cependant, pour la suite, les erreurs n'affecteront plus des systèmes
 de communications classiques, mais plutôt des systèmes de calcul quantique.
-Et, comme nous le verrons dans cette thèse, les systèmes quantiques sont
-naturellement beaucoup plus sensible aux erreurs.
+Et, comme je le présenterai dans cette thèse, les systèmes quantiques sont
+naturellement beaucoup plus sensibles aux erreurs.
 
 À cet effet, j'ai effectué un stage au sein de l'équipe de Microsoft Research,
 principalement sous la supervision de Michael Beverland, lors duquel j'ai conçu
 des circuits permettant de mesurer un système quantique afin d'identifier les
 potentielles fautes qui affectent celui-ci. 
-J'ai également proposé une architecture pour implémenter ces circuits de façon plus réaliste en laboratoire.
-Finalement, avec le reste de l'équipe, nous avons prouvé mathématiquement
+Avec le reste de l'équipe, nous avons prouvé mathématiquement
 que les circuits que j'ai développés sont optimaux.
-L'ensemble de ces résultats sont inspirés de méthodes issues de la théorie des graphes.
+Suite à cela, j'ai proposé une architecture pour implémenter ces circuits
+de façon plus réaliste en laboratoire
+et les simulations numériques que j'ai effectuées ont démontré des résultats 
+prometteurs pour cette approche. 
+D'ailleurs, ce résultat a été accueilli avec grand intérêt par la communauté
+scientifique et a été publié dans la prestigieuse revue \textit{Physical Review Letters}.
+Pour complémenter ce travail,
+j'ai collaborer avec l'équipe de Microsoft pour démontrer analytiquement 
+que les architectures actuelles d'ordinateurs quantiques reposant sur des connections
+locales entre les qubits ne suffiront pas pour la réalisation d'ordinateurs de grandes
+tailles protégés des erreurs.
+L'ensemble de ces résultats sont inspirés de méthodes issues de la théorie des graphes
+et plus particulièrement des méthodes de représentation des graphes dans un espace en 
+deux dimensions.
+L'utilisation de telles méthodes pour le design de circuits et d'architectures quantiques
+est également une apporche novatrice.
 
 J'ai terminé ma thèse sous la supervision du professeur Stefanos Kourtis.
-Avec celui-ci,
-j'ai créé une méthode, toujours fondée sur une approche graphique, 
+Avec celui-ci, j'ai créé une méthode, 
+fondée sur la théorie des graphes et des méthodes d'informatique théorique,
 qui permet d'automatiquement concevoir de nouveaux protocoles de 
-corrections des erreurs dans un système quantique.
-Cela nous a permis de montrer qu'il est probablement beaucoup plus facile 
-que ce que le croyait la communauté scientifique de concevoir de tels protocoles
+correction des erreurs dans un système quantique.
+La méthode que j'ai conçue repose sur la résolution d'un problème 
+de satisfaction de contraintes.
+Ce type de problèmes sont généralement très difficile à résoudre.
+Cependant,
+il existe pour ces derniers un paramètre critique. 
+En variant ce paramètre, 
+le sytème passe d'une phase où les instances sont facilement résolubles 
+vers une phase où il est facile de montrer qu'il n'y pas de solution.
+Les problèmes difficiles sont alors concentrés autour de cette transition.
+Grâce à des expériences numériques,
+j'ai montré que la méthode proposé a un comportement similaire.
+Cela permet de montrer qu'il existe une régime où il est beaucoup plus facile 
+que ce que le croyait la communauté de concevoir des protocoles de corrections
+des erreurs quantiques.
+De plus,
+au meilleur de ma connaissance,
+l'article qui a résulté de ce travail est le premier qui met de l'avant
+ce lien entre la construction de protocoles de corrections des erreurs
+et les problèmes de satisfication de contraintes avec les transitions de phases
+associées.
 
 Vous aurez remarqué que lors de tous ces projets,
 je n'ai jamais eu le même superviseur.
@@ -58,12 +100,12 @@ C'est après ce stage que je me suis finalement greffé à l'équipe du professe
 qui venait de démarrer son groupe.
 Heureusement,
 lors de toutes ces étapes, 
-je pouvais toujours compter sur le soutien de Guillaume Duclos-Ciani,
+je pouvais toujours compter sur le soutien de Guillaume Duclos-Cianci,
 initialement professionel de recherche au sein du groupe de David Poulin.
 
 En bref,
 j'espère que vous aurez du plaisir à lire cette thèse même si celle-ci 
-tire un peu dans tous les sens.
+peu paraitre légèrement éclectique.
 Elle reflète les connaissances et compétences que j'ai acquises en travaillant sous 
 la supervision de plusieurs mentors en plus de s'intéresser à l'un des problèmes
 parmi les plus importants pour réaliser les promesses de l'informatique quantique.
