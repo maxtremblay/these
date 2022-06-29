@@ -38,7 +38,7 @@ ainsi qu'une généralisation de ces derniers, les codes polaires convolutifs.
 Ces codes sont très importants puisque les codes polaires sont au cœur 
 de la technologie de communication 5G~\cite{bioglio_design_2021}
 et que toutes améliorations de ceux-ci a un grand potentiel d'application.
-À cet effet,
+Conséquemment,
 le chapitre se termine par une présentation d'un article scientifique dans lequel
 j'identifie les régimes où les performances des codes polaires convolutifs sont les plus impressionnantes.
 
@@ -73,7 +73,7 @@ si le message $00000$ est transmis,
 le message $01010$ est reçu avec probabilité $p^2(1 - p)^3$ 
 tandis que le message $11111$ est reçu avec probabilité $p^5$.
 De façon générale, 
-la probabilité que le message original soit reçu sans erreur est de $(1 - p)^k$.
+la probabilité que le message d'origine soit reçu sans erreur est de $(1 - p)^k$.
 Cette probabilité décroit exponentiellement avec la taille du message 
 et il est rapidement improbable que cela se produise.
 
@@ -129,18 +129,17 @@ Ainsi, si $p \lesssim 0.22$, il est avantageux d'utiliser le code correcteur.
 
 \subsection{Capacité des canaux bruités}
 
-Le défi de la correction d'erreur est de construire des codes correcteurs 
+Le défi de la correction d'erreurs est de construire des codes correcteurs 
 qui réduisent considérablement la probabilité d'une erreur logique sans utiliser 
 un trop grand nombre de bits supplémentaires.
-Formalement,
-c'est quantité est mesurée par le rendement d'un canal, 
+Cette quantité est mesurée par le rendement d'un canal, 
 soit le ratio $R = k/n$ entre le nombre de bits d'information et le 
 nombre de bits du code. 
 C'est en 1948 que Claude Shannon a démontré la plus grande valeur 
-de rendement qui peut être transmise via un canal bruité~\cite{shannon_mathematical_1948}.
+de rendement pouvant être transmise via un canal bruité~\cite{shannon_mathematical_1948}.
 Plus précisément,
-la capacité $\capacite$ d'un canal bruité est le rendement maximum 
-que peuvent transmettre plusieurs copies du canal tel que la probabilité d'une 
+la capacité $\capacite$ d'un canal bruité corresponda au rendement maximum 
+que peuvent transmettre plusieurs copies du canal telle que la probabilité d'une 
 erreur logique tende vers 0 lorsque $n \to \infty$.
 Autrement dit,
 pour tout rendement $R \leq \capacite $, 
@@ -233,14 +232,15 @@ je vais me concentrer sur les réseaux de tenseurs comme un outil d'algèbre lin
 et je ne discuterai pas des considérations plus physiques (corrélations, entropie, etc) 
 qui accompagnent généralement une introduction du sujet.
 Pour plus de détails,
-il existe plusieurs articles d'introduction~\cite{bridgeman_hand-waving_2017, baker_methodes_2021} aux réseaux de tenseurs qui couvrent de nombreuses applications de cet outil principalement en physique du solide,
+il existe plusieurs articles d'introduction~\cite{bridgeman_hand-waving_2017, baker_methodes_2021}
+aux réseaux de tenseurs qui couvrent de nombreuses applications de cet outil, principalement en physique du solide,
 mais également pour des domaines comme l'informatique quantique et l'apprentissage automatique. 
 
 Intuitivement, 
 un tenseur est la généralisation d'une matrice.
 En effet,
 comme une matrice, 
-un tenseur peut être compris comme une boite de nombres identifiés par une liste d'indices. 
+un tenseur est assimilé à une boite de nombres identifiés par une liste d'indices. 
 Pour les matrices,
 il suffit d'une paire d'indices pour identifier un élément,
 alors qu'un nombre arbitraire d'indices peut être utilisé pour un tenseur. 
@@ -559,7 +559,7 @@ le bit $u_i$ est transmis en connaissant la valeur des bits précédents et en
 ignorant la valeur des bits suivants de probabilité uniforme.
 Il reste alors à trouver l'ensemble des canaux ayant les plus grandes capacités
 et de fixer la valeur des autres bits à 0.
-Cela engendre un protocole de communication permettant d'envoyer des messages de
+Ceci engendre un protocole de communication permettant d'envoyer des messages de
 $k \to n(1 - H_2(p))$ bits encodés à l'aide de $n = 2^m$ bits, ce qui est optimal pour le 
 canal binaire symétrique.
 
@@ -608,7 +608,7 @@ Pour la suite,
 je définis un code polaire en fonction du nombre de niveaux de polarisation $m$
 et d'un ensemble de bits $\mathcal F$ dont la valeur est fixée à 0.
 Chacun des $n = 2^m$ bits d'un tel code sont décodés de manière successive.
-C'est-à-dire, 
+Alors, 
 après avoir reçu le message $\vb y$,
 pour trouver la séquence de bit $\vb u$ la plus probable,
 le bit $u_1$ est décodé, suivi du bit $u_2$ et ainsi de suite jusqu'à décoder le bit $u_n$.
@@ -760,8 +760,8 @@ le coût du décodage devient $\bigO(n\log(n))$~\cite{ferris_branching_2014, ari
   \label{fig:contraction_codes_polaires}
 \end{figure}
 
-Le coût du décodeur par réseaux de tenseurs est équivalent au décodeur par annulation successive introduit
-en même temps que les codes polaires.
+Le coût du décodeur par réseaux de tenseurs est équivalent au décodeur par annulations successives
+introduit en même temps que les codes polaires.
 Ces décodeurs combinés au fait qu'il est possible de transmettre de l'information à 
 un rendement $1 - H_2(p)$ font des codes polaires les premiers codes correcteurs permettant 
 d'atteindre la capacité d'un canal tout en étant efficacement décodable.
@@ -774,7 +774,7 @@ en se basant sur la structure en arbre du réseau de tenseurs pour
 chaque étape du décodage.
 En effet, 
 toutes les modifications aux circuits des codes polaires qui permettent
-de conserver cette structure engendrent une famille de codes décodable
+de conserver cette structure engendrent une famille de codes décodables
 avec un coût $\bigO(n \log(n))$.
 La première modification proposée est d'ajouter 
 une couche de portes CNOT décalée de 1 bit à chaque niveau de polarisation.
@@ -806,7 +806,7 @@ On y voit également qu'un code polaire régulier est équivalent à un code pol
 de profondeur 1 et de largeur 2.
 
 Dans l'article,
-je compare l'impact de la profondeur et de largeur sur les performances des codes.
+je compare l'impact de la profondeur et de la largeur sur les performances des codes.
 De plus, 
 bien que le coût du décodage de chacun de ces codes soit de $\bigO(n \log(n))$,
 augmenter la profondeur ou la largeur augmente le coût d'un facteur multiplicatif constant.
@@ -819,7 +819,7 @@ afin d'estimer s'il est rentable de généraliser ces codes.
 Je réponds à cette question en montrant d'abord que la performance des codes 
 augmentent avec la profondeur et diminue avec la largeur.
 Suite à cela, une étude du coût de décodage permet de conclure qu'il est optimal
-d'utiliser des codes de profondeur et largeur 2 puisque le gain de performance 
+d'utiliser des codes de profondeur et de largeur deux puisque le gain de performance 
 pour des profondeurs plus élevées est moins appréciable.
 
 \subsection{Contribution}
