@@ -78,13 +78,13 @@ Pour contrer ce problème,
 les codes quantiques d'opérateurs de parité à faible 
 densité~(LDPC, de l'anglais \textit{low-density parity-check})
 reçoivent de plus en plus d'attention.
-Cet intérêt est en partie stimuler par le succès des codes LDPC classiques introduient
+Cet intérêt est en partie stimuler par le succès des codes LDPC classiques introduits
 par Gallager~\cite{gallager_low-density_1962}.
 De plus, il a été montré par Gottesman~\cite{gottesman_fault-tolerant_2013}
 qu'il est possible d'utiliser des codes quantiques LDPC pour 
 construire des ordinateurs quantiques protégés des erreurs avec 
-un surcoût constant en qubits.
-Il s'agit donc d'outils importants pour la réalisation du calcul quantique à grand échelle.
+un surcout constant en qubits.
+Il s'agit donc d'outils importants pour la réalisation du calcul quantique à grande échelle.
 
 Les codes quantiques LDPC incluent plusieurs familles,
 dont les codes par produit d'hypergraphes~\cite{tillich_quantum_2014}
@@ -99,18 +99,17 @@ sans avoir recours à une construction classique au préalable.
 L'un des principaux avantages de cette méthode est sa flexibilité 
 lors de la construction des codes.
 En fait,
-cette construction permet de générer n'importe quelle famille de codes stabilisateurs
+cette construction permet de générer n'importe quelle famille de codes stabilisateurs,
 dont les codes LDPC.
 
-Cette approche repose sur la résolution d'un problème de satisfication de contraintes.
+Cette approche repose sur la résolution d'un problème de satisfaction de contraintes.
 Bien que ce problème soit généralement difficile à résoudre,
 j'ai numériquement identifié des régimes pour lesquels il est aisé de
 construire des codes correcteurs quantiques
 et des régimes pour lesquels la tâche est beaucoup plus ardue.
 Cela, bien que surprenant, est un comportement attendu pour ce type de problème.
 
-Je reviendrai sur ce fait plus loin dans ce chapitre
-après avoir présenteré le formaliste des canaux bruités quantiques 
+Je reviendrai sur cela après avoir présenté le formaliste des canaux bruités quantiques 
 et des codes stabilisateurs.
 Finalement,
 je présenterai l'article expliquant la construction et 
@@ -132,7 +131,7 @@ est représentée par une application
 Pour décrire plus précisément cette transformation,
 j'utiliserai les opérateurs de Krauss.
 Dans ce cas,
-l'application est définie comme
+l'application est définie par
 \begin{align}
   \mathcal{E}(\rho) = \sum_{k} E_k \rho E_k^\dag,
 \end{align}
@@ -162,6 +161,17 @@ obtenir un état pur.
 Ainsi,
 l'état initial du système et de l'environnement est $\rho \otimes \op{e_0}$.
 
+\begin{figure}
+  \begin{center}
+    \includegraphics{figures/circuit_canal_quantique.pdf}
+  \end{center}
+  \caption[Représentation en circuit d'un canal quantique]{
+    Représentation en circuit d'un canal quantique.
+    Le résultat de la mesure est ignoré.
+  }
+  \label{fig:circuit_canal_quantique}
+\end{figure}
+
 Par la suite,
 un opérateur unitaire $U$ est appliqué sur le système et l'environnement suivit d'une
 mesure de l'environnement sans connaitre le résultat.
@@ -176,19 +186,19 @@ Ainsi, l'état final du système est
 avec $E_k = \mel{e_k}{U}{e_0}$.
 Ainsi,
 l'application $\mathcal{E}$ représente la transformation de l'état d'un système quantique
-lorsque celui-ci intéragit avec son environnement et que l'on ignore l'état final
+lorsque celui-ci interagit avec son environnement et que l'on ignore l'état final
 de l'environnement.
 
-Une autre interprétation est suite à l'application $\mathcal E$,
+Une autre interprétation est qu'à la suite de l'application $\mathcal E$,
 le système se retrouve dans l'état $\rho_k \propto E_k \rho E_k^\dag$
 avec probabilité $p_k = \tr(E_k \rho E_k^\dag)$.
-Il est alors possible d'écrire l'application comme
+Il est alors possible d'écrire l'application selon
 \begin{align}
   \mathcal E(\rho) = \sum_k p_k \rho_k.
 \end{align}
 Cette formulation montre clairement l'utilité de $\mathcal E$ pour
 représenter un canal bruité quantique.
-De façon similaire à un canal bruité classique,
+De façon similaire au canal bruité classique,
 un canal quantique transforme un premier état 
 vers un second état choisi aléatoirement.
 
@@ -211,19 +221,57 @@ le canal s'écrit généralement comme
   \mathcal E(\rho) = \sum_{Q \in \mathcal P_n} p_Q Q\rho Q.
 \end{align}
 
+En particulier,
+dans l'article de ce chapitre,
+j'utilise le canal d'effacement quantique pour évaluer la performance
+des codes correcteurs que je construis.
+Ce canal représente la situation où l'information contenue dans certains 
+qubits est complètement perdue et que ces qubits sont connus.
+On dit alors que ces qubits sont effacés.
+En laboratoire, cela correspond par exemple à la défaillance d'une composante électronique
+ou à la perte d'un photon.
+Pour représenter cette situation, l'état $\rho$ est associé à un second registre
+permettant de marquer les qubits effacés.
+Dans le cas d'un seul qubit avec une probabilité d'effacement $p$,
+le canal s'écrit
+\begin{equation}
+  \epsilon_p(\rho \times \op{0}) 
+  = (1 - p) \rho \otimes \op{0} + p \frac{I}{2} \otimes \op{1}.
+\end{equation}
+Dans cet équation,
+l'opérateur $I/2$ est utilisé pour représenter un état maximalement mixé
+sans aucune information sur l'état initial $\rho$.
+Le second registre indique la présence de l'effacement.
+Comme 
+\begin{align}
+  I = \frac{1}{2} \qty(
+  I\rho I + X \rho X + Y \rho Y + Z \rho Z
+)
+\end{align}
+pour tout opérateur $\rho$,
+il est possible de réécrire le canal
+\begin{equation}
+  \epsilon_p(\rho \times \op{0}) 
+  = \qty(1 -  p) \rho \otimes \op{0} + \frac{p}{4} \qty(\rho + X \rho X + Y \rho Y + Z \rho Z)\otimes \qty(X\op{0}X).
+\end{equation}
+Cela montre clairement que chacun des opérateurs de Krauss 
+est proportionnel à un opérateur de Pauli à deux qubits.
 
-\begin{figure}
-  \begin{center}
-    \includegraphics{figures/circuit_canal_quantique.pdf}
-  \end{center}
-  \caption[Représentation en circuit d'un canal quantique]{
-    Représentation en circuit d'un canal quantique.
-    Le résultat de la mesure est ignoré.
-  }
-  \label{fig:circuit_canal_quantique}
-\end{figure}
+Dans l'article,
+je présente plus en détail le canal d'effacement.
+Entre autres,
+je généralise le canal au cas à plusieurs qubits
+en plus de présenter un algorithme de décodage optimal applicable à n'importe quel
+code correcteur quantique pour ce canal.
+Ce décodeur universel est la raison principale pour utiliser le canal d'effacement.
+Celui-ci permet d'étudier de nouveaux codes sans nécessairement avoir besoin de construire des 
+décodeurs spécialisés pour des canaux bruités plus complexes~(voir par exemple \cite{pastawski_holographic_2015, gullans_quantum_2021}).
 
-
+Dans le chapitre suivant,
+j'utiliserai un modèle de bruit plus réaliste qui permet
+de représenter une mémoire quantique.
+Celui-ci est également construit à partir d'opérateurs de Krauss proportionnels à des
+opérateurs de Pauli.
 
 
 \subsection{Codes stabilisateurs}
