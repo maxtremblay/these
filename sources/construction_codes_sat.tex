@@ -218,8 +218,24 @@ l'ensemble des opérateurs $\qty{I, X, Y, Z}^n$ avec une phase parmi $\qty{1, i,
 Dans ce cas,
 le canal s'écrit généralement comme
 \begin{align}
-  \mathcal E(\rho) = \sum_{Q \in \mathcal P_n} p_Q Q\rho Q.
+  \mathcal E(\rho) = \sum_{P \in \mathcal P_n} p_P P\rho P.
 \end{align}
+Le poids $|P|$ d'un opérateur de Pauli $P$ est le nombre d'opérateurs différent de $I$ qui le compose.
+Par exemple, $|i\cdot XIYX| = 3$.
+Pour l'ensemble des canaux que je considèrai,
+la probabilité d'une erreur $P \in \mathcal P_n$ diminue exponentiellement avec le poids 
+de celle-ci.
+
+À prime abord,
+cette approche semble limitée,
+mais puisque les opérateurs de Pauli forment une base,
+il est possible de représenter un opérateur de Krauss
+comme une combinaison linéaire de ces derniers.
+Ainsi,
+un protocole qui permet de protéger un système quantique contre les erreurs 
+$Q \subseteq \mathcal P_n$ protège également le système contre toutes les 
+combinaisons linéaires des opérateurs de $Q$.
+Ce modèle est donc suffisant pour construire une théorie générale de la correction d'erreurs quantique.
 
 En particulier,
 dans l'article de ce chapitre,
@@ -235,7 +251,7 @@ permettant de marquer les qubits effacés.
 Dans le cas d'un seul qubit avec une probabilité d'effacement $p$,
 le canal s'écrit
 \begin{equation}
-  \epsilon_p(\rho \times \op{0}) 
+  \mathcal E_p(\rho \times \op{0}) 
   = (1 - p) \rho \otimes \op{0} + p \frac{I}{2} \otimes \op{1}.
 \end{equation}
 Dans cet équation,
@@ -248,14 +264,20 @@ Comme
   I\rho I + X \rho X + Y \rho Y + Z \rho Z
 )
 \end{align}
-pour tout opérateur $\rho$,
-il est possible de réécrire le canal
+pour tout opérateur $\rho$\footnote{
+  En notant $f(\rho) = I\rho I + X\rho X + Y \rho Y + Z \rho Z$,
+  on remarque que $f(I/2) = I$ et que $f(X) = f(Y) = f(Z) = 0$.
+  De plus,
+  pour avoir une trace unité,
+  une matrice densité se décompose comme $\rho = I/2 + aX + bY + cZ$,
+  ce qui permet de conclure.
+},
+il est possible de réécrire le canal à l'aide d'opérateurs de Pauli à 2 qubits.
+Ainsi,
 \begin{equation}
-  \epsilon_p(\rho \times \op{0}) 
+  \mathcal E_p(\rho \times \op{0}) 
   = \qty(1 -  p) \rho \otimes \op{0} + \frac{p}{4} \qty(\rho + X \rho X + Y \rho Y + Z \rho Z)\otimes \qty(X\op{0}X).
 \end{equation}
-Cela montre clairement que chacun des opérateurs de Krauss 
-est proportionnel à un opérateur de Pauli à deux qubits.
 
 Dans l'article,
 je présente plus en détail le canal d'effacement.
@@ -279,12 +301,108 @@ opérateurs de Pauli.
 L'une des meilleures ressources pour une présentation complète du formalisme des codes
 stabilisateurs est la thèse de doctorat de Gottesman~\cite{gottesman_stabilizer_1997}.
 Dans cette section,
-je me limiterai plutôt aux concepts essentiels à la compréhension des travaux et de l'article associé.
+je me limiterai plutôt aux concepts essentiels à la compréhension des travaux 
+et de l'article associé.
+
+De façon similaire aux codes classiques,
+les codes correcteurs quantiques encodent les états d'un espace de Hilbert
+dans un sous-espace d'un espace de plus grande dimension.
+Dans le cas des qubits,
+les états de l'espace de Hilbert $\mathcal H_2^k$ sont encodés à l'aide d'un
+sous-espace $\code \subseteq \mathcal H_2^n$.
+Pour préserver la linéarité de la mécanique quantique,
+le code $\code$ doit être un espace linéaire.
+Ainsi,
+si $\ket\psi, \ket\phi \in \code$,
+alors $\alpha\ket\psi + \beta\ket\phi \in \code$ 
+pour toutes paires $\alpha, \beta$ de nombres complexes.~\footnote{
+  Pour simplifier la présentation,
+  je laisse tomber la normalisation des états quantiques.
+}
+
+Un exemple de code quantique permettant d'encoder un qubit à l'aide de neuf qubits est 
+le code de Shor~\cite{shor_scheme_1995} défini par l'encodage
+\begin{align}
+  \ket{0} \to \ket{\bar{0}} = (\ket{000} + \ket{111}) \otimes (\ket{000} + \ket{111}) \otimes (\ket{000} + \ket{111}), \notag \\
+  \ket{1} \to \ket{\bar{1}} = (\ket{000} - \ket{111}) \otimes (\ket{000} - \ket{111}) \otimes (\ket{000} - \ket{111}).
+  \label{eq:code_shor}
+\end{align}
+Par linéarité, l'état $\alpha \ket{0} + \beta \ket{1}$ est encodé avec l'état 
+$\alpha \ket{\bar{0}} + \beta\ket{\bar {1}}$.
+Je ne détaillerai pas ce code,
+mais celui-ci illustre qu'il n'est pas pratique d'énumérer l'encodage des états de base
+pour définir un code.
+D'abord,
+l'espace $\mathcal H_2^k$ requiert $2^k$ états de base
+et chacun de ceux-ci implique une superposition de $\mathcal O(2^n)$ 
+si le code $\code$ est un sous-espace de l'espace de Hilbert à $n$ qubits.
+
+Le formalisme des stabilisateurs permet de contourner ce problème en offrant une 
+représentation beaucoup plus efficace de certains états quantiques.
+D'abord,
+un état $\ket\phi$ est stabilisé par l'opérateur $U$ lorsque $U\ket\psi = \ket\psi$,
+c'est-à-dire lorsque $\ket \phi$ est un état propre de valeur propre $+1$ de $U$.
+Un état ou un sous-espace est alors représenté par les opérateurs qui le stabilisent.
+Par exemple,
+l'état $\ket{00} + \ket{11}$ est l'unique état à deux qubits stabilisé par 
+les opérateurs $XX$ et $ZZ$. 
+De même,
+les états $\ket 00$ et $\ket 11$ forment une base
+pour les états stabilisés par l'opérateur $ZZ$.
+Il est important de choisir des opérateurs qui commutent pour assurer 
+que ceux-ci partagent les mêmes états propres.
+De plus, l'opérateur identité $I$ stabilise tous les états et l'opérateurs
+$-I$ ne stabilise aucun état.
+
+De façon plus générale,
+un groupe stabilisateur $\mathcal S$ pour $n$ qubits est un sous-groupe abélien 
+du groupe de Pauli $\mathcal P_n$ excluant l'opérateur $-I$.
+Cet exclusion implique également que tous les opérateurs ayant la phase $i$ ou $-i$ sont exclus.
+Un code stabilisateur $\code(\mathcal S)$ est alors l'espace des états stabilisés par $\mathcal S$.
+De plus,
+puisque les états stabilisés par les opérateurs $P, Q \in \mathcal P_n$ sont également
+stabilisés par l'opérateur $PQ$,
+il est common de choisir un ensemble de générateurs $g(\mathcal S) = \qty{S_1, \ldots, S_m}$
+pour décrire le groupe stabilisateur
+\begin{align}
+  \mathcal S = 
+  \qty{
+    \prod_{i=1}^m S_i^{a_i} : \vb a \in \qty{0, 1}^m
+  }
+\end{align}
+de $2^m$ éléments.
+Lorsque les générateur sont indépendants,
+c'est-à-dire qu'il n'est pas possible d'en obtenir un comme le produit des autres,
+le code $\code(\mathcal S)$ a une dimension $2^{n - m}$.
+Ainsi, 
+pour encoder $k$ qubits avec un code de $n$ qubits,
+exactement $m = n - k$ générateurs indépendents sont nécessaires.
+
+Le code de Shor introduit à l'équation~\eqref{eq:code_shor} est stabilisé
+par le groupe stabilisateur $\mathcal S$ généré par les opérateurs 
+\begin{gather}
+    X_1 X_2 X_3 X_4 X_5 X_6, \quad
+    Z_1 Z_2, \quad Z_4 Z_5, \quad Z_7 Z_8, \notag \\
+    X_4 X_5 X_6 X_7 X_8 X_9, \quad
+    Z_2 Z_3, \quad Z_5 Z_6, \quad Z_8 Z_9.
+\end{gather}
+Dans ce cas précis,
+le formalisme stabilisateur peut sembler légèrement encombrant mais,
+il permet généralement de représenter un code de $n$ qubits encodant $k$ qubits
+à l'aide de $n - k$ opérateurs de poids $\mathcal O(n)$.
+Le coût total de la représentation est alors $\mathcal O(n^2)$, ce qui est un gain exponentiel
+par rapport à l'énumération des états de base du code en notation de Dirac.
+
+Pour la suite,
+j'utiliserai la notation $[n, k]$ pour représenter un code stabilisateur arbitraire 
+encodant l'espace $\mathcal H_2^k$ dans un sous-ensemble $\code \subseteq \mathcal H_2^n$.
+
+
 
 
 
 \subsection{Théorème du seuil et évaluation de la performance des codes correcteurs quantiques}
-
+CITER Gottesman-Knill
 
 
 
