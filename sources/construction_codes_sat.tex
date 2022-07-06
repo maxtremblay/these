@@ -148,7 +148,7 @@ Ainsi, je me limite à une justification intuitive de cette définition
 et j'invite les personnes intéressées à consulter le huitième chapitre de ce livre.
 
 De façon générale,
-l'état $\rho$ évolue au sein d'un environnement dont les états de bases 
+l'état $\rho$ évolue au sein d'un environnement dont les états de base 
 sont $\qty{\ket{e_0}, \ket{e_1}, \ldots}$.
 Au début d'une expérience (ou d'un calcul),
 le système et l'environnement sont dans un état de produit tensoriel,
@@ -184,7 +184,7 @@ Ainsi, l'état final du système est
   = \sum_k E_k \rho E_k^\dag
 \end{equation}
 avec $E_k = \mel{e_k}{U}{e_0}$.
-Ainsi,
+Alors,
 l'application $\mathcal{E}$ représente la transformation de l'état d'un système quantique
 lorsque celui-ci interagit avec son environnement et que l'on ignore l'état final
 de l'environnement.
@@ -222,7 +222,7 @@ le canal s'écrit généralement comme
 \end{align}
 Le poids $|P|$ d'un opérateur de Pauli $P$ est le nombre d'opérateurs différent de $I$ qui le compose.
 Par exemple, $|i\cdot XIYX| = 3$.
-Pour l'ensemble des canaux que je considèrai,
+Pour l'ensemble des canaux que je considérerai,
 la probabilité d'une erreur $P \in \mathcal P_n$ diminue exponentiellement avec le poids 
 de celle-ci.
 
@@ -234,7 +234,7 @@ comme une combinaison linéaire de ces derniers.
 Ainsi,
 un protocole qui permet de protéger un système quantique contre les erreurs 
 $Q \subseteq \mathcal P_n$ protège également le système contre toutes les 
-combinaisons linéaires des opérateurs de $Q$.
+combinaisons linéaires des opérateurs de $Q$~\cite{knill_theory_1997}.
 Ce modèle est donc suffisant pour construire une théorie générale de la correction d'erreurs quantique.
 
 En particulier,
@@ -379,7 +379,7 @@ pour encoder $k$ qubits avec un code de $n$ qubits,
 exactement $m = n - k$ générateurs indépendents sont nécessaires.
 
 Le code de Shor introduit à l'équation~\eqref{eq:code_shor} est stabilisé
-par le groupe stabilisateur $\mathcal S$ généré par les opérateurs 
+par le groupe généré par les opérateurs 
 \begin{gather}
     X_1 X_2 X_3 X_4 X_5 X_6, \quad
     Z_1 Z_2, \quad Z_4 Z_5, \quad Z_7 Z_8, \notag \\
@@ -392,16 +392,137 @@ il permet généralement de représenter un code de $n$ qubits encodant $k$ qubi
 à l'aide de $n - k$ opérateurs de poids $\mathcal O(n)$.
 Le coût total de la représentation est alors $\mathcal O(n^2)$, ce qui est un gain exponentiel
 par rapport à l'énumération des états de base du code en notation de Dirac.
-
 Pour la suite,
 j'utiliserai la notation $[n, k]$ pour représenter un code stabilisateur arbitraire 
 encodant l'espace $\mathcal H_2^k$ dans un sous-ensemble $\code \subseteq \mathcal H_2^n$.
 
+Le syndrome d'une erreur $E \in \mathcal P_n$,
+qui affectent un état $\ket\psi$ quelconque d'un code $[n, k]$,
+est le résultat des mesures des générateurs du groupe stabilisateur.
+Puisque les opérateurs de Pauli commutent ou anticommutent,
+le résultat de chacune de ces mesures est $+1$ ou $-1$.
+En effet, si $SE = \pm ES$ pour un stabilisateur $S$,
+alors
+\begin{equation}
+  SE\ket\psi = \pm E S \ket\psi = \pm E\ket\psi.
+\end{equation}
+Ainsi,
+l'état $E\ket\psi$ est un état propre de valeur propre $\pm 1$ de $S$.
+Les composantes du syndrome $\vb{s}(E) \in \qty{+1, -1}^{n - k}$
+sont données par la relation $S_iE = s_i S_i E$ pour $S_i \in g(\mathcal S)$.
 
+Il est important de noter que le syndrome est indépendant de l'état $\ket \psi$.
+Conséquemment,
+une mesure du syndrome permet de détecter la présence d'erreurs sans corrompre l'état du système.
+À partir de cette information,
+un décodeur essaie de trouver une correction $F$ telle que $FE \in \mathcal S$, 
+soit que $FE\ket\psi = \ket\psi$ pour tout état code $\ket\psi$.
+Le choix de la correction n'est pas unique puisque si $FE \in \mathcal S$,
+alors $(SF)E \in \mathcal S$ pour tous $S \in \mathcal S$.
+Ainsi,
+toutes corrections $F' = SF$ sont également valides.
 
+Formellement,
+chaque opérateur appartenant à la même classe du groupe quotient $\mathcal P_n/\mathcal S$
+à le même effet sur le code puisque $P\ket\psi = PS\ket\psi$ pour tout $S \in \mathcal S$.
+La classe d'un opérateur $P \in \mathcal P_n$ est l'ensemble 
+$P\mathcal S = \qty{PS : S\in \mathcal S}$.
+De plus,
+comme $|\mathcal P_n| = 4^{n+1}$,
+le groupe quotient $\mathcal P_n/\mathcal S$ d'un code $[n, k]$ tel que $|\mathcal S| = 2^{n - k}$
+possède $2^{n+k+2}$ classes.
+En comparaison,
+seulement $2^{n-k}$ syndromes sont possibles,
+ce qui implique que $2^{2k + 2} = 4^{k + 1}$ classes d'opérateurs ont exactement le même syndrome,
+mais des effets différents sur le code.
+
+Les opérateurs appartenant aux classes ayant le syndrome $\qty{+1, +1, \ldots, +1}$
+sont des représentations à $n$ qubit des opérateurs de Pauli $\mathcal P_k$
+agissant sur le code.
+Ces opérateurs forment le groupe des opérateurs logiques $\mathcal L$ et correspondent
+au centralisateur 
+\begin{align}
+  C_{\mathcal P_n}(\mathcal S) 
+  = \qty{P \in \mathcal P_n : PS = SP, \forall S \in \mathcal S}.
+\end{align}
+Puisqu'un opérateur logique $L \mathcal L$ commute avec l'ensemble des stabilisateurs,
+\begin{equation}
+  S(L\ket\psi) = LS\ket\psi = L\ket\psi
+\end{equation}
+pour tout état code.
+En conséquence,
+$L\ket\psi$ est également un état code.
+De façon similaire,
+pour un syndrome arbitraire,
+les $4^{k+1}$ classes ayant ce syndrome sont reliées par les opérateurs logiques.
+
+On remarque que $\mathcal S \subset \mathcal L$.
+En effet, le groupe stabilisateur correspond à l'opérateur $I$ sur le code.
+De même, les classes $-\mathcal S$, $i\mathcal S$ et $-i\mathcal S$ correpondent
+aux opérateurs $-I$, $iI$ et $-iI$.
+La correspondance entre les autres opérateurs logiques et opérateurs de Pauli est
+arbitraire tant que les relations de commutations sont respectées.
+
+La conséquence de tout cela est qu'il est possible de décomposer un opérateur
+$E \in \mathcal P_n$ comme $P \sim LC$ où $C$ est un opérateur de même syndrome que $P$
+et $L$ est un opérateur logique.
+Il n'est pas nécéssaire que $P = LE$, mais plutôt que $LE$ soit un élément de la classe
+$P\mathcal S$.
+Cette décomposition permet de construire une procédure de décodage optimale que l'on 
+nomme décodeur par maximum de vraissemblance (MV).
+À partir du syndrome de l'opérateur $E$, 
+le décodeur MV choisi d'abord aléatoirement une correction $C$ de même syndrome avant
+de choisir un opérateur logique selon
+\begin{align}
+  L_{\text{MV}} = \arg\max_{L' \in \mathcal L} \sum_{S \in \mathcal S} \Pr[L'SC].
+\end{align}
+L'idée derrière le décodeur MV est qu'il existe $L$ tel que $C = LE$
+et que le décodage est un succès si $L_{MV}C = SE$ pour $S \in \mathcal S$.
+Ainsi, pour tout opérateur logique $L'$, nous avons que 
+\begin{align}
+  \sum_{S\in \mathcal S} \Pr[L'SC]
+  =
+  \sum_{S\in \mathcal S} \Pr[L'SLE]
+  =
+  \sum_{S\in \mathcal S} \Pr[L'LSE].
+\end{align}
+Dans le cas typique,
+le poids de $E$ est faible puisque la probabilité d'un opérateur diminue avec son poid.
+Ainsi, la somme est maximisée par $L'L \in \mathcal S$ si le poids de tous les opérateurs
+$\mathcal L \setminus \mathcal S$ est élevé.
+Sinon,
+la somme est maximisée par $L'L \equiv P \in \mathcal L \setminus \mathcal S$ et l'application de cette correction
+laisse le système avec une erreur $L_{MV}CE = L'LEE = P$ indectable.
+
+Le décodeur échoue dans deux cas,
+soit si le poids de $E$ est élevé, ce qui est hors de notre contrôle,
+ou s'il existe un opérateur logique non stabilisateur de faible poids.
+Ainsi,
+il est important de construire des codes stabilisateurs pour lesquels la distance minimale,
+\begin{align}
+  d = \min_{L \in \mathcal L \setminus \mathcal S} |L|,
+\end{align}
+est élevée.
+Le décodeur MV permet de corriger toutes les erreurs dont le poids est inférieur à $d / 2$.
+Il n'est pas exclus que des erreurs de poids plus élevés soit corrigibles, 
+mais les paramètres $n$, $k$ et $d$ d'un code permettent d'estimer rapidement les performances
+de celui-ci en fonction de son rendement $k/n$.
+
+Par contre,
+calculer la distance minimale d'un code requiert de comparer le poid d'un
+nombre exponentiel d'opérateurs.
+Il est donc généralement impossible de calculer cette quantité et des simulations numériques 
+doivent être effectuées pour estimer la performance d'un code.
+Je reviendrai sur ce point à la section~\ref{sec:seuil_perf} après avoir présenté
+les codes de Calderbank-Shor-Steane et une représentation graphique des codes
+stabilisateurs aux prochaines sections.
+
+\subsection{Codes CSS}
+\subsection{Graphes de Tanner}
 
 
 \subsection{Théorème du seuil et évaluation de la performance des codes correcteurs quantiques}
+\label{sec:seuil_perf}
 CITER Gottesman-Knill
 
 
