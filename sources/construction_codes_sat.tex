@@ -300,10 +300,9 @@ opérateurs de Pauli.
 L'une des meilleures ressources pour une présentation complète du formalisme des codes
 stabilisateurs est la thèse de doctorat de Gottesman~\cite{gottesman_stabilizer_1997}.
 Dans cette section,
-je me limiterai plutôt aux concepts essentiels à la compréhension des travaux 
-et de l'article associé.
+je me limiterai plutôt aux concepts essentiels à la compréhension des travaux et de l'article.
 
-De façon similaire aux codes classiques,
+De façon comparable aux codes classiques,
 les codes correcteurs quantiques encodent les états d'un espace de Hilbert
 dans un sous-espace d'un espace de plus grande dimension.
 Dans le cas des qubits,
@@ -337,10 +336,10 @@ et chacun de ceux-ci implique une superposition de $\mathcal O(2^n)$
 si le code $\code$ est un sous-espace de l'espace de Hilbert à $n$ qubits.
 
 Le formalisme des stabilisateurs permet de contourner ce problème en offrant une 
-représentation beaucoup plus efficace de certains états quantiques.
+représentation beaucoup plus efficiente de certains états quantiques.
 D'abord,
 un état $\ket\phi$ est stabilisé par l'opérateur $U$ lorsque $U\ket\psi = \ket\psi$,
-c'est-à-dire lorsque $\ket \phi$ est un état propre de valeur propre $+1$ de $U$.
+soit lorsque $\ket \phi$ est un état propre de valeur propre $+1$ de $U$.
 Un état ou un sous-espace est alors représenté par les opérateurs qui le stabilisent.
 Par exemple,
 l'état $\ket{00} + \ket{11}$ est l'unique état à deux qubits stabilisé par 
@@ -350,18 +349,18 @@ les états $\ket 00$ et $\ket 11$ forment une base
 pour les états stabilisés par l'opérateur $ZZ$.
 Il est important de choisir des opérateurs qui commutent pour assurer 
 que ceux-ci partagent les mêmes états propres.
-De plus, l'opérateur identité $I$ stabilise tous les états et l'opérateurs
-$-I$ ne stabilise aucun état.
+De plus, l'opérateur identité $I$ stabilise tous les états
+et l'opérateur $-I$ ne stabilise aucun état.
 
 De façon plus générale,
 un groupe stabilisateur $\mathcal S$ pour $n$ qubits est un sous-groupe abélien 
 du groupe de Pauli $\mathcal P_n$ excluant l'opérateur $-I$.
-Cet exclusion implique également que tous les opérateurs ayant la phase $i$ ou $-i$ sont exclus.
+Cette exclusion implique également que tous les opérateurs ayant la phase $i$ ou $-i$ sont exclus.
 Un code stabilisateur $\code(\mathcal S)$ est alors l'espace des états stabilisés par $\mathcal S$.
 De plus,
 puisque les états stabilisés par les opérateurs $P, Q \in \mathcal P_n$ sont également
 stabilisés par l'opérateur $PQ$,
-il est common de choisir un ensemble de générateurs $g(\mathcal S) = \qty{S_1, \ldots, S_m}$
+il est commun de choisir un ensemble de générateurs $g(\mathcal S) = \qty{S_1, \ldots, S_m}$
 pour décrire le groupe stabilisateur
 \begin{align}
   \mathcal S = 
@@ -370,12 +369,12 @@ pour décrire le groupe stabilisateur
   }
 \end{align}
 de $2^m$ éléments.
-Lorsque les générateur sont indépendants,
+Lorsque les générateurs sont indépendants,
 c'est-à-dire qu'il n'est pas possible d'en obtenir un comme le produit des autres,
 le code $\code(\mathcal S)$ a une dimension $2^{n - m}$.
 Ainsi, 
 pour encoder $k$ qubits avec un code de $n$ qubits,
-exactement $m = n - k$ générateurs indépendents sont nécessaires.
+exactement $m = n - k$ générateurs indépendants sont nécessaires.
 
 Le code de Shor introduit à l'équation~\eqref{eq:code_shor} est stabilisé
 par le groupe généré par les opérateurs 
@@ -386,10 +385,10 @@ par le groupe généré par les opérateurs
     Z_2 Z_3, \quad Z_5 Z_6, \quad Z_8 Z_9.
 \end{gather}
 Dans ce cas précis,
-le formalisme stabilisateur peut sembler légèrement encombrant mais,
-il permet généralement de représenter un code de $n$ qubits encodant $k$ qubits
+le formalisme stabilisateur peut sembler légèrement encombrant,
+mais il permet généralement de représenter un code de $n$ qubits encodant $k$ qubits
 à l'aide de $n - k$ opérateurs de poids $\mathcal O(n)$.
-Le coût total de la représentation est alors $\mathcal O(n^2)$, ce qui est un gain exponentiel
+Le cout total de la représentation est alors $\mathcal O(n^2)$, ce qui est un gain exponentiel
 par rapport à l'énumération des états de base du code en notation de Dirac.
 Pour la suite,
 j'utiliserai la notation $[n, k]$ pour représenter un code stabilisateur arbitraire 
@@ -416,16 +415,16 @@ une mesure du syndrome permet de détecter la présence d'erreurs sans corrompre
 À partir de cette information,
 un décodeur essaie de trouver une correction $F$ telle que $FE \in \mathcal S$, 
 soit que $FE\ket\psi = \ket\psi$ pour tout état code $\ket\psi$.
-Le choix de la correction n'est pas unique puisque si $FE \in \mathcal S$,
+Le choix de la correction n'est pas unique, car, si $FE \in \mathcal S$,
 alors $(SF)E \in \mathcal S$ pour tous $S \in \mathcal S$.
 Ainsi,
 toutes corrections $F' = SF$ sont également valides.
 
 Formellement,
-chaque opérateur appartenant à la même classe du groupe quotient $\mathcal P_n/\mathcal S$
-à le même effet sur le code puisque $P\ket\psi = PS\ket\psi$ pour tout $S \in \mathcal S$.
-La classe d'un opérateur $P \in \mathcal P_n$ est l'ensemble 
-$P\mathcal S = \qty{PS : S\in \mathcal S}$.
+tous les opérateurs $P \in \mathcal P_n$ de la même classe du groupe quotient $\mathcal P_n/\mathcal S$
+ont le même effet sur le code puisque $P\ket\psi = PS\ket\psi$ pour tout $S \in \mathcal S$.
+La classe d'un opérateur $P \in \mathcal P_n$ est l'ensemble $P\cdot \mathcal S = \qty{PS : S\in \mathcal S}$,
+soit l'ensemble des opérateurs équivalent après multiplication par un stabilisateur.
 De plus,
 comme $|\mathcal P_n| = 4^{n+1}$,
 le groupe quotient $\mathcal P_n/\mathcal S$ d'un code $[n, k]$ tel que $|\mathcal S| = 2^{n - k}$
@@ -439,12 +438,13 @@ Les opérateurs appartenant aux classes ayant le syndrome $\qty{+1, +1, \ldots, 
 sont des représentations à $n$ qubit des opérateurs de Pauli $\mathcal P_k$
 agissant sur le code.
 Ces opérateurs forment le groupe des opérateurs logiques $\mathcal L$ et correspondent
-au centralisateur 
+au centralisateur,
 \begin{align}
   C_{\mathcal P_n}(\mathcal S) 
-  = \qty{P \in \mathcal P_n : PS = SP, \forall S \in \mathcal S}.
+  = \qty{P \in \mathcal P_n : PS = SP, \forall S \in \mathcal S},
 \end{align}
-Puisqu'un opérateur logique $L \mathcal L$ commute avec l'ensemble des stabilisateurs,
+du groupe stabilisateur.
+Puisqu'un opérateur logique $L \in \mathcal L$ commute avec l'ensemble des stabilisateurs,
 \begin{equation}
   S(L\ket\psi) = LS\ket\psi = L\ket\psi
 \end{equation}
@@ -463,35 +463,35 @@ La correspondance entre les autres opérateurs logiques et opérateurs de Pauli 
 arbitraire tant que les relations de commutations sont respectées.
 
 La conséquence de tout cela est qu'il est possible de décomposer un opérateur
-$E \in \mathcal P_n$ comme $P \sim LC$ où $C$ est un opérateur de même syndrome que $P$
+$E \in \mathcal P_n$ en produit $LC$ où $C$ est un opérateur de même syndrome que $E$
 et $L$ est un opérateur logique.
-Il n'est pas nécéssaire que $P = LE$, mais plutôt que $LE$ soit un élément de la classe
-$P\mathcal S$.
+Il n'est pas nécessaire que $E = LC$, mais plutôt que $LC$ soit un élément de la classe $E \cdot \mathcal S$.
 Cette décomposition permet de construire une procédure de décodage optimale que l'on 
 nomme décodeur par maximum de vraissemblance (MV).
 À partir du syndrome de l'opérateur $E$, 
 le décodeur MV choisi d'abord aléatoirement une correction $C$ de même syndrome avant
 de choisir un opérateur logique selon
 \begin{align}
-  L_{\text{MV}} = \arg\max_{L' \in \mathcal L} \sum_{S \in \mathcal S} \Pr[L'SC].
+  L_{\text{MV}} = \arg\max_{L \in \mathcal L} \sum_{S \in \mathcal S} \Pr[LSC].
 \end{align}
-L'idée derrière le décodeur MV est qu'il existe $L$ tel que $C = LE$
-et que le décodage est un succès si $L_{MV}C = SE$ pour $S \in \mathcal S$.
-Ainsi, pour tout opérateur logique $L'$, nous avons que 
+L'idée derrière le décodeur MV est qu'il existe un opérateur logique $L^*$ tel que $C = L^*E$.
+Alors, le décodage est un succès si $L_{MV}$ et $L^*$ ont la même classe,
+c'est-à-dire si $L_{MV}C = SE$ pour un certain stabilisateur $S \in \mathcal S$.
+Ainsi, pour tout opérateur logique $L$, nous avons que 
 \begin{align}
-  \sum_{S\in \mathcal S} \Pr[L'SC]
+  \sum_{S\in \mathcal S} \Pr[LSC]
   =
-  \sum_{S\in \mathcal S} \Pr[L'SLE]
+  \sum_{S\in \mathcal S} \Pr[LSL^*E]
   =
-  \sum_{S\in \mathcal S} \Pr[L'LSE].
+  \sum_{S\in \mathcal S} \Pr[LL^*SE].
 \end{align}
 Dans le cas typique,
 le poids de $E$ est faible puisque la probabilité d'un opérateur diminue avec son poid.
-Ainsi, la somme est maximisée par $L'L \in \mathcal S$ si le poids de tous les opérateurs
+Ainsi, la somme est maximisée par $LL^* \in \mathcal S$ si le poids de chacun des opérateurs de
 $\mathcal L \setminus \mathcal S$ est élevé.
 Sinon,
-la somme est maximisée par $L'L \equiv P \in \mathcal L \setminus \mathcal S$ et l'application de cette correction
-laisse le système avec une erreur $L_{MV}CE = L'LEE = P$ indectable.
+la somme est maximisée par $LL^* \equiv P \in \mathcal L \setminus \mathcal S$ 
+et l'application de cette correction laisse le système avec une erreur $L_{MV}CE = LL^*EE = P$ indectable.
 
 Le décodeur échoue dans deux cas,
 soit si le poids de $E$ est élevé, ce qui est hors de notre contrôle,
@@ -504,14 +504,14 @@ il est important de construire des codes stabilisateurs pour lesquels la distanc
 est élevée.
 Le décodeur MV permet de corriger toutes les erreurs dont le poids est inférieur à $d / 2$.
 Il n'est pas exclus que des erreurs de poids plus élevés soit corrigibles, 
-mais les paramètres $n$, $k$ et $d$ d'un code permettent d'estimer rapidement les performances
-de celui-ci en fonction de son rendement $k/n$.
+mais les paramètres $n$, $k$ et $d$ d'un code permettent d'estimer rapidement la capacité
+de ce dernier à corriger les erreurs en fonction de son rendement $k/n$.
 
 Par contre,
-calculer la distance minimale d'un code requiert de comparer le poid d'un
-nombre exponentiel d'opérateurs.
-Il est donc généralement impossible de calculer cette quantité et des simulations numériques 
-doivent être effectuées pour estimer la performance d'un code.
+calculer la distance minimale d'un code requiert de comparer le poid d'un nombre exponentiel d'opérateurs.
+Il en est de même pour le calcul de $L_{MV}$ qui requiert un nombre exponentiel de compaisons.
+Il est donc généralement impossible de calculer ces quantité et des simulations numériques 
+doivent être effectuées pour estimer la performance d'un code à l'aide d'un décodeur sous-optimal.
 Je reviendrai sur ce point à la section~\ref{sec:seuil_perf} après avoir présenté
 les codes de Calderbank-Shor-Steane et une représentation graphique des codes
 stabilisateurs aux prochaines sections.
