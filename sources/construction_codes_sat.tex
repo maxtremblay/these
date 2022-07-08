@@ -296,6 +296,7 @@ Celui-ci est également construit à partir d'opérateurs de Krauss proportionne
 opérateurs de Pauli.
 
 \subsection{Codes stabilisateurs}
+\label{sec:codes_stabs}
 
 L'une des meilleures ressources pour une présentation complète du formalisme des codes
 stabilisateurs est la thèse de doctorat de Gottesman~\cite{gottesman_stabilizer_1997}.
@@ -506,34 +507,133 @@ Le décodeur MV permet de corriger toutes les erreurs dont le poids est inférie
 Il n'est pas exclus que des erreurs de poids plus élevés soit corrigibles, 
 mais les paramètres $n$, $k$ et $d$ d'un code permettent d'estimer rapidement la capacité
 de ce dernier à corriger les erreurs en fonction de son rendement $k/n$.
+Par exemple,
+la distance minimale du code de Shor est trois.
+Ainsi, ce code permet de corriger toutes les erreurs de poids un.
+Dans le cas où la probabilité d'un erreur de poids $w$ est proportionnelle $p^w$,
+le code de Shor réduit la probabilité d'erreur logique d'un facteur quadratique.
 
 Par contre,
 calculer la distance minimale d'un code requiert de comparer le poid d'un nombre exponentiel d'opérateurs.
-Il en est de même pour le calcul de $L_{MV}$ qui requiert un nombre exponentiel de compaisons.
-Il est donc généralement impossible de calculer ces quantité et des simulations numériques 
-doivent être effectuées pour estimer la performance d'un code à l'aide d'un décodeur sous-optimal.
-Je reviendrai sur ce point à la section~\ref{sec:seuil_perf} après avoir présenté
-les codes de Calderbank-Shor-Steane et une représentation graphique des codes
-stabilisateurs aux prochaines sections.
+Il en est de même pour le calcul de $L_{MV}$ qui requiert généralement un nombre exponentiel de comparaisons.
+Une des exceptions à se grand cout pour le décodeur MV est pour le canal à effacement pour lequel
+le cout est  polynomial.
+Ainsi, dans les travaux de cette thèse,
+j'ai effectué dans simulations numériques du canal à effacement avec le décodeur MV pour estimer la
+capacité des codes que j'ai construits.
+Les codes étudiés dans l'article appartiennent 
+à la famille des codes CSS que je présente à la prochaine section.
 
 \subsection{Codes CSS}
 
-\subsection{Graphes de Tanner}
+Un opérateur est de type $P$ pour $P \in {X, Y, Z}$ s'il est un produit tensoriel de $I$ et $P$ exclusivement.
+Les codes de Calderbank-Shor-Steane (CSS)~\cite{calderbank_good_1996, steane_multiple-particle_nodate},
+sont des codes stabilisateurs générés par un ensemble composé uniquement d'opérateurs de type $X$ et $Z$.
+Le code de Shor de l'équation~\ref{eq:code_shor} est un exemple de code CSS.
+L'avantage des codes CSS provient du fait qu'il est possible de décomposer n'importe quelle erreur
+comme un produit d'un opérateur de type $X$ et d'un opérateur de type $Z$.
+Ainsi,
+la partie $X$ d'erreur sera détectée par les générateurs de type $Z$ et vice-versa.
+Cela permet alors de simplifier l'analyse et les décodeurs en sépérant le traitement des générateurs 
+et des erreurs de chaque type.
+Les générateurs $g(\mathcal S)$ du groupe stabilisateur $\mathcal S$
+code CSS sont donc partitionnés en deux sous-ensembles $g_X(\mathcal S)$ et $g_Z(\mathcal S)$,
+où $g_p(\mathcal S)$ contient les générateurs de type $P$.
 
+Construire un code CSS, et par extension un code stabilisateur, n'est pas simple,
+puisque les stabilisateurs doivent commuter.
+Pour vérifier si deux opérateurs de Pauli commutent ou anticommute,
+il est suffisant de vérifier la commutation sur chaque qubit individuellement.
+En effet,
+deux opérateurs parmi $\qty{I, X, Y, Z}$ agissant sur le même qubit commutent si l'un d'entre 
+eux est trivial ($I$) ou s'ils sont égaux.
+Sinon, ils anticommutent.
+Conséquemment,
+deux opérateurs à plusieurs qubits commute si et seulement si ils anticommutent sur un nombre 
+pair de qubits.
+Pour les codes CSS, 
+un opérateur de type $X$ commute avec un opérateur de type $Z$ si le nombre de qubits où les deux
+agissent non-trivialement est pair.
 
-\subsection{Théorème du seuil et évaluation de la performance des codes correcteurs quantiques}
-\label{sec:seuil_perf}
-CITER Gottesman-Knill
+Bien évidemment,
+la théorie des codes CSS est beaucoup plus riche que ce que je viens de présenter.
+Cependant,
+les relations de commutations entre les opérateurs sont suffisantes pour comprendre
+les travaux présentés à la fin de ce chapitre.
+Je reviendrai plus en détail sur les codes CSS au prochain chapitre lorsque je présenterai
+la construction des codes par produits d'hypergraphes.
+ 
+\subsection{Représentations des codes stabilisateurs}
+\label{sec:representations_codes}
 
+La méthode de construction de codes présentée dans l'article de chapitre est en fait un algorithme
+de recherche d'ensemble d'opérateurs de Pauli qui commutent.
+Pour définir ce problème,
+j'utilise deux représentations alternatives des codes, soit les matrices de parités et les graphes de Tanner.
+Par simplicité,
+je limiterai ses représentations aux codes CSS,
+mais il est possible de les généraliser à tous les codes stabilisateurs.
 
+Un opérateur de Pauli à $n$ qubits de type $P$ s'exprime comme $\otimes_{i=1}^{n} P^{p_i}$,
+où $\vb p \in \corpsfini{2}^{n}$ est ce que l'on nomme un opérateur de parité.
+Dans cette représentation,
+une paire d'opérateurs de Pauli de type $X$ et $Z$ ayant respectivement les opérateurs de parité $\vb x$ 
+et $\vb z$ commutent si $\vb x^T \vb z = 0$,
+soit lorsque $\vb x$ et $\vb z$ sont orthogonaux.
+Comme un stabilisateur peut être représenté par un opérateur de parité,
+il est possible de représenter les générateurs $g_P(\mathcal S)$ d'un code CSS
+par une matrice $H_P$ dont la rangée $i$ est l'opérateur de parité du
+générateur $S_{P, i}$.
+Les matrices $H_X$ et $H_Z$ sont les matrices densités du code.
+Ces dernières doivent respecter la condition $H_X^t H_Z = 0$ pour 
+que les stabilisateurs commutent.
+
+Un code est éparse si le nombre de 1 dans chacune des matrices est faible.
+Les codes éparses forment la famille des codes LDPC,
+de l'anglais \textit{Low-Density Parity-Check} qui se traduit par
+\textit{opérateurs de parité à faible densité}.
+Comme je le présenterai à la section suivante,
+les codes LDPC sont particulièrement importants puisqu'il est possible de construire
+des circuits de mesures du syndrome avec un faible surcout
+constant en nombre de qubits~\cite{gottesman_fault-tolerant_2013}.
+Ainsi,
+ces circuits de faible taille limitent la propagation en plus d'être plus simple à 
+implémenter en laboratoire.
+Un point fort de la méthode présentée dans l'article de ce chapitre est qu'elle permet 
+de générer de tels codes.
+
+Les matrices densités permettent également d'obtenir une représentation graphique d'un code.
+Pour ce faire, la matrice de parité $H_P$ est associée à la matrice d'adjacence d'un
+graphe bipartie $T_P = (Q \cup g_P(\mathcal S), E_P)$,
+où $Q = \qty{q_1, \dots, q_n}$ est l'ensemble des qubits
+et $\qty{q_i, S_{P, j}} \in E_P$ si et seulement si $H_{P, i, j} = 1$.
+Les graphes $T_X$ et $T_Z$ sont les graphes de Tanner de $g_X(\mathcal S)$ et $g_Z(\mathcal S)$.
+Il est possible de combiner ces deux graphes en un seul graphe
+\begin{align}
+  T = (Q \cup g(\mathcal S), E_X \cup E_Z)
+\end{align}
+pour obtenir le graphe de Tanner de $g(\mathcal S) = g_X(\mathcal S) \cup g_Z(\mathcal S)$.
+
+D'un point de vue haut niveau,
+la méthode de construction de codes présentée dans cette thèse,
+cherche un graphe de Tanner comme le sous-graphe d'un graphe bipartie
+ayant un nombre important d'arêtes.
+Cette recherche est analogue à un problème de coloration des arêtes du graphes initiales.
+On dit alors qu'un graphe admet un coloriage stabilisant s'il possède un graphe de Tanner comme sous-graphe.
+Cette connection entre la construction de codes et la coloration de graphes permet 
+de représenter la construction de codes commme un problème de satisfaction de contraintes.
+Je définirai ces problèmes à la section suivante.
 
 \section{Problèmes de satisfaction de contraintes}
+\label{sec:csp}
+
 \subsection{Transition de phases et seuil de satisfiabilité}
+
 
 \section{Article : Une multitude de codes stabilisateurs éparses}
 
 Cet article soumis au journal Quantum à l'été 2022 a pour titre original
-\textit{Finite-rate quantum sparse codes aplenty}.
+\textit{Finite-rate sparse quantum codes aplenty}.
 Celui-ci était toujours en processus de révision lors de la soumission de cette thèse.
 
 \includepdf[pages=-]{articles/sat_codes_construction.pdf}
