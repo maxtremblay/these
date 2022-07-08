@@ -142,7 +142,7 @@ avec la condition que
 Cette dernière permet d'assurer que $\tr(\mathcal{E}(\rho)) = 1$.
 
 Dans leur excellent livre d'introduction à l'informatique quantique de 
-Neilsen et Chuang~\cite{nielsen_quantum_2010} motivent en détails 
+Neilsen et Chuang~\cite{nielsen_quantum_2010} motivent en détail 
 cette définition générale pour l'évolution d'un état quantique.
 Ainsi, je me limite à une justification intuitive de cette définition
 et j'invite les personnes intéressées à consulter le huitième chapitre de ce livre.
@@ -152,7 +152,7 @@ l'état $\rho$ évolue au sein d'un environnement dont les états de base
 sont $\qty{\ket{e_0}, \ket{e_1}, \ldots}$.
 Au début d'une expérience (ou d'un calcul),
 le système et l'environnement sont dans un état de produit tensoriel,
-c'est-à-dire, un état sans intrication.
+soit un état sans intrication.
 De plus, il est suffisant de considérer que l'environnement est dans l'état 
 pur $\ket{e_0}$.
 En effet,
@@ -173,8 +173,8 @@ l'état initial du système et de l'environnement est $\rho \otimes \op{e_0}$.
 \end{figure}
 
 Par la suite,
-un opérateur unitaire $U$ est appliqué sur le système et l'environnement suivit d'une
-mesure de l'environnement sans connaitre le résultat.
+un opérateur unitaire $U$ est appliqué sur le système et l'environnement,
+suivi d'une mesure de l'environnement sans connaitre le résultat.
 Le circuit correspondant est illustré à la figure~\ref{fig:circuit_canal_quantique}.
 Ainsi, l'état final du système est
 \begin{equation}
@@ -198,7 +198,7 @@ Il est alors possible d'écrire l'application selon
 \end{align}
 Cette formulation montre clairement l'utilité de $\mathcal E$ pour
 représenter un canal bruité quantique.
-De façon similaire au canal bruité classique,
+De façon comparable au canal bruité classique,
 un canal quantique transforme un premier état 
 vers un second état choisi aléatoirement.
 
@@ -222,11 +222,11 @@ le canal s'écrit généralement comme
 \end{align}
 Le poids $|P|$ d'un opérateur de Pauli $P$ est le nombre d'opérateurs différent de $I$ qui le compose.
 Par exemple, $|i\cdot XIYX| = 3$.
-Pour l'ensemble des canaux que je considérerai,
+Pour l'ensemble des canaux que je considèrerai,
 la probabilité d'une erreur $P \in \mathcal P_n$ diminue exponentiellement avec le poids 
 de celle-ci.
 
-À prime abord,
+De prime abord,
 cette approche semble limitée,
 mais puisque les opérateurs de Pauli forment une base,
 il est possible de représenter un opérateur de Krauss
@@ -241,8 +241,8 @@ En particulier,
 dans l'article de ce chapitre,
 j'utilise le canal d'effacement quantique pour évaluer la performance
 des codes correcteurs que je construis.
-Ce canal représente la situation où l'information contenue dans certains 
-qubits est complètement perdue et que ces qubits sont connus.
+Ce canal représente la situation où l'information contenue dans certains qubits,
+dont on connait la position, est complètement perdue.
 On dit alors que ces qubits sont effacés.
 En laboratoire, cela correspond par exemple à la défaillance d'une composante électronique
 ou à la perte d'un photon.
@@ -294,7 +294,6 @@ j'utiliserai un modèle de bruit plus réaliste qui permet
 de représenter une mémoire quantique.
 Celui-ci est également construit à partir d'opérateurs de Krauss proportionnels à des
 opérateurs de Pauli.
-
 
 \subsection{Codes stabilisateurs}
 
@@ -518,6 +517,7 @@ les codes de Calderbank-Shor-Steane et une représentation graphique des codes
 stabilisateurs aux prochaines sections.
 
 \subsection{Codes CSS}
+
 \subsection{Graphes de Tanner}
 
 
