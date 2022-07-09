@@ -437,7 +437,7 @@ mais des effets différents sur le code.
 
 Les opérateurs appartenant aux classes ayant le syndrome $\qty{+1, +1, \ldots, +1}$
 sont des représentations à $n$ qubit des opérateurs de Pauli $\mathcal P_k$
-agissant sur le code.
+agissant sur le code~\cite{aaronson_improved_2004}.
 Ces opérateurs forment le groupe des opérateurs logiques $\mathcal L$ et correspondent
 au centralisateur,
 \begin{align}
@@ -604,15 +604,16 @@ de générer de tels codes.
 
 Les matrices densités permettent également d'obtenir une représentation graphique d'un code.
 Pour ce faire, la matrice de parité $H_P$ est associée à la matrice d'adjacence d'un
-graphe bipartie $T_P = (Q \cup g_P(\mathcal S), E_P)$,
+graphe bipartie $T_P = (Q \cup g_P(\mathcal S), A_P)$,
 où $Q = \qty{q_1, \dots, q_n}$ est l'ensemble des qubits
-et $\qty{q_i, S_{P, j}} \in E_P$ si et seulement si $H_{P, i, j} = 1$.
+et $\qty{q_i, S_{P, j}} \in A_P$ si et seulement si $H_{P, i, j} = 1$.
 Les graphes $T_X$ et $T_Z$ sont les graphes de Tanner de $g_X(\mathcal S)$ et $g_Z(\mathcal S)$.
 Il est possible de combiner ces deux graphes en un seul graphe
 \begin{align}
-  T = (Q \cup g(\mathcal S), E_X \cup E_Z)
+  T = (Q \cup g(\mathcal S), A_X \cup A_Z)
 \end{align}
 pour obtenir le graphe de Tanner de $g(\mathcal S) = g_X(\mathcal S) \cup g_Z(\mathcal S)$.
+La première figure de l'article de ce chapitre illustre le graphe de Tanner du code de Shor.
 
 D'un point de vue haut niveau,
 la méthode de construction de codes présentée dans cette thèse,
@@ -627,13 +628,263 @@ Je définirai ces problèmes à la section suivante.
 \section{Problèmes de satisfaction de contraintes}
 \label{sec:csp}
 
-\subsection{Transition de phases et seuil de satisfiabilité}
+Les problèmes de satisfaction de contraintes (PSC)
+forment l'une des classes de problèmes parmi les plus importantes en informatique.
+Un exemple de PSC est le problème de coloriage d'une carte illustré à la figure~\ref{fig:quebec}
+Dans ce cas,
+il s'agit d'assigner une couleur à chacune des régions d'une carte sans que deux régions voisines 
+aient la même couleur.
+Pour représenter ce problème,
+il est courant d'utiliser un graphe où les sommets représentent les régions et une arête relie
+chaque paire de régions voisines.
+Ceci n'est qu'un des nombreux exemples de PSC.
+Ces derniers trouvent de nombreuses applications dans plusieurs domaines,
+dont l'intelligence artificielle~\cite{russel_artificial_nodate}
+et la compilation de langages de programmation~\cite{aho_compilers_2006}.
 
+\begin{figure}
+  \begin{center}
+    \includegraphics{figures/quebec.pdf}
+  \end{center}
+  \caption[Exemple du problème de coloriage d'une carte]{
+    Carte des régions administratives du Québec et exemple de coloriage. 
+    Le coloriage utilise quatre couleurs,
+    ce qui est optimal puisque le graphe contient un sous-graphe complet
+    formé par les quatre sommets 6, 13, 14 et 15~\cite{kubale_graph_2004}.
+    Image modifiée à partir de Wikimedia Commons~\cite{noauthor_carte_2016}.
+  }
+  \label{fig:quebec}
+\end{figure}
 
-\section{Article : Une multitude de codes stabilisateurs éparses}
+De façon générale,
+un PSC est défini par trois ensembles~\cite{lecoutre_constraint_2009},
+soit un ensemble de variables $V = \qty{v_1, \ldots, v_n}$,
+un ensemble de domaines $D = \qty{d_1, \ldots, d_n}$
+et un ensemble de contraintes $C = \qty{c_1, \ldots, c_m}$.
+Chaque variable $v_i$ peut prendre les valeurs du domaine $d_i$
+et chaque contrainte $c_j$ est une paire $(T_j, R_j)$
+telle que $T_j$ est un sous-ensemble ordonné de contraintes et $R_j$
+est un sous-ensemble des domaines correspondants.
+Une assignation $a: V \to D$ satisfait une contrainte $(T, R)$ 
+si $(a(v) : v \in T) \in R$.
+Un PSC est satisfiable s'il existe une assignation 
+satisfaisant toutes les contraintes simultanément.
+
+Pour le coloriage d'un graphe $G = (S, A)$,
+les variables correspondent aux sommets
+et le domaine de chaque variable est le même,
+soit les couleurs disponibles.
+Une contrainte $(a, D^*)$ est ajouté pour chaque arête $a \in A$,
+où $D^*$ est l'ensemble des paires de couleurs différentes.
+Une assignation satisfait l'ensemble des contraintes 
+si chaque paire de sommets d'une même arête a deux couleurs différentes.
+Pour l'exemple de la figure~\ref{fig:quebec},
+le problème est satisfiable si et seulement si quatre couleurs 
+ou plus sont disponibles ~\cite{kubale_graph_2004}.
+
+La méthode de construction de codes proposée est une variation 
+du coloriage d'un graphe biparti où les couleurs sont assignées aux arêtes plutôt qu'aux sommets.
+Dans ce cas, il y a une couleur pour chaque opérateur de Pauli $\qty{I, X, Y, Z}$
+et les contraintes assurent que le coloriage correspond à un graphe de Tanner
+en plus d'assurer d'autres propriétés favorables à la découverte de meilleurs codes.
+
+Ce problème est généralement difficile à résoudre,
+mais comme pour plusieurs autres PSC difficiles,
+les résultats numériques que j'ai obtenus suggèrent fortement
+l'existence d'un régime de paramètres pour lequel la recherche d'assignations
+satisfaisant les contraintes est beaucoup plus facile.
+De plus,
+les logiciels de résolutions des PSC sont de plus en plus efficients comme le démontrent les résultats
+de diverses compétitions du domaine~\cite{noauthor_minizinc_nodate, noauthor_sat_nodate}.
+Ce sont ces deux raisons qui me portent à croire que la connexion entre la construction de 
+codes stabilisateurs et les problèmes de satisfaction de contraintes a le potentiel de grandement accélérer la découverte de codes correcteurs quantiques.
+
+À la prochaine section, 
+je présente un PSC pour lequel l'existence de différents régimes de difficulté 
+est bien étudiée. 
+De plus, je présente une motivation théorique un peu plus générale pour l'existence de
+tels régimes pour le problème de construction de codes.
+
+\subsection{Seuil de satisfiabilité}
+
+Les problèmes de satisfaction booléennes,
+généralement abrégés à problèmes SAT,
+sont des problèmes de satisfactions de contraintes où le domaine de chaque variable
+est $\mathbb B = \qty{\mathcal V, \mathcal F}$,
+soit les valeurs booléeenes \textit{vrai} et \textit{faux}.
+Dans la formulation la plus standard,
+un problème SAT avec les $n$ variables $V = \qty{v_1,\ldots, v_n}$
+est représenté par une conjonction de disjonctions des variables $V$ et de leur négation 
+$\bar V = \qty{\bar v_1, \ldots, \bar v_n}$.
+Plus particulièrement,
+chaque contrainte $c_j$ s'exprime comme une disjonction de $r_j$ littéraux
+\begin{align}
+  c_j(\vb l) = l_{j, 1} \lor \ldots \lor l_{j, r_{j}},
+\end{align}
+où chaque littéral $l_{j, i} \in V \cup \bar V$.
+La négation est définie selon
+\begin{align}
+  \bar v = 
+  \begin{cases}
+    \mathcal F, &\text{si } v = \mathcal V, \\
+    \mathcal V, &\text{s} v = \mathcal F,
+  \end{cases}
+\end{align}
+alors que la disjonction est définie selon
+\begin{align}
+  u \lor v = 
+  \begin{cases}
+    \mathcal F, &\text{si } u = v = \mathcal F, \\
+    \mathcal V, &\text{sinon}.
+  \end{cases}
+\end{align}
+Une assignation $\vb v$ satisfait un ensemble de $m$ contraintes si
+\begin{align}
+  c_1(\vb v) \land \ldots \land c_m(\vb v) = \mathcal V,
+\end{align}
+où la conjonction est définie selon
+\begin{align}
+  u \land v = 
+  \begin{cases}
+    \mathcal V, &\text{si } u = v = \mathcal V, \\
+    \mathcal F, &\text{sinon}.
+  \end{cases}
+\end{align}
+Lorsque le problème s'exprime comme une conjonction de disjonctions,
+on dit qu'il est dans la forme normale conjonctive
+et il est possible d'exprimer toutes formules booléennes constituées de négations,
+de disjonctions et de conjonctions sous cette forme~\cite{tseitin_complexity_1983}.
+
+Les problèmes SAT ont reçus beaucoup d'attention entre autres
+puisqu'il s'agit des premiers problèmes démontrés appartenir à la classe 
+des problèmes NP-complet~\cite{cook_complexity_1971}.
+Ainsi,
+résoudre un problème SAT arbitraire est généralement difficile.
+Par contre,
+il existe des instances beaucoup plus facile à résoudre.
+On peut alors se demander quelle est la probabilité qu'un problème SAT
+construit aléatoirement soit facilement résoluble.
+Dans le reste de cette section,
+je vais montrer comment cette probabilité varie drastiquement avec 
+l'augmentation du nombre de contraintes.
+
+D'abord,
+l'analyse se limite aux problèmes $k$-SAT,
+soit les problèmes où chaque disjonction agit sur exactement $k$ littéraux.
+De plus,
+il est supposé que pour construire une instance aléatoire de problème $k$-SAT sur $n$ variables,
+chaque disjonctions est choisie uniformément parmi les $\binom{2n}{k}$ possibilités.
+Pour $n$ et $k$ fixés, je note $D_{n,k}$ l'ensemble de ces disjonctions.
+Ainsi, une instance est définie par un sous-ensemble de $D_{n, k}$ et $\mathbb S_{n,k,m}$ 
+est la variable aléatoire des sous-ensembles de $m$ contraintes de $D_{n, k}$.
+
+Pour un sous-ensemble $S \subseteq D_{n, k}$,
+la propriété $\mathcal P(S)$ est vraie lorsque le problème SAT correspond à $S$
+admet une instance satisfiable.
+Cette propriété est monotone décroissante,
+c'est-à-dire que si $\mathcal P(S)$ est vraie,
+alors $\mathcal P(S')$ est vraie pour tout $S' \subseteq S$.
+En effet,
+si une assignation satisfait $S$, elle satisfait également $S'$.
+De plus,
+\begin{align}
+  \Pr[\mathcal P(\mathbb S_{n, k, m})] \leq 
+  \Pr[\mathcal P(\mathbb S_{n, k, m'})],
+\end{align}
+si $m \geq m'$,
+puisque $\mathcal P$ est une propriété monotone décroissante 
+de $D_{n, k}$~\cite{bollobas_threshold_1987}.
+Finalement, la propriété $\mathcal P$ est non-trivial puisque
+$\mathcal P(S)$ est vraie lorsque $S$ est vide et fausse lorsque $S = D_{n, k}$,
+car $D_{n, k}$ contient les $2^k$ contraintes
+sur les variables $v_1, \ldots, v_k$ et leur négation
+qui ne peuvent être toutes satisfaites par la même assignation.
+
+Comme $\mathcal P$ est une propriété monotone décroissante non-triviale,
+il est intuitif que la probabilité que $\mathbb S_{n,k,m}$ satisfait 
+$\mathcal P$ diminue avec $m$.
+Ce qui est plus surprenant est que cette variation ce fait drastiquement 
+autour d'une valeur seuil et non de façon progressive.
+Formellement,
+une fonction $\mu(n)$ est un seuil pour $\mathcal P$ si 
+\begin{align}
+  \lim_{n \to \infty} \Pr[\mathcal P(\mathbb S_{n,k,m})] 
+  =
+  \begin{cases}
+    1, \text{si } m / \mu \to 0, \\
+    0, \text{si } m / \mu \to 1.
+  \end{cases}
+\end{align}
+Un seuil est abrupte lorsque la condition est relaxée à
+\begin{align}
+  \lim_{n \to \infty} \Pr[\mathcal P(\mathbb S_{n,k,m})] 
+  =
+  \begin{cases}
+    1, \text{si } m / \mu < 1 - \epsilon, \\
+    0, \text{si } m / \mu > 1 + \epsilon,
+  \end{cases}
+\end{align}
+pour tout $\epsilon > 0$.
+Il est montré que toutes fonctions monotones décroissantes
+possède un seuil~\cite{bollobas_threshold_1987}.
+
+Dans le cas des problèmes $k$-SAT pour $k \geq 3$,
+il a été montré que le seuil est en fait abrupte et que sa valeur se
+situe entre $n(2^k \ln 2 - k)$ et $n(2^k \ln 2)$~\cite{achlioptas_rigorous_2005}.
+Ainsi, si $n$ est assez grand et que le nombre d'arêtes est inférieur au seuil,
+il est fort probable qu'une instance aléatoire $\mathbb S_{n,k,m}$ soit satisfiable.
+De même,
+dès que le nombre d'arêtes est supérieur au seuil,
+il est fort probable que $\mathbb S_{n, k, m}$ soit non-satisfiable.
+De plus, il a été montré que les seules instances qui sont réellement difficile
+à résoudre sont celles pour lesquelles $m$ est près du seuil.
+Pour tous les autres cas,
+il existe un algorithme qui peut trouver une assignation satifaisant les contraintes
+ou prouver qu'une telle assignation n'existe pas en temps polynomial~\cite{cheeseman_where_1991}.
+
+Ce seuil de satisfiabilité n'est pas unique au problème $k$-SAT.
+Comme mentionné aux sections précédentes,
+la recherche de codes stabilisateurs est comparable à un problème de recherche d'un sous-graphe
+admettant une certaine coloration des arêtes.
+L'existence d'un tel sous-graphe
+en une propriété monotone croissante avec le nombre d'arêtes du graphe initial.
+Ainsi,
+il existe également un seuil pour cette propriété à l'exception que celui-ci à la comportement 
+inverse au problème $k$-SAT.
+En effet,
+pour la recherche de codes, 
+la probabilité de trouver un code devient très grande lorsque le nombre d'arêtes dépasse le seuil.
+C'est cette observation qui motive les résultats de l'article.
+
+\section{Article}
 
 Cet article soumis au journal Quantum à l'été 2022 a pour titre original
 \textit{Finite-rate sparse quantum codes aplenty}.
 Celui-ci était toujours en processus de révision lors de la soumission de cette thèse.
+
+Dans ce dernier, le problème de construction de codes est défini plus en détail
+et des évidences numériques que la valeur du seuil décroit avec le nombre de qubits sont présentées.
+Cela permet alors de faire une connection avec les autres problèmes de satisfaction de contraintes
+et de conclure que lorsque le nombre d'arêtes est supérieur au seuil,
+il deviant facile de construire des codes correcteurs d'erreurs quantiques.
+Ce résultat reste valide lorsque des contraintes supplémentaires sont imposés pour obtenir
+des codes LDPC.
+De même,
+des simulations numériques démontrent que les codes trouvés ainsi 
+ont des performances optimales pour la canal à effacement.
+
+Cette article est le résultat de la combinaison de l'expertise que j'ai développé avec David Poulin
+et l'équipe de Microsoft sur la correction d'erreur quantique et l'expertise de Stefanos Kourtis
+sur les problèmes de satisfaction de contraintes.
+C'est après avoir rejoint l'équipe de ce dernier pour terminer mon doctorat que nous avons 
+réalisé le lien entre ces deux domaines de recherche.
+J'ai ensuite implémenté un logiciel permettant de construire et résoudre diverses instances 
+de problèmes de recherche de codes.
+Grace à celui-ci,
+j'ai pu explorer diverses définitions du problème jusqu'à trouver la version qui est étudiée plus
+en détails dans l'article.
+J'ai également implémenté et effectué les simulations de performances des codes avec le canal à effacement.
+Finalement, 
+j'ai écris l'article qui a été révisé et amélioré par Stefanos Kourtis et Guillaume Duclos-Cianci.
 
 \includepdf[pages=-]{articles/sat_codes_construction.pdf}
