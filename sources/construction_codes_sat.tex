@@ -621,7 +621,7 @@ cherche un graphe de Tanner comme le sous-graphe d'un graphe bipartie
 ayant un nombre important d'arêtes.
 Cette recherche est analogue à un problème de coloration des arêtes du graphes initiales.
 On dit alors qu'un graphe admet un coloriage stabilisant s'il possède un graphe de Tanner comme sous-graphe.
-Cette connection entre la construction de codes et la coloration de graphes permet 
+Cette connexion entre la construction de codes et la coloration de graphes permet 
 de représenter la construction de codes commme un problème de satisfaction de contraintes.
 Je définirai ces problèmes à la section suivante.
 
@@ -630,7 +630,7 @@ Je définirai ces problèmes à la section suivante.
 
 Les problèmes de satisfaction de contraintes (PSC)
 forment l'une des classes de problèmes parmi les plus importantes en informatique.
-Un exemple de PSC est le problème de coloriage d'une carte illustré à la figure~\ref{fig:quebec}
+Un exemple de PSC est le problème de coloriage d'une carte illustré à la figure~\ref{fig:quebec}.
 Dans ce cas,
 il s'agit d'assigner une couleur à chacune des régions d'une carte sans que deux régions voisines 
 aient la même couleur.
@@ -661,7 +661,7 @@ un PSC est défini par trois ensembles~\cite{lecoutre_constraint_2009},
 soit un ensemble de variables $V = \qty{v_1, \ldots, v_n}$,
 un ensemble de domaines $D = \qty{d_1, \ldots, d_n}$
 et un ensemble de contraintes $C = \qty{c_1, \ldots, c_m}$.
-Chaque variable $v_i$ peut prendre les valeurs du domaine $d_i$
+Chaque variable $v_i$ prend les valeurs du domaine $d_i$
 et chaque contrainte $c_j$ est une paire $(T_j, R_j)$
 telle que $T_j$ est un sous-ensemble ordonné de contraintes et $R_j$
 est un sous-ensemble des domaines correspondants.
@@ -671,10 +671,10 @@ Un PSC est satisfiable s'il existe une assignation
 satisfaisant toutes les contraintes simultanément.
 
 Pour le coloriage d'un graphe $G = (S, A)$,
-les variables correspondent aux sommets
+les variables correspondent aux sommets $S$
 et le domaine de chaque variable est le même,
 soit les couleurs disponibles.
-Une contrainte $(a, D^*)$ est ajouté pour chaque arête $a \in A$,
+Une contrainte $(a, D^*)$ est ajoutée pour chaque arête $a \in A$,
 où $D^*$ est l'ensemble des paires de couleurs différentes.
 Une assignation satisfait l'ensemble des contraintes 
 si chaque paire de sommets d'une même arête a deux couleurs différentes.
@@ -691,7 +691,7 @@ en plus d'assurer d'autres propriétés favorables à la découverte de meilleur
 Ce problème est généralement difficile à résoudre,
 mais comme pour plusieurs autres PSC difficiles,
 les résultats numériques que j'ai obtenus suggèrent fortement
-l'existence d'un régime de paramètres pour lequel la recherche d'assignations
+l'existence d'un régime de paramètres pour lesquels la recherche d'assignations
 satisfaisant les contraintes est beaucoup plus facile.
 De plus,
 les logiciels de résolutions des PSC sont de plus en plus efficients comme le démontrent les résultats
@@ -705,13 +705,13 @@ est bien étudiée.
 De plus, je présente une motivation théorique un peu plus générale pour l'existence de
 tels régimes pour le problème de construction de codes.
 
-\subsection{Seuil de satisfiabilité}
+\subsection{Seuil de satisfaisabilité}
 
-Les problèmes de satisfaction booléennes,
+Les problèmes de satisfaisabilité booléennes,
 généralement abrégés à problèmes SAT,
 sont des problèmes de satisfactions de contraintes où le domaine de chaque variable
 est $\mathbb B = \qty{\mathcal V, \mathcal F}$,
-soit les valeurs booléeenes \textit{vrai} et \textit{faux}.
+soit les valeurs booléennes \textit{vrai} et \textit{faux}.
 Dans la formulation la plus standard,
 un problème SAT avec les $n$ variables $V = \qty{v_1,\ldots, v_n}$
 est représenté par une conjonction de disjonctions des variables $V$ et de leur négation 
@@ -755,25 +755,24 @@ on dit qu'il est dans la forme normale conjonctive
 et il est possible d'exprimer toutes formules booléennes constituées de négations,
 de disjonctions et de conjonctions sous cette forme~\cite{tseitin_complexity_1983}.
 
-Les problèmes SAT ont reçus beaucoup d'attention entre autres
-puisqu'il s'agit des premiers problèmes démontrés appartenir à la classe 
-des problèmes NP-complet~\cite{cook_complexity_1971}.
-Ainsi,
-résoudre un problème SAT arbitraire est généralement difficile.
-Par contre,
-il existe des instances beaucoup plus facile à résoudre.
-On peut alors se demander quelle est la probabilité qu'un problème SAT
-construit aléatoirement soit facilement résoluble.
-Dans le reste de cette section,
-je vais montrer comment cette probabilité varie drastiquement avec 
-l'augmentation du nombre de contraintes.
+
+Les problèmes SAT ont reçu beaucoup d’attention,
+entre autres puisqu’il s’agit de problèmes auxquels tous les problèmes de la classe NP
+peuvent être réduit~\cite{cook_complexity_1971}.
+Résoudre un problème SAT arbitraire est donc généralement difficile.
+Par contre, il est possible de construire des instances beaucoup
+plus faciles à résoudre~\cite{cheeseman_where_1991}.
+On peut alors se demander quelle est la probabilité qu’un problème SAT construit
+aléatoirement soit facilement résoluble.
+Dans le reste de cette section, je montrerai comment cette probabilité varie brusquement
+avec l’augmentation du nombre de contraintes.
 
 D'abord,
 l'analyse se limite aux problèmes $k$-SAT,
 soit les problèmes où chaque disjonction agit sur exactement $k$ littéraux.
 De plus,
 il est supposé que pour construire une instance aléatoire de problème $k$-SAT sur $n$ variables,
-chaque disjonctions est choisie uniformément parmi les $\binom{2n}{k}$ possibilités.
+chaque disjonction est choisie uniformément parmi les $\binom{2n}{k}$ possibilités.
 Pour $n$ et $k$ fixés, je note $D_{n,k}$ l'ensemble de ces disjonctions.
 Ainsi, une instance est définie par un sous-ensemble de $D_{n, k}$ et $\mathbb S_{n,k,m}$ 
 est la variable aléatoire des sous-ensembles de $m$ contraintes de $D_{n, k}$.
@@ -800,10 +799,10 @@ car $D_{n, k}$ contient les $2^k$ contraintes
 sur les variables $v_1, \ldots, v_k$ et leur négation
 qui ne peuvent être toutes satisfaites par la même assignation.
 
-Comme $\mathcal P$ est une propriété monotone décroissante non-triviale,
+Comme $\mathcal P$ est une propriété monotone décroissante non triviale,
 il est intuitif que la probabilité que $\mathbb S_{n,k,m}$ satisfait 
 $\mathcal P$ diminue avec $m$.
-Ce qui est plus surprenant est que cette variation ce fait drastiquement 
+Ce qui est plus surprenant est que cette variation ce fait brusquement 
 autour d'une valeur seuil et non de façon progressive.
 Formellement,
 une fonction $\mu(n)$ est un seuil pour $\mathcal P$ si 
@@ -815,7 +814,7 @@ une fonction $\mu(n)$ est un seuil pour $\mathcal P$ si
     0, \text{si } m / \mu \to 1.
   \end{cases}
 \end{align}
-Un seuil est abrupte lorsque la condition est relaxée à
+Un seuil est aigu lorsque la condition est relaxée à
 \begin{align}
   \lim_{n \to \infty} \Pr[\mathcal P(\mathbb S_{n,k,m})] 
   =
@@ -826,23 +825,23 @@ Un seuil est abrupte lorsque la condition est relaxée à
 \end{align}
 pour tout $\epsilon > 0$.
 Il est montré que toutes fonctions monotones décroissantes
-possède un seuil~\cite{bollobas_threshold_1987}.
+possèdent un seuil~\cite{bollobas_threshold_1987}.
 
 Dans le cas des problèmes $k$-SAT pour $k \geq 3$,
-il a été montré que le seuil est en fait abrupte et que sa valeur se
+il a été montré que le seuil est aigu et que sa valeur se
 situe entre $n(2^k \ln 2 - k)$ et $n(2^k \ln 2)$~\cite{achlioptas_rigorous_2005}.
 Ainsi, si $n$ est assez grand et que le nombre d'arêtes est inférieur au seuil,
 il est fort probable qu'une instance aléatoire $\mathbb S_{n,k,m}$ soit satisfiable.
 De même,
 dès que le nombre d'arêtes est supérieur au seuil,
-il est fort probable que $\mathbb S_{n, k, m}$ soit non-satisfiable.
-De plus, il a été montré que les seules instances qui sont réellement difficile
+il est fort probable que $\mathbb S_{n, k, m}$ soit non satisfiable.
+De plus, il a été montré que les seules instances qui sont réellement difficiles
 à résoudre sont celles pour lesquelles $m$ est près du seuil.
 Pour tous les autres cas,
 il existe un algorithme qui peut trouver une assignation satifaisant les contraintes
 ou prouver qu'une telle assignation n'existe pas en temps polynomial~\cite{cheeseman_where_1991}.
 
-Ce seuil de satisfiabilité n'est pas unique au problème $k$-SAT.
+Ce seuil de satisfaisabilité n'est pas unique au problème $k$-SAT.
 Comme mentionné aux sections précédentes,
 la recherche de codes stabilisateurs est comparable à un problème de recherche d'un sous-graphe
 admettant une certaine coloration des arêtes.
@@ -852,8 +851,10 @@ Ainsi,
 il existe également un seuil pour cette propriété à l'exception que celui-ci à la comportement 
 inverse au problème $k$-SAT.
 En effet,
-pour la recherche de codes, 
-la probabilité de trouver un code devient très grande lorsque le nombre d'arêtes dépasse le seuil.
+bien que les expériences numériques effectuées ne permettent pas de confirmer si le seuil 
+est aigu ou non,
+ces dernières confirment que la probabilité de trouver un code devient
+très grande lorsque le nombre d'arêtes dépasse le seuil.
 C'est cette observation qui motive les résultats de l'article.
 
 \section{Article}
@@ -864,18 +865,17 @@ Celui-ci était toujours en processus de révision lors de la soumission de cett
 
 Dans ce dernier, le problème de construction de codes est défini plus en détail
 et des évidences numériques que la valeur du seuil décroit avec le nombre de qubits sont présentées.
-Cela permet alors de faire une connection avec les autres problèmes de satisfaction de contraintes
+Cela permet alors de faire une connexion avec les autres problèmes de satisfaction de contraintes
 et de conclure que lorsque le nombre d'arêtes est supérieur au seuil,
 il deviant facile de construire des codes correcteurs d'erreurs quantiques.
-Ce résultat reste valide lorsque des contraintes supplémentaires sont imposés pour obtenir
-des codes LDPC.
+Ce résultat reste valide lorsque des contraintes supplémentaires sont imposées pour obtenir des codes LDPC.
 De même,
-des simulations numériques démontrent que les codes trouvés ainsi 
+des simulations numériques démontrent que les codes trouvés de cette manière
 ont des performances optimales pour la canal à effacement.
 
-Cette article est le résultat de la combinaison de l'expertise que j'ai développé avec David Poulin
-et l'équipe de Microsoft sur la correction d'erreur quantique et l'expertise de Stefanos Kourtis
-sur les problèmes de satisfaction de contraintes.
+Cette article est le résultat de la combinaison de l'expertise que j'ai développée avec David Poulin
+et l'équipe de Microsoft sur la correction d'erreurs quantique et l'expertise de Stefanos Kourtis
+sur les problèmes de satisfaction de contraintes et les différents régimes de difficulté.
 C'est après avoir rejoint l'équipe de ce dernier pour terminer mon doctorat que nous avons 
 réalisé le lien entre ces deux domaines de recherche.
 J'ai ensuite implémenté un logiciel permettant de construire et résoudre diverses instances 
@@ -883,7 +883,7 @@ de problèmes de recherche de codes.
 Grace à celui-ci,
 j'ai pu explorer diverses définitions du problème jusqu'à trouver la version qui est étudiée plus
 en détails dans l'article.
-J'ai également implémenté et effectué les simulations de performances des codes avec le canal à effacement.
+J'ai également implémenté et effectué les simulations des codes avec le canal à effacement.
 Finalement, 
 j'ai écris l'article qui a été révisé et amélioré par Stefanos Kourtis et Guillaume Duclos-Cianci.
 
