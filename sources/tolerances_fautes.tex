@@ -392,7 +392,152 @@ je vais introduire les codes de produits d'hypergraphes,
 la famille de codes LDPC qui a été étudiée plus en détail dans l'article.
 
 \section{Codes de produits d'hypergraphes et codes expanseurs}
+
+Les codes de produits d'hypergraphes,
+introduient par Tillich et Zémor~\cite{tillich_quantum_2014} figurent parmi les codes LDPC 
+les plus étudiées~\cite{grospellier_combining_2020, grospellier_numerical_2018, leverrier_quantum_2015, kovalev_improved_2012, kovalev_numerical_2018}.
+Une raison de cet intérêt est qu'ils permettent d'obtenir de bonnes performances 
+avec un rendement $k/n$ constant tout en ayant une construction relativement simple.
+En effet,
+ces derniers sont obtenus par le coloriage des sommets du produit cartésien de
+deux codes correcteurs classiques.
+Ainsi,
+dans cette section,
+je présenterai d'abord un formalisme pour les codes corrections classiques
+différent de celui présenté au chapitre~\ref{chap:codes_polaires},
+avant d'utiliser ce formalisme pour introduire formellement les codes
+de produits d'hypergraphes.
+
 \subsection{Codes linéaires}
+
+Un code correcteur classique $\code$ est linéaire si $\vb x + \vb y \in C$ 
+pour tous $\vb x, \vb y \in \code$.
+Ainsi,
+pour un code linéaire encodant $k$ bits avec $n$ bits,
+il existe une matrice $G \in \corpsfini{2}^{n \times k}$,
+nommée matrice génératrice,
+dont les rangées forment une base de $\code$.
+Le code est alors le sous-espace
+\begin{align}
+	\code(G) = \qty{
+		G \vb x : \vb x \in \corpsfini{2}^k
+	},
+\end{align}
+de dimension $k$.
+Comme le choix de base pour $\code$ n'est pas unique,
+il existe plusieurs choix pour $G$.
+
+De manière comparable aux codes stabilisateurs,
+la capacité d'un code linéaire à corriger les erreurs dépend de la distance minimale entre 
+les mots codes,
+\begin{align}
+	d = \min_{\vb x, \vb x' \in \code} | \vb x + \vb x'| = \min_{\vb x \in \code \setminus \qty{\vb 0}} |\vb x|,
+\end{align}
+où $|\cdot|$ est la norme de Hamming, soit le nombre de 1 dans un vecteur.
+La seconde égalité est obtenue par linéarité des mots codes.
+Un décodeur optimal est alors en mesure de corriger toutes les erreurs dont la norme de Hamming
+est inférieure à $d/2$.
+
+Alternativement,
+un code est défini à partir d'une matrice de parité, $H \in \corpsfini{2}^{(n - k) \times n}$.
+Dans ce cas,
+\begin{align}
+	\code(H) = \qty{
+		\vb x \in \corpsfini{2}^n : H \vb x = \vb 0
+	}.
+\end{align}
+Il est possible que $H$ est plus de $n - k$ rangées si certaines d'entres elles 
+sont linéairement dépendantes, par contre je me limiterai au cas où $H$ est 
+de plein rang, donc que le nombre de rangées est exactement $n - k$.
+
+Alors que la matrice $G$ est utile pour l'encodage des messages en mots codes,
+la matrice $H$ est plutôt utile pour la détection des erreurs et le décodage.
+En effet,
+la matrice de parité est comparable au groupe stabilisateur pour les codes quantiques.
+En autre,
+le syndrome d'un vecteur $\vb z \in \corpsfini{2}^n$ est le vecteur $\sigma(\vb z) = H\vb z$
+et les mots codes sont les vecteurs de syndrome nul.
+Ainsi, un syndrome non nul indique la présence d'erreurs.
+
+Finalement, puisque $H (G\vb x) = \vb 0$ pour tous $\vb x \in \corpsfini{2}^k$,
+les matrices $G$ et $H$ doivent respecter la condition $HG = 0$.
+L'adjoint d'un code $\code$ est le code $\code^\perp$ où $G^\perp = H^T$ et $H^\perp = G^T$ sont inversés.
+Ainsi, les mots codes du code adjoint sont orthogonaux aux mots codes du code initial.
+Il en est de même pour les rangées des matrices de parité.
+
+Un exemple de code linéaire est le code de Hamming dont la matrice
+de parité est 
+\begin{align}
+	H = \begin{pmatrix}
+		0 & 0 & 0 & 1 & 1 & 1 & 1 \\
+		0 & 1 & 1 & 0 & 0 & 1 & 1 \\
+		1 & 0 & 1 & 0 & 1 & 0 & 1
+	\end{pmatrix}
+\end{align}
+et la matrice génératrice est 
+\begin{align}
+	G = \begin{pmatrix}
+		1 & 1 & 1 & 0 & 0 & 0 & 0 \\
+		1 & 0 & 0 & 1 & 1 & 0 & 0 \\
+		0 & 1 & 0 & 1 & 0 & 1 & 0 \\
+		1 & 1 & 1 & 1 & 1 & 1 & 1.
+	\end{pmatrix}
+\end{align}
+En calculant les $2^4 = 16$ combinaisons linéaires possibles des 
+rangées de $G$,
+l'on obtient que la distance minimale du code de Hamming est de trois.
+Ainsi,
+ce code permet de corriger toutes les erreurs de norme de un.
+
+Un décodeur optimal pour le code de Hamming découle directement de la valeur du syndrome.
+En effet, pour un mot code $\vb x$ affecté de l'erreur $\vb e$,
+le syndrome est 
+\begin{align}
+	\sigma(\vb x + \vb e) = H\vb x + H\vb e = H\vb e
+\end{align}
+puisque $H \vb x = \vb 0$ par définition du code.
+Ainsi, le syndrome ne dépend que de l'erreur et non du mot code.
+La matrice $H$ est construire telle que le syndrome d'une erreur $\vb e$ de norme un
+correspond à la représentation en binaire du numéro de la colonne.
+Par exemple,
+le syndrome de $\vb e = \begin{pmatrix} 0 & 0 & 0 & 1 & 0 & 0 & 0 \end{pmatrix}^T$
+est $\sigma(\vb e) = \begin{pmatrix} 0 & 1 & 1 \end{pmatrix}^T$,
+ce qui correspond à la représentation binaire du nombre 4.
+Cela permet ainsi d'identifier que l'erreur affecte le quatrième bit et 
+il suffit de renverser ce dernier pour retrouver le mot code initial.
+
+Le code de Hamming est un exemple particulier et un syndrome ne permet généralement
+pas d'identifier aussi facilement une erreur.
+Par contre,
+les algorithmes de décodage des codes linéaires sortes du cadre de cette thèse.
+Il est suffisant de considérer que les méthodes standards de propagation des 
+croyances sont utilisées~\cite{richardson_modern_2008}.
+
+Idéalement,
+il est désirable que 
+le rendement $k/n$ et la distance relative $d/n$ d'une famille de codes
+soient bornés inférieurement.
+Un résultat étonnant est qu'une matrice de parité avec une  faible densité de 1
+choisi aléatoirement répond à ces critères avec forte probabilité~\cite{gallager_low-density_1962}.
+Ce résultat repose sur une représentation graphique des codes linéaires sous forme de graphe de Tanner.
+
+Comme au chapitre précédent,
+la graphe de Tanner d'une matrice de parité $H$,
+est le graphe bipartie $T = (B \cup P, A)$
+où les sommets $B = \qty{b_1, \ldots, b_n}$ correspondent aux $n$ bits
+et les sommets $P = \qty{p_1, \ldots, p_{n - k}}$ aux $n - k$ rangées de la matrice de parité.
+L'arête $\qty{b_i, p_j} \in A$ si et seulement si $H_{ji} = 1$.
+Pour la suite de cette section,
+je considère que les graphe sont $(\Delta_B, \Delta_P)$-réguliers,
+c'est-à-dire que le degré de tous les sommets de $B$ ($P$) est $\Delta_B$ ($\Delta_P$).
+
+
+
+
+
+
+
+
 \subsection{Produits d'hypergraphes}
 
 
