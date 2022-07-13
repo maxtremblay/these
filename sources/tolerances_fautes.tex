@@ -9,9 +9,9 @@ du chapitre précédent pour présenter la conception d'une mémoire quantique.
 Une mémoire quantique est un système quantique permettant de stocker
 de l'information pour une durée indéterminée.
 Cependant,
-tel que mentionné au chapitre précédent,
+comme mentionné au chapitre précédent,
 les systèmes quantiques sont sujets aux erreurs,
-même lorsque aucune opération n'est effectuée.
+même lorsqu'aucune opération n'est effectuée.
 Ainsi,
 pour construire une mémoire quantique,
 il est nécessaire, encore une fois,
@@ -24,11 +24,11 @@ l'information stockée dans le système pour un calcul futur.
 En principe,
 il est possible d'utiliser n'importe quel code correcteur pour construire
 une mémoire quantique,
-mais certains ont des propriétées plus favorables.
+mais certains ont des propriétés plus favorables.
 D'abord,
 il est difficile de mettre à l'échelle un code correcteur dont le graphe
 de Tanner est local, soit un graphe où la distance entre chaque paire de sommets 
-connectés par une arête est bornée indépendemment du nombre de sommets.
+connectés par une arête est bornée indépendamment du nombre de sommets.
 Plus précisément,
 Bravyi, Poulin et Terhal~\cite{bravyi_tradeoffs_2010}
 ont montré que pour un tel code $[n, k]$,
@@ -36,14 +36,14 @@ la distance minimale $d$ est limitée par
 \begin{equation}
 	d^2 \leq c \frac{n}{k},
 \end{equation}
-pour une constante $c$ indépendente de $n$, $k$ et $d$.
+pour une constante $c$ indépendante de $n$, $k$ et $d$.
 Ainsi,
 si $k$ augmente proportionnellement avec $n$,
 la distance minimale est bornée par une constante.
 De plus,
 pour avoir une distance minimale raisonnable,
-il est nécessaire que le nombre de qubits encodés $k$ 
-n'augmente pas ou très peu avec $n$.
+le nombre de qubits encodés $k$ 
+ne doit pas ou très peu augmenter avec $n$.
 
 Ce résultat implique que pour un grand $n$,
 soit peu de qubits sont encodés,
@@ -59,20 +59,20 @@ Conséquemment,
 il est possible d'utiliser des codes LDPC pour construire 
 des mémoires quantiques de grandes échelles.
 
-D'un point de vue expérimentale,
+D'un point de vue expérimental,
 les codes LDPC ont l'avantages de pouvoir être implémentés de sorte que 
-chaque qubit soit connecté à un nombre bornée d'autres qubits.
+chaque qubit soit connecté à un nombre borné d'autres qubits.
 Comme je le présenterai plus tard lorsque j'introduirai les circuits
 de mesures de syndromes,
 cela permet d'implémenter efficacement les circuits nécessaires à la
 construction d'une mémoire quantique,
 à la condition de pouvoir coupler n'importe quelle paire de qubits 
-indépendemment de la distance qui les sépare.
+indépendamment de la distance qui les sépare.
 
-Comme les couplages à long portée sont difficiles pour plusieurs technologie de qubits,
+Comme les couplages à longue portée sont difficiles pour plusieurs technologies de qubits,
 il est tentant d'essayer d'implémenter des codes dont le graphe de Tanner est non local
-à l'aide d'une architecture de qubits intéragissant localement,
-quite à payer un léger surcout.
+à l'aide d'une architecture de qubits interagissant localement,
+quitte à payer un léger surcout.
 Cependant,
 dans un article qui n'est pas présenté dans cette thèse~\cite{delfosse_bounds_2021},
 Nicolas Delfosse, Michael Beverland et moi-même avons montré que le cout de cette approche
@@ -90,15 +90,15 @@ Ainsi,
 soit un très grand nombre de qubits sont nécessaires,
 soit le circuit doit être très long.
 Dans les deux cas,
-augmenter ces quantités offre plus d'occasions aux erreurs de ce manifester,
+augmenter ces quantités offre plus d'occasions aux erreurs de se manifester,
 ce qui réduit significativement la qualité de la mémoire.
 
 L'article présenté dans ce chapitre introduit une nouvelle architecture pour une mémoire quantique
-qui permet d'implémenter des circuits pour de bons codes LDPC sans qu'il n'y ait de
+qui permet d'implémenter des circuits pour de bons codes LDPC sans qu'il y ait de
 croisement entre les couplages.
-Bien que cela ne permet de régler le problème des couplages à long portée,
+Bien que cela ne permet pas de régler le problème des couplages à longue portée,
 il s'agit d'un premier pas dans la bonne direction puisque les croisements
-entre les couplages sont une limitation importante aux connections plus longues
+entre les couplages sont une limitation importante aux connexions plus longues
 pour plusieurs technologies de
 qubits~\cite{sarovar_detecting_2020, debnath_demonstration_2016, neill_blueprint_2018, ash-saki_analysis_2020}.
 De plus,
@@ -108,7 +108,7 @@ sur des puces classiques~\cite{leighton_complexity_1983},
 mais jusqu'alors peu ou pas utilisés pour le design de systèmes quantiques.
 Comme des expériences numériques démontrent le potentiel de cette approche pour la réduction
 des erreurs dans une mémoire quantique,
-les travaux de cet article ouvre la porte à utiliser d'avantage les méthodes 
+les travaux de cet article ouvrent la porte à utiliser davantage les méthodes 
 de tracés de graphes pour la conception de systèmes quantiques.
 
 Pour le reste de ce chapitre,
@@ -116,7 +116,7 @@ je présenterai d'abord les notions nécessaires de tolérance aux fautes et les
 de bruits correspondant à une mémoire quantique.
 Par la suite,
 j'introduirai les codes de produits d'hypergraphes,
-la famille de codes LDPC qui a été utilisée dans les expériences numériques,
+les codes LDPC utilisés dans les expériences numériques,
 avant de présenter l'article.
 
 \section{Tolérance aux fautes quantique}
@@ -134,17 +134,18 @@ avant de présenter l'article.
 Dans un scénario idéal,
 un circuit quantique est composé de transformations unitaires,
 de préparations d'états, de mesures et de traitements classiques et toutes ces opérations
-se font sans erreur.
+se font sans erreurs.
 Par contre,
 ce scénario,
 bien que très utile pour concevoir des algorithmes quantiques,
 est loin de la réalité où chaque opération est imparfaite.
 Dans le modèle que je considère pour ce chapitre et les travaux associés,
-ces imperfections dans les opérations sont représentées en ajoutant à la suite
-de chaque opération parfaite un canal bruité tel qu'illustré à la figure~\ref{fig:teleportation_bruit}.
+ces imperfections dans les opérations sont représentées en ajoutant,
+à la suite de chaque opération parfaite,
+un canal bruité tel qu'illustré à la figure~\ref{fig:teleportation_bruit}.
 De plus,
 comme les circuits considérés inclus du traitement classique,
-il est supposé que les bits sont parfait,
+il est supposé que les bits sont parfaits,
 ce qui est assez près de la réalité.
 
 Selon l'opération qui est effectuée,
@@ -156,9 +157,9 @@ le circuit est divisé en étapes telles qu'à chacune d'elles,
 exactement une opération affecte chaque qubit.
 Pour ce faire,
 lorsqu'un qubit est inactif,
-il est considéré que l'opérateur $I$ est appliqué.
+l'opérateur $I$ est appliqué.
 Également,
-il n'est pas exclue qu'une opération affecte plusieurs qubits lors de la même étape.
+il n'est pas exclu qu'une opération affecte plusieurs qubits lors de la même étape.
 
 Pour la préparation d'un état propre de $Z$, soit $\ket 0$ ou $\ket 1$,
 le canal 
@@ -194,17 +195,17 @@ Cela est équivalent au canal binaire symétrique du premier chapitre
 et est noté $\mathcal E_m$.
 
 Le circuit de téléportation illustré à la figure~\ref{fig:teleportation_bruit},
-dans sa version idéale et sa version bruité,
+dans sa version idéale et sa version bruitée,
 constitue dans son ensemble une transformation (non unitaire) à un qubit.
 En effet,
-bien que celui-ci utilise,
+bien que celui-ci comporte trois qubits,
 seul le troisième peut avoir un état arbitraire en entrée et un seul qubit reste à la sortie.
-L'ensemble des circuits que je considérerai ont cette forme,
-c'est-à-dire qu'ils transforment $s$ qubits vers $s$ de manière 
+L'ensemble des circuits que je considèrerai ont cette forme,
+c'est-à-dire qu'ils transforment $s$ qubits vers $s'$ de manière 
 potentiellement non unitaire à l'aide de diverses opérations classiques et quantiques
 et de qubits supplémentaires.
 Je noterai $N$ le nombre total de qubits du circuit et $\tau$
-la profondeur, soit le nombre d'étapes du circuit. 
+sa profondeur, soit le nombre d'étapes. 
 
 En raison de l'ajout d'un canal bruité après chaque opération,
 il est peu probable que l'état à la sortie du circuit soit l'état désiré.
@@ -212,21 +213,21 @@ Pour contrer ce problème,
 les états à l'entrée et la sortie du circuit sont encodés dans un code correcteur.
 Cela implique par contre de modifier le circuit pour prendre en compte l'encodage des qubits.
 Pour évaluer la capacité d'un circuit modifié à tolérer les erreurs,
-on vérifie si un décodeur idéal, comme le décodeur de maximum de vraissemblance, est en 
+on vérifie si un décodeur idéal, comme le décodeur de maximum de vraisemblance, est en 
 mesure de corriger les erreurs à la sortie du circuit~\cite{gottesman_introduction_2009}.
 Ainsi,
 pour un circuit $C$,
 un état arbitraire $\ket{\psi}$,
 sa version encodée $\ket{\bar{\psi}}$ à l'aide d'un code $[n, k]$
 et un décodeur optimal $\mathcal D$,
-un circuit $T$ est un adaptation tolérante aux fautes de $C$ si,
+un circuit $T$ est une adaptation tolérante aux fautes de $C$ si,
 avec forte probabilité,
 \begin{align}
 	\mathcal D\qty(T \cdot \mathcal E_1^{n}\qty(\op{\bar \psi}) \cdot T^{\dag})
 	= \ket{\bar \phi},
 	\label{eq:tol_faute_condition}
 \end{align}
-où $\ket{\bar \phi}$ est la version encodé de $\ket{\phi} = C \ket\psi$.
+où $\ket{\bar \phi}$ est la version encodée de $\ket{\phi} = C \ket\psi$.
 
 Il n'est pas évident qu'il est possible de construire des circuits tolérants aux fautes
 puisque l'encodage demande d'utiliser une plus grand nombre de qubits,
@@ -236,17 +237,17 @@ le théorème du seuil~\cite{aharonov_fault-tolerant_1999} stipule que si la pro
 par opération $p$ est inférieure à une valeur seuil $p^*$,
 alors il est possible de construire un circuit tolérant aux fautes satisfaisant
 l'équation~\ref{eq:tol_faute_condition} avec une probabilité arbitrairement près de 1.
-La probabilité de seuil mesurée en pratique dépend des codes correcteur utilisés
+La probabilité de seuil mesurée en pratique dépend des codes correcteurs utilisés
 et des détails d'implémentation du circuit.
 Ainsi,
-la valeur de se seuil est une métrique importante dans la performance d'un circuit tolérant aux fautes.
+la valeur de ce seuil est une métrique importante dans la performance d'un circuit tolérant aux fautes.
 En effet,
-un seuil élevé permet d'utiliser le circuit avec des systèmes plus bruyant.
+un seuil élevé permet d'utiliser le circuit avec des systèmes plus bruyants.
 
 Le cas étudié dans les travaux de cette thèse est le cas simple d'une mémoire quantique 
-où la version idéale du circuit correspond à l'opérateur identité sur chaque qubit répété à chaque étape.
+où la version idéale du circuit est composée uniquement de l'opérateur identité sur chaque qubit répété à chaque étape.
 Bien que ce circuit semble très simple,
-il s'agit d'un passage essentiel pour réaliser des circuits plus complexe comme le circuit
+il s'agit d'un passage essentiel pour réaliser des circuits plus complexes comme le circuit
 de téléportation.
 De plus,
 lorsque ce circuit est remplacé par sa version bruitée,
@@ -259,9 +260,9 @@ c'est-à-dire qu'elle diminue exponentiellement avec $k$ et $t$.
 L'astuce pour construire une mémoire quantique tolérante aux fautes
 est de constamment faire la correction des erreurs.
 Ainsi,
-le circuit est remplacé par une succession de mesure du syndrome
+le circuit est remplacé par une succession de mesures du syndrome
 et d'application de la correction obtenue par un décodeur.
-Bien sur, 
+Bien sûr, 
 chacune des opérations nécessaires dans les deux cas est suivie d'un canal bruité.
 
 En général,
@@ -270,14 +271,14 @@ Il est plutôt commun de choisir un décodeur sous-optimal,
 mais trouvant une correction en temps polynomial.
 Dans ce cas,
 on suppose que le temps de décodage est nul 
-et qu'aucune erreur ne peut apparaitre durant lors du décodage.
+et qu'aucune erreur n'apparait lors du décodage.
 
 Dans le cadre de cette thèse,
 je ne m'intéresse pas aux décodeurs et je me contente des algorithmes de décodage standards.
-Cela me permet de me concenter sur les circuits de mesure du syndrome.
+Cela me permet de me concentrer sur les circuits de mesure du syndrome.
 Dans le cas idéal,
-un circuit de mesure du syndrome prend en entrée un état arbitraire
-et retourne ce même état en plus d'une séquence de bits correspondant au syndrome de l'état.
+un circuit de mesure du syndrome prend en entrée un état arbitraire et retourne ce même état,
+en plus d'une séquence de bits correspondant au syndrome de l'état.
 
 Les mesures du syndrome se font à l'aide d'opérations appartenant au groupe de Clifford,
 de préparation des états propres de $X$ et $Z$ et de la mesure de ces opérateurs
@@ -288,7 +289,7 @@ il existe un $Q \in \mathcal P$ pour lequel $PU = UQ$.
 Comme les erreurs sont décomposées sur la base des opérateurs de Pauli,
 il est possible de remplacer une erreur appliquée avant un opérateur de Clifford
 par une erreur appliquée après.
-Cela permet ainsi de remplacer toutes les erreurs effectant un circuit composé d'opérateurs de Clifford, p
+Cela permet ainsi de remplacer toutes les erreurs affectant un circuit composé d'opérateurs de Clifford,
 par une seule erreur à la fin du circuit.
 
 Le groupe de Clifford est généré par l'opérateur d'Hadamard $H$,
@@ -333,17 +334,17 @@ une opération CNOT est faite à partir de chacun des qubits supportant de stabi
 vers le qubit de mesure.
 Finalement,
 ce qubit est mesuré dans la base de l'opérateur $Z$.
-Tel que mentionnée à l'équation~\ref{eq:cnot_pauli},
+Telle que mentionnée à l'équation~\ref{eq:cnot_pauli},
 une erreur $X$ affectant le premier qubit du CNOT est remplacée
 par une erreur $X$ sur ce même qubit et sur le qubit de mesure.
 Dans le cas contraire,
-une erreur $X$ sur le qubit de mesure ne se propage sur l'autre qubit 
+une erreur $X$ sur le qubit de mesure ne se propage pas sur l'autre qubit 
 impliqué dans le CNOT.
 Ainsi,
 comme illustré à la figure~\ref{fig:mesure_syndrome},
 après l'application des portes CNOT,
 le qubit de mesure se retrouve dans l'état $X^r\ket{0}$ où 
-$r$ et le nombre de qubits affecté par une erreur $X$ à l'entrée du circuit.
+$r$ est le nombre de qubits affecté par une erreur $X$ à l'entrée du circuit.
 Une mesure dans la base $Z$ permet donc de mesurer la parité de $r$.
 Comme les erreurs $Z$ n'ont aucun impact sur la valeur de la mesure,
 cela complète le circuit.
@@ -353,11 +354,11 @@ un circuit similaire est utilisé.
 Dans celui-ci,
 le qubit de mesure est préparé dans l'état $\ket +$ au lieu de l'état $\ket 0$,
 la direction des portes CNOT est inversée
-et la mesure ce fait dans la base de l'opérateur $X$.
+et la mesure se fait dans la base de l'opérateur $X$.
 Encore une fois,
 il est possible de valider ce circuit avec les relations de l'équation~\ref{eq:cnot_pauli}.
 
-Le circuit pour mesurer la totalité du syndrome est obtenue 
+Le circuit pour mesurer la totalité du syndrome est obtenu 
 en chainant les circuits pour mesurer la parité de chacun des
 générateurs du groupe stabilisateur.
 De prime abord,
@@ -367,30 +368,33 @@ la profondeur du circuit total augmente linéairement avec le nombre
 de générateurs.
 Deuxièmement,
 en cas d'erreurs dans les circuits individuels,
-la valeur du syndrome peut ne pas correspondre à l'erreur sur le système.
+la valeur du syndrome ne correspond plus à l'erreur résiduelle sur le système.
 
-Les travaux de ce chapitre addressent c'est deux problèmes.
+Les travaux de ce chapitre adressent ces deux problèmes.
 D'abord,
 il est montré qu'il est possible d'effectuer des mesures de syndromes en parallèle
-pour tout codes CSS.
+pour tous les codes CSS.
 Cela permet de réduire la profondeur du circuit à une constante qui ne dépend que
 du degré du graphe de Tanner,
-soit le nombre d'arête du sommet avec le plus de connexions.
+soit le nombre d'arêtes du sommet avec le plus de connexions.
 Ensuite,
 des simulations numériques ont montré que même avec cette approche simple
 de mesure du syndrome,
-le seuil de tolérance aux fautes obtenus avec les codes de produits d'hypergraphe
+le seuil de tolérance aux fautes obtenu avec les codes de produits d'hypergraphe
 est du même ordre de grandeur que les meilleurs seuils connus.
 Ainsi,
 remplacer les circuits de mesure de chaque générateur par des circuits
-naturellement plus tolérant aux fautes ne peut qu'améliorer les résultats qui seront présentés.
-Il s'agit d'ailleurs d'un avenue intéressante pour de futurs travaux de recherche.
+naturellement plus tolérants aux fautes ne peut qu'améliorer les résultats qui seront présentés.
+Il s'agit d'ailleurs d'une avenue intéressante pour de futurs travaux de recherche.
 
 Dans la prochaine section,
 je vais introduire les codes de produits d'hypergraphes, 
-la famille de codes LDPC qui a été étudiée plus en détails dans l'article.
+la famille de codes LDPC qui a été étudiée plus en détail dans l'article.
 
 \section{Codes de produits d'hypergraphes et codes expanseurs}
+\subsection{Codes linéaires}
+\subsection{Produits d'hypergraphes}
+
 
 \section{Article}
 
