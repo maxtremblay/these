@@ -230,7 +230,7 @@ avec forte probabilité,
 où $\ket{\bar \phi}$ est la version encodée de $\ket{\phi} = C \ket\psi$.
 
 Il n'est pas évident qu'il est possible de construire des circuits tolérants aux fautes
-puisque l'encodage demande d'utiliser une plus grand nombre de qubits,
+puisque l'encodage demande d'utiliser un plus grand nombre de qubits,
 ce qui représente un plus grand risque d'erreurs.
 Par contre,
 le théorème du seuil~\cite{aharonov_fault-tolerant_1999} stipule que si la probabilité d'erreur
@@ -330,7 +330,7 @@ Pour mesurer la parité d'un générateur du groupe stabilisateur de type $Z$,
 un qubit supplémentaire, nommé qubit de mesure,
 est d'abord préparé dans l'état $\ket 0$.
 Ensuite,
-une opération CNOT est faite à partir de chacun des qubits supportant de stabilisateur
+une opération CNOT est faite à partir de chacun des qubits supportant le stabilisateur
 vers le qubit de mesure.
 Finalement,
 ce qubit est mesuré dans la base de l'opérateur $Z$.
@@ -353,7 +353,7 @@ Pour mesurer la parité d'un stabilisateur de type $X$,
 un circuit similaire est utilisé.
 Dans celui-ci,
 le qubit de mesure est préparé dans l'état $\ket +$ au lieu de l'état $\ket 0$,
-la direction des portes CNOT est inversée
+l'orientation des portes CNOT est inversée
 et la mesure se fait dans la base de l'opérateur $X$.
 Encore une fois,
 il est possible de valider ce circuit avec les relations de l'équation~\ref{eq:cnot_pauli}.
@@ -370,7 +370,7 @@ Deuxièmement,
 en cas d'erreurs dans les circuits individuels,
 la valeur du syndrome ne correspond plus à l'erreur résiduelle sur le système.
 
-Les travaux de ce chapitre adressent ces deux problèmes.
+Les travaux de ce chapitre traitent de ces deux problèmes.
 D'abord,
 il est montré qu'il est possible d'effectuer des mesures de syndromes en parallèle
 pour tous les codes CSS.
@@ -446,7 +446,7 @@ Dans ce cas,
 		\vb x \in \corpsfini{2}^n : H \vb x = \vb 0
 	}.
 \end{align}
-Il est possible que $H$ est plus de $n - k$ rangées si certaines d'entres elles 
+Il est possible que $H$ ait plus de $n - k$ rangées si certaines d'entre elles 
 sont linéairement dépendantes, par contre je me limiterai au cas où $H$ est 
 de plein rang, donc que le nombre de rangées est exactement $n - k$.
 
@@ -465,7 +465,7 @@ L'adjoint d'un code $\code$ est le code $\code^\perp$ où $G^\perp = H^T$ et $H^
 Ainsi, les mots codes du code adjoint sont orthogonaux aux mots codes du code initial.
 Il en est de même pour les rangées des matrices de parité.
 
-Un exemple de code linéaire est le code de Hamming dont la matrice
+Un exemple de code linéaire est le code de Hamming, dont la matrice
 de parité est 
 \begin{align}
 	H = \begin{pmatrix}
@@ -485,7 +485,7 @@ et la matrice génératrice est
 \end{align}
 En calculant les $2^4 = 16$ combinaisons linéaires possibles des 
 rangées de $G$,
-l'on obtient que la distance minimale du code de Hamming est de trois.
+l'on obtient une distance minimale de trois pour le code de Hamming.
 Ainsi,
 ce code permet de corriger toutes les erreurs de norme de un.
 
@@ -497,7 +497,7 @@ le syndrome est
 \end{align}
 puisque $H \vb x = \vb 0$ par définition du code.
 Ainsi, le syndrome ne dépend que de l'erreur et non du mot code.
-La matrice $H$ est construire telle que le syndrome d'une erreur $\vb e$ de norme un
+La matrice $H$ est construite telle que le syndrome d'une erreur $\vb e$ de norme un
 correspond à la représentation en binaire du numéro de la colonne.
 Par exemple,
 le syndrome de $\vb e = \begin{pmatrix} 0 & 0 & 0 & 1 & 0 & 0 & 0 \end{pmatrix}^T$
@@ -509,7 +509,7 @@ il suffit de renverser ce dernier pour retrouver le mot code initial.
 Le code de Hamming est un exemple particulier et un syndrome ne permet généralement
 pas d'identifier aussi facilement une erreur.
 Par contre,
-les algorithmes de décodage des codes linéaires sortes du cadre de cette thèse.
+les algorithmes de décodage des codes linéaires sortent du cadre de cette thèse.
 Il est suffisant de considérer que les méthodes standards de propagation des 
 croyances sont utilisées~\cite{richardson_modern_2008}.
 
@@ -522,16 +522,16 @@ choisi aléatoirement répond à ces critères avec forte probabilité~\cite{sip
 Ce résultat repose sur une représentation graphique des codes linéaires sous forme de graphe de Tanner.
 
 Comme au chapitre précédent,
-la graphe de Tanner d'une matrice de parité $H$,
+le graphe de Tanner d'une matrice de parité $H$,
 est le graphe bipartie $T = (B \cup P, A)$
 où les sommets $B = \qty{b_1, \ldots, b_n}$ correspondent aux $n$ bits
 et les sommets $P = \qty{p_1, \ldots, p_{n - k}}$ aux $n - k$ rangées de la matrice de parité.
 L'arête $\qty{b_i, p_j} \in A$ si et seulement si $H_{ji} = 1$.
 Pour la suite de cette section,
-je considère que les graphe sont $(\Delta_B, \Delta_P)$-réguliers,
+je considère que les graphes sont $(\Delta_B, \Delta_P)$-réguliers,
 c'est-à-dire que le degré de tous les sommets de $B$ ($P$) est $\Delta_B$ ($\Delta_P$).
 Pour se limiter aux graphes de Tanner à faible densité,
-$\Delta_B$ et $\Delta_P$ sont fixés indépendemment du nombre de qubits $n$.
+$\Delta_B$ et $\Delta_P$ sont fixés indépendamment du nombre de qubits $n$.
 Les codes considérés sont donc des codes LDPC.
 
 Intuitivement,
@@ -539,7 +539,7 @@ un code permet de corriger une erreur si cette dernière anticommute avec un nom
 considérable de générateurs du groupe stabilisateur.
 Plus formellement,
 cette propriété se mesure par l'expansion du graphe du Tanner.
-Un graphe bipartie $G = (B\cup P, A)$, $(\Delta_B, \Delta_P)$-régulier,
+Un graphe biparti $G = (B\cup P, A)$, $(\Delta_B, \Delta_P)$-régulier,
 est $(\alpha_B, \beta_B)$-expanseur à gauche si,
 pour tout $S \subseteq B$ tel que $|S| \leq \alpha_B |B|$,
 \begin{align}
@@ -574,8 +574,8 @@ De plus,
 avec forte probabilité lorsque $n$ augmente,
 un graphe biparti régulier choisi aléatoirement est expanseur~\cite{sipser_expander_1996}.
 En combinant ces deux résultats,
-on conclue qu'avec forte probabilité un code choisi aléatoirement possède une distance minimale
-proportionnel à $n$.
+on conclut qu'avec forte probabilité un code choisi aléatoirement possède une distance minimale
+proportionnelle à $n$.
 Également, comme $1 - \Delta_B / \Delta_P = k/n$,
 il est possible de fixer les degrés pour obtenir un rendement arbitraire et constant.
 Ainsi,
@@ -583,8 +583,8 @@ cette approche permet de générer une famille de code avec $k\sim n$ et $d \sim
 ce qui est asymptotiquement optimal.
 
 Dans la prochaine section,
-je détaillerai comment une paires de graphes de Tanner expanseurs pour des codes linéaires
-peuvent être utilisé pour construire de bons codes correcteurs quantiques.
+je présenterai comment utiliser une paire de graphes de Tanner expanseurs classiques
+pour construire de bons codes correcteurs quantiques.
 Cela complètera les notions nécessaires pour comprendre l'article du chapitre.
 
 \subsection{Produits d'hypergraphes}
