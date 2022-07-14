@@ -461,9 +461,9 @@ Ainsi, un syndrome non nul indique la présence d'erreurs.
 
 Finalement, puisque $H (G\vb x) = \vb 0$ pour tous $\vb x \in \corpsfini{2}^k$,
 les matrices $G$ et $H$ doivent respecter la condition $HG = 0$.
-L'adjoint d'un code $\code$ est le code $\code^\perp$ où $G^\perp = H^T$ et $H^\perp = G^T$ sont inversés.
-Ainsi, les mots codes du code adjoint sont orthogonaux aux mots codes du code initial.
-Il en est de même pour les rangées des matrices de parité.
+% L'adjoint d'un code $\code$ est le code $\code^\perp$ où $G^\perp = H^T$ et $H^\perp = G^T$.
+% Ainsi, les mots codes du code adjoint sont orthogonaux aux mots codes du code initial.
+% Il en est de même pour les rangées des matrices de parité.
 
 Un exemple de code linéaire est le code de Hamming, dont la matrice
 de parité est 
@@ -574,12 +574,12 @@ De plus,
 avec forte probabilité lorsque $n$ augmente,
 un graphe biparti régulier choisi aléatoirement est expanseur~\cite{sipser_expander_1996}.
 En combinant ces deux résultats,
-on conclut qu'avec forte probabilité un code choisi aléatoirement possède une distance minimale
-proportionnelle à $n$.
+on conclut qu'avec forte probabilité,
+un code choisi aléatoirement possède une distance minimale proportionnelle à $n$.
 Également, comme $1 - \Delta_B / \Delta_P = k/n$,
 il est possible de fixer les degrés pour obtenir un rendement arbitraire et constant.
 Ainsi,
-cette approche permet de générer une famille de code avec $k\sim n$ et $d \sim n$,
+cette approche permet de générer une famille de codes avec $k \sim n$ et $d \sim n$,
 ce qui est asymptotiquement optimal.
 
 Dans la prochaine section,
@@ -588,6 +588,51 @@ pour construire de bons codes correcteurs quantiques.
 Cela complètera les notions nécessaires pour comprendre l'article du chapitre.
 
 \subsection{Produits d'hypergraphes}
+
+Au chapitre~\ref{chap:construction_codes},
+j'ai présenté une méthode novatrice pour construire des codes CSS.
+Pour les travaux de ce chapitre,
+j'utilise plutôt une famille existante de code CSS,
+les codes de produits d'hypergraphes~\cite{tillich_quantum_2014}.
+
+D'abord,
+je rappelle qu'un code CSS est un code stabilisateur pour lequel les générateurs du groupe
+stabilisateur se partionnent en deux sous-groupe, 
+les générateurs de type $X$ et les générateurs de type $Z$.
+Ces sous-groupes sont respectivement représentés par les matrices de parité $H_X$ et $H_Z$.
+Pour assurer que les stabilisateurs commutent,
+la condition $H_X H_Z^T = 0$ est imposée.
+Comme discuté au chapitre précédent,
+il est difficile de construire une paire de codes linéaires
+respectant cette condition.
+Le produit d'hypergraphe est en fait une méthode pour construire
+une telle paire de codes à partir d'une seconde paire de codes linéaires
+ne respectant pas nécessairement la condition.
+
+Le produit d'hypergraphes de deux codes linéaires $C_1$ et $C_2$
+correspond à un coloriage des sommets du produit cartésien~\footnote{Voir annexe~\ref{chap:theo_graphe}}
+des graphes de Tanner~\footnote{Le nom de \textit{produit d'hypergraphes} peut sembler étrange à première
+vue puisque les graphes de Tanner sont des graphes bipartis. Cependant, les hypergraphes et les graphes
+bipartis sont isomorphiques. Je me limite donc à la représentation par graphes bipartis.} correspondant.
+Les sommets du produit cartésien $T = T_1 \times T_2$, 
+des graphes de Tanner $T_i = (B_i \cup P_i, A_i)$ associés aux codes $C_i$,
+se partionnent en quatre ensembles:
+$B_1 \times B_2$, $P_1 \times P_2$, $B_1 \times P_2$ et $P_1 \times B_2$.
+Le graphe de Tanner $T_X$ possède alors les sommets $B_X = B_1 \times B_2 \cup P_1 \times P_2$
+et $P_X = B_1 \times P_2$.
+De même,
+le graphe de Tanner $T_Z$ possède les sommets $B_Z = B_X \equiv Q$
+et $P_Z = P_1 \times B_2$.
+La figure~2(a) de l'article à la fin du chapitre illustre cette construction.
+La figure montre également que le voisinage commun de chaque paire de sommets
+$(p_X, p_z) \in P_X \times P_Z$ contient soit deux ou zéro sommets de $Q$~\cite{tillich_quantum_2014}.
+
+
+
+
+
+
+ 
 
 \section{Article}
 
