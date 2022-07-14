@@ -517,8 +517,8 @@ Idéalement,
 il est désirable que 
 le rendement $k/n$ et la distance relative $d/n$ d'une famille de codes
 soient bornés inférieurement.
-Un résultat étonnant est qu'une matrice de parité avec une  faible densité de 1
-choisi aléatoirement répond à ces critères avec forte probabilité~\cite{gallager_low-density_1962}.
+Un résultat étonnant est qu'une matrice de parité avec une faible densité de 1
+choisi aléatoirement répond à ces critères avec forte probabilité~\cite{sipser_expander_1996}.
 Ce résultat repose sur une représentation graphique des codes linéaires sous forme de graphe de Tanner.
 
 Comme au chapitre précédent,
@@ -530,16 +530,64 @@ L'arête $\qty{b_i, p_j} \in A$ si et seulement si $H_{ji} = 1$.
 Pour la suite de cette section,
 je considère que les graphe sont $(\Delta_B, \Delta_P)$-réguliers,
 c'est-à-dire que le degré de tous les sommets de $B$ ($P$) est $\Delta_B$ ($\Delta_P$).
+Pour se limiter aux graphes de Tanner à faible densité,
+$\Delta_B$ et $\Delta_P$ sont fixés indépendemment du nombre de qubits $n$.
+Les codes considérés sont donc des codes LDPC.
 
+Intuitivement,
+un code permet de corriger une erreur si cette dernière anticommute avec un nombre 
+considérable de générateurs du groupe stabilisateur.
+Plus formellement,
+cette propriété se mesure par l'expansion du graphe du Tanner.
+Un graphe bipartie $G = (B\cup P, A)$, $(\Delta_B, \Delta_P)$-régulier,
+est $(\alpha_B, \beta_B)$-expanseur à gauche si,
+pour tout $S \subseteq B$ tel que $|S| \leq \alpha_B |B|$,
+\begin{align}
+	|\eta(S)| \geq (1 - \beta_B) \Delta_B |S|,
+\end{align}
+où $\eta(S)$ est l'ensemble des sommets dans le voisinage de $S$.
+De même,
+ce graphe est $(\alpha_P, \beta_P)$-expanseur à droite si,
+pour tout $S \subseteq P$ tel que $|S| \leq \alpha_P |P|$,
+\begin{align}
+	|\eta(S)| \geq (1 - \beta_P) \Delta_P |S|.
+\end{align}
+Finalement,
+le graphe est $(\alpha_B, \beta_B, \alpha_P, \beta_B)$-expanseur
+s'il est $(\alpha_B, \beta_B)$-expanseur à gauche
+et $(\alpha_P, \beta_P)$-expanseur à droite.
 
+Comme $\Delta_B|S|$ est la cardinalité maximale du voisinage d'un
+sous-ensemble $S \subseteq B$,
+il suit qu'un graphe est expanseur à gauche si la cardinalité de 
+chaque sous-ensemble de taille raisonnable est près de la valeur optimale.
+Une intuition similaire s'applique aux différentes variations de l'expansion.
+Ainsi,
+un graphe expanseur est un graphe relativement bien connecté,
+malgré une faible densité d'arêtes.
 
+La propriété d'expansion est importante pour la correction d'erreurs puisqu'un code correcteur
+avec un graphe de Tanner $(\Delta_B, \Delta_P)$-régulier et $(\alpha_B, \beta_B)$-expanseur à gauche,
+avec $\beta_B > 1/2$,
+possède une distance minimale de $\alpha_B n$~\cite{sipser_expander_1996}.
+De plus,
+avec forte probabilité lorsque $n$ augmente,
+un graphe biparti régulier choisi aléatoirement est expanseur~\cite{sipser_expander_1996}.
+En combinant ces deux résultats,
+on conclue qu'avec forte probabilité un code choisi aléatoirement possède une distance minimale
+proportionnel à $n$.
+Également, comme $1 - \Delta_B / \Delta_P = k/n$,
+il est possible de fixer les degrés pour obtenir un rendement arbitraire et constant.
+Ainsi,
+cette approche permet de générer une famille de code avec $k\sim n$ et $d \sim n$,
+ce qui est asymptotiquement optimal.
 
-
-
-
+Dans la prochaine section,
+je détaillerai comment une paires de graphes de Tanner expanseurs pour des codes linéaires
+peuvent être utilisé pour construire de bons codes correcteurs quantiques.
+Cela complètera les notions nécessaires pour comprendre l'article du chapitre.
 
 \subsection{Produits d'hypergraphes}
-
 
 \section{Article}
 
