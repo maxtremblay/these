@@ -610,22 +610,73 @@ une telle paire de codes à partir d'une seconde paire de codes linéaires
 ne respectant pas nécessairement la condition.
 
 Le produit d'hypergraphes de deux codes linéaires $C_1$ et $C_2$
-correspond à un coloriage des sommets du produit cartésien~\footnote{Voir annexe~\ref{chap:theo_graphe}}
-des graphes de Tanner~\footnote{Le nom de \textit{produit d'hypergraphes} peut sembler étrange à première
+s'obtient à partir du produit cartésien des graphes de 
+Tanner~\footnote{Le nom de \textit{produit d'hypergraphes} peut sembler étrange à première
 vue puisque les graphes de Tanner sont des graphes bipartis. Cependant, les hypergraphes et les graphes
 bipartis sont isomorphiques. Je me limite donc à la représentation par graphes bipartis.} correspondant.
-Les sommets du produit cartésien $T = T_1 \times T_2$, 
-des graphes de Tanner $T_i = (B_i \cup P_i, A_i)$ associés aux codes $C_i$,
+Le produit cartésien des graphes de Tanner $T_i = (B_i \cup P_i, A_i)$,
+associés aux codes $C_i$, 
+est le graphe 
+\begin{align}
+	T_1 \times T_2 = ((B_1 \cup P_1) \times (B_2 \cup P_2), A),
+\end{align}
+avec les arêtes 
+\begin{align}
+	A = 
+	&\qty{
+		\qty{(b_1, s_2), (p_1, s_2)} :
+		\qty{b_1, p_1} \in A_1, s_2 \in B_2 \cup P_2
+	} 
+	\notag\\
+	&\cup
+	\qty{
+		\qty{(s_1, b_2), (s_1, p_2)} :
+		\qty{b_2, p_2} \in A_2, s_1 \in B_1 \cup P_1
+	}.
+\end{align}
+
+\begin{figure}
+	\centering
+	\includegraphics{figures/produit_hg.pdf}
+	\caption[Produit d'hypergraphes]{
+		Produit d'hypergraphes entre deux graphes de Tanner.
+		Les sommets creux appartiennet aux graphes $T_1$ et $T_2$,
+		alors que les sommets pleins sont ceux de $T_1 \times T_2$.
+		Les ronds sont les sommets $Q = (B_1 \times B_2) \cup (P_1 \times P_2)$,
+		les carrés sont les sommets $P_X = B_1 \times P_2$
+		et les losanges sont les sommets $P_Z = P_1 \times B_2$.
+		Les arêtes en gras ainsi que les sommets associés illustrent comment
+		la contrainte d'orthogonalité est respectée.
+	}
+	\label{fig:produit_hg}
+\end{figure}
+
+Les sommets du produit cartésien $T_1 \times T_2$, 
 se partionnent en quatre ensembles:
 $B_1 \times B_2$, $P_1 \times P_2$, $B_1 \times P_2$ et $P_1 \times B_2$.
-Le graphe de Tanner $T_X$ possède alors les sommets $B_X = B_1 \times B_2 \cup P_1 \times P_2$
+Cette partition permet de construire les graphes de Tanner $T_X$ et $T_Z$.
+Le graphe $T_X$ possède alors les sommets $B_X = B_1 \times B_2 \cup P_1 \times P_2$
 et $P_X = B_1 \times P_2$.
 De même,
 le graphe de Tanner $T_Z$ possède les sommets $B_Z = B_X \equiv Q$
 et $P_Z = P_1 \times B_2$.
-La figure~2(a) de l'article à la fin du chapitre illustre cette construction.
-La figure montre également que le voisinage commun de chaque paire de sommets
-$(p_X, p_z) \in P_X \times P_Z$ contient soit deux ou zéro sommets de $Q$~\cite{tillich_quantum_2014}.
+Un exemple de produit d'hypergraphe est illustré à la figure~\ref{fig:produit_hg}.
+
+Le produit d'hypergraphe assure l'orthogonalité de $H_X$ et $H_Z$.
+En effet,
+par définition du produit cartésien,
+deux sommets $(b_1, p_2) \in P_X$ et $(p_1, b_2) \in P_Z$ 
+ont comme uniques voisins communs potentiels les sommets $(b_1, b_2), (p_1, p_2) \in Q$.
+Cela est le cas si $\qty{b_1, p_1} \in A_1$ et $\qty{b_2, p_2} \in A_2$.
+Si ces deux conditions sont remplis,
+les sommets $(b_1, p_2)$ et $(p_1, b_2)$ partagent deux voisins communs.
+Sinon,
+ils n'ont aucun voisin en commun.
+Ainsi, le voisinage commun de chaque paire de sommets $(p_X, p_z) \in P_X \times P_Z$
+contient soit deux ou zéro sommets de $Q$~\cite{tillich_quantum_2014}.
+Cette contrainte,
+qui implique l'orthogonalité de $H_X$ et $H_Z$,
+est également illustrée à la figure~\ref{fig:produit_hg}.
 
 
 
