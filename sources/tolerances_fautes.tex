@@ -393,13 +393,12 @@ la famille de codes LDPC qui a été étudiée plus en détail dans l'article.
 
 \section{Codes de produits d'hypergraphes et codes expanseurs}
 
-Les codes de produits d'hypergraphes,
-introduient par Tillich et Zémor~\cite{tillich_quantum_2014} figurent parmi les codes LDPC 
-les plus étudiées~\cite{grospellier_combining_2020, grospellier_numerical_2018, leverrier_quantum_2015, kovalev_improved_2012, kovalev_numerical_2018}.
+Les codes de produit d'hypergraphes introduits par Tillich et Zémor~\cite{tillich_quantum_2014}
+figurent parmi les codes LDPC les plus étudiées~\cite{grospellier_combining_2020, grospellier_numerical_2018, leverrier_quantum_2015, kovalev_improved_2012, kovalev_numerical_2018}.
 Une raison de cet intérêt est qu'ils permettent d'obtenir de bonnes performances 
 avec un rendement $k/n$ constant tout en ayant une construction relativement simple.
 En effet,
-ces derniers sont obtenus par le coloriage des sommets du produit cartésien de
+ces derniers sont obtenus par une partition des sommets du produit cartésien de
 deux codes correcteurs classiques.
 Ainsi,
 dans cette section,
@@ -569,7 +568,7 @@ malgré une faible densité d'arêtes.
 La propriété d'expansion est importante pour la correction d'erreurs puisqu'un code correcteur
 avec un graphe de Tanner $(\Delta_B, \Delta_P)$-régulier et $(\alpha_B, \beta_B)$-expanseur à gauche,
 avec $\beta_B > 1/2$,
-possède une distance minimale de $\alpha_B n$~\cite{sipser_expander_1996}.
+possède une distance minimale d'au moins $\alpha_B n$~\cite{sipser_expander_1996}.
 De plus,
 avec forte probabilité lorsque $n$ augmente,
 un graphe biparti régulier choisi aléatoirement est expanseur~\cite{sipser_expander_1996}.
@@ -678,14 +677,159 @@ Cette contrainte,
 qui implique l'orthogonalité de $H_X$ et $H_Z$,
 est également illustrée à la figure~\ref{fig:produit_hg}.
 
+Les matrices $H_X$ et $H_Z$ du produit d'hypergraphes des matrices
+$H_1 \in \corpsfini{2}^{n_1 \times r_1}$
+et
+$H_2 \in \corpsfini{2}^{n_2 \times r_2}$
+s'exprime directement selon~\cite{tillich_quantum_2014}
+\begin{align}
+	&H_X = (H_1 \otimes I_{n_2}\, \, \, I_{r_1} \otimes H_2^T),
+	&H_Z = (I_{n_1} \otimes H_2 \, \, \, H_1^T \otimes I_{r_2}),
+	\label{eq:prod_hg_mat}
+\end{align}
+où $(A \, \, \, B)$ est la concaténation des matrices $A$ et $B$.
+Il est alors aisé de vérifier l'orthogonalité,
+soit que
+\begin{align}
+	H_X H_Z^T 
+	&=
+	(H_1 \otimes I_{n_2})(I_{n_1} \otimes H_2)^T 
+	+ (I_{r_1} \otimes H_2^T)(H_1^T \otimes I_{r_2})^T
+	\notag \\
+	&= 
+	H_1 \otimes H_2^T + H_1 \otimes H_2^T
+	\notag \\
+	&= 0.
+\end{align}
+La dernière égalité se justifie du fait que $1 + 1 = 0$ pour le corps $\corpsfini{2}$.
 
+Pour le reste de section,
+je montrerai comment le produit d'hypergraphes permet de construire de bons codes CSS
+à partir de codes classiques expanseurs.
+Pour ce faire,
+je me limiterai aux produits de codes $C_1 = C_2 \equiv C$ 
+puisqu'il s'agit des codes utilisés dans l'article.
+Ce résultat est présenté plus détails par Leverrier et al~\cite{leverrier_quantum_2015}.
 
+L'équation~\eqref{eq:prod_hg_mat} implique que les dimensions des matrices
+$H_X \in \corpsfini{2}^{r_X \times n_q}$ et $H_Z \in \corpsfini{2}^{r_Z \times n_q}$ 
+sont données par les paramètres $n_q = n_1 n_2 + r_1 r_2$, $r_X = r_1 n_2$ et $r_Z = n_1 r_2$.
+Le code CSS correspondant possède ainsi $n_q$ qubits et $r_X + r_Z$ générateurs du groupe stabilisateur.
+Le nombre de qubits encodés est alors
+\begin{align}
+	k_q 
+	= 
+	n - r_X - r_Z
+	= (n_1 - r_1)(n_2 - r_2)
+	= k_1 k_2.
+\end{align}
+Dans le cas où $n_1 = n_2 \equiv n$, $k_1 = k_2 \equiv k$ et $r_1 = r_2 \equiv r$,
+les paramètres du codes quantiques sont $[n_q = n^2 + r^2, k_q = k^2]$.
+Ainsi,
+le code CSS résultant a un rendement $k_q / n_q$ constant lorsque le code linéaire utilisé 
+a également un rendement $k/n$ constant.
 
+La distance minimale $d_q$ d'un code CSS construit avec les codes linéaires $C_X$ et $C_Z$ 
+ayant respectivement une distance minimale $d_X$ et $d_Z$ est~\cite{calderbank_good_1996}
+\begin{align}
+	d_q = \min(d_X, d_Z).
+\end{align}
+Cela découle du fait que pour des stabilisateurs $S_X$ et $S_Z$ respectivement de type $X$ et $Z$,
+le poids du produit $S_X S_Z$ est au moins $\min(|S_X|, |S_Z|)$.
 
+Lorsque $H_1 = H_1 \equiv H$,
+l'équation~\eqref{eq:prod_hg_mat} devient
+\begin{align}
+	&H_X = (H \otimes I_{n}\, \, \, I_{r} \otimes H^T),
+	&H_Z = (I_{n} \otimes H \, \, \, H^T \otimes I_{r}).
+\end{align}
+Ainsi,
+$H_X(\vb x \otimes \vb u \, \, \, \vb 0) = \vb 0$ 
+pour tous vecteurs $\vb x$ tels que $H \vb x = \vb 0$ et vecteurs $\vb u$ 
+tels que $|\vb u| = 1$.
+Dans ce cas,
+$|(\vb x \otimes \vb u \, \, \, \vb 0)| = |\vb x|$.
+Ainsi,
+la distance minimale $d_X$ du code $C_X$ de matrice de parité $H_X$ est au moins la distance
+minimale $d$ du code linéaire $C$.
+De même,
+il est possible de construire un vecteur orthogonal à $H_X$ à partir d'un vecteur $\vb x$
+tel que $H^T \vb x = \vb 0$.
+Ainsi,
+\begin{align}
+	d_X = \min(d, d^T),
+\end{align}
+avec $d^T$ la distance minimale du code de matrice de parité $H^T$.
+Un argument similaire s'applique pour $d_Z$.
+La distance minimale de code CSS est donc~\cite{tillich_quantum_2014}
+\begin{align}
+	d_q = \min(d_X, d_Z) = \min(d, d^T).
+\end{align}
 
- 
+Comme montré à la section précédente,
+un code linéaire $(\alpha_B, \beta_B, \alpha_P, \beta_P)$-expanseur a une
+distance minimale $d \geq \alpha_B n$.
+En transposant le graphe de Tanner associé,
+on conclut que $d^T \geq \alpha_P r$.
+Ainsi,
+la distance minimale du produit d'hypergraphe d'un code expanseur est~\cite{leverrier_quantum_2015}
+\begin{align}
+	d_q \geq \min(\alpha_B n, \alpha_P r).
+\end{align}
+Cette approche permet ainsi de construire une famille de codes CSS tels que
+$k_q \sim n_q$ et $d_q \sim \sqrt{n_q}$.
+Puisque la nombre de qubits encodés et la distance minimale augmente avec le nombre 
+de qubits du codes,
+il est possible d'utiliser ces codes pour construire des systèmes tolérant aux fautes
+avec un surcout constant en qubits~\cite{gottesman_fault-tolerant_2013}.
+Les travaux de l'article de ce chapitre font en pas dans cette direction 
+en introduisant une mémoire quantique tolérante aux fautes construite
+à partir de codes de produit d'hypergraphes.
 
 \section{Article}
+
+L'article a été accepté par la revue \textit{Physical Review Letters} a l'été 2022,
+mais n'était toujours pas publié au moment de soumettre la thèse.
+
+Dans celui-ci,
+des circuits de mesure du syndrome de profondeurs constantes utilisables
+avec tous codes CSS LDPC sont présentés.
+La construire ce ces circuits reposent sur un algorithme de coloration des
+arêtes des graphes de Tanner.
+De plus,
+il est montré comment réduire d'avantage la profondeur du circuit pour les codes 
+de produits d'hypergraphes.
+Des mémoires quantiques sont simulées en utilisant ces circuits pour des 
+produit d'hypergraphes de codes linéaires $(3, 4)$-réguliers.
+Les résultats obtenus montrent clairement que l'utilisation de cette approche
+réduit significativement le nombre de qubits nécessaires pour l'encodage
+en comparaison aux codes de surfaces,
+des codes très étudiés~\cite{kitaev_fault-tolerant_2003, dennis_topological_2002, fowler_surface_2012, fowler_high_2009, stephens_fault-tolerant_2014, bravyi_efficient_2014, darmawan_tensor-network_2017} 
+où les graphes de Tanner sont limités à des connexions locales.
+
+L'article introduit également une architecture multiplanaire pour implémenter une telle mémoire
+en laboratoire.
+Bien qu'il reste du travail à faire pour que implémenter cette architecture
+dans des conditions de laboratoire réelles,
+la constuire cette dernière utilise une approche novatrice basée sur les algorithmes de tracage de
+graphe.
+
+J'ai effectué les travaux de cet article dans le cadre d'un stage 
+dans l'équipe de Microsoft.
+L'idée de voir le problème de construction de circuits de mesure du syndrome
+comme un problème de coloriage de graphes a été proposé par mes superviseurs.
+Par la suite,
+j'ai poussé cette idée plus loin dans le cadre des produits d'hypergraphes.
+De plus,
+j'ai implémenté l'ensemble du logiciel de simulation en plus de faire les expériences numériques
+et l'analyse des données.
+J'ai également conçu l'architecture multiplanaire et effectué les preuves de l'article.
+Finalement,
+le travail de rédaction de l'article a été partagé également entre les trois auteurs.
+
+Les travaux que j'ai effectué lors du stage ont également menés à une seconde 
+publication~\cite{delfosse_bounds_2021},
+qui n'est pas présentée dans cette thèse.
 
 \includepdf[pages=-]{articles/planar_layout.pdf}
 
