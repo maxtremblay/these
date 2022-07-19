@@ -394,7 +394,7 @@ la famille de codes LDPC qui a été étudiée plus en détail dans l'article.
 \section{Codes de produits d'hypergraphes et codes expanseurs}
 
 Les codes de produit d'hypergraphes introduits par Tillich et Zémor~\cite{tillich_quantum_2014}
-figurent parmi les codes LDPC les plus étudiées~\cite{grospellier_combining_2020, grospellier_numerical_2018, leverrier_quantum_2015, kovalev_improved_2012, kovalev_numerical_2018}.
+figurent parmi les codes LDPC les plus étudiés~\cite{grospellier_combining_2020, grospellier_numerical_2018, leverrier_quantum_2015, kovalev_improved_2012, kovalev_numerical_2018}.
 Une raison de cet intérêt est qu'ils permettent d'obtenir de bonnes performances 
 avec un rendement $k/n$ constant tout en ayant une construction relativement simple.
 En effet,
@@ -402,7 +402,7 @@ ces derniers sont obtenus par une partition des sommets du produit cartésien de
 deux codes correcteurs classiques.
 Ainsi,
 dans cette section,
-je présenterai d'abord un formalisme pour les codes corrections classiques
+je présenterai d'abord un formalisme pour les codes correcteurs classiques
 différent de celui présenté au chapitre~\ref{chap:codes_polaires},
 avant d'utiliser ce formalisme pour introduire formellement les codes
 de produits d'hypergraphes.
@@ -457,12 +457,8 @@ En autre,
 le syndrome d'un vecteur $\vb z \in \corpsfini{2}^n$ est le vecteur $\sigma(\vb z) = H\vb z$
 et les mots codes sont les vecteurs de syndrome nul.
 Ainsi, un syndrome non nul indique la présence d'erreurs.
-
 Finalement, puisque $H (G\vb x) = \vb 0$ pour tous $\vb x \in \corpsfini{2}^k$,
 les matrices $G$ et $H$ doivent respecter la condition $HG = 0$.
-% L'adjoint d'un code $\code$ est le code $\code^\perp$ où $G^\perp = H^T$ et $H^\perp = G^T$.
-% Ainsi, les mots codes du code adjoint sont orthogonaux aux mots codes du code initial.
-% Il en est de même pour les rangées des matrices de parité.
 
 Un exemple de code linéaire est le code de Hamming, dont la matrice
 de parité est 
@@ -486,7 +482,7 @@ En calculant les $2^4 = 16$ combinaisons linéaires possibles des
 rangées de $G$,
 l'on obtient une distance minimale de trois pour le code de Hamming.
 Ainsi,
-ce code permet de corriger toutes les erreurs de norme de un.
+ce code permet de corriger toutes les erreurs de norme un.
 
 Un décodeur optimal pour le code de Hamming découle directement de la valeur du syndrome.
 En effet, pour un mot code $\vb x$ affecté de l'erreur $\vb e$,
@@ -582,7 +578,7 @@ cette approche permet de générer une famille de codes avec $k \sim n$ et $d \s
 ce qui est asymptotiquement optimal.
 
 Dans la prochaine section,
-je présenterai comment utiliser une paire de graphes de Tanner expanseurs classiques
+j'aborderai comment utiliser une paire de graphes de Tanner expanseurs classiques
 pour construire de bons codes correcteurs quantiques.
 Cela complètera les notions nécessaires pour comprendre l'article du chapitre.
 
@@ -596,7 +592,7 @@ les codes de produits d'hypergraphes~\cite{tillich_quantum_2014}.
 
 D'abord,
 je rappelle qu'un code CSS est un code stabilisateur pour lequel les générateurs du groupe
-stabilisateur se partionnent en deux sous-groupe, 
+stabilisateur se partitionnent en deux sous-groupes, 
 les générateurs de type $X$ et les générateurs de type $Z$.
 Ces sous-groupes sont respectivement représentés par les matrices de parité $H_X$ et $H_Z$.
 Pour assurer que les stabilisateurs commutent,
@@ -639,7 +635,7 @@ avec les arêtes
 	\includegraphics{figures/produit_hg.pdf}
 	\caption[Produit d'hypergraphes]{
 		Produit d'hypergraphes entre deux graphes de Tanner.
-		Les sommets creux appartiennet aux graphes $T_1$ et $T_2$,
+		Les sommets creux appartiennent aux graphes $T_1$ et $T_2$,
 		alors que les sommets pleins sont ceux de $T_1 \times T_2$.
 		Les ronds sont les sommets $Q = (B_1 \times B_2) \cup (P_1 \times P_2)$,
 		les carrés sont les sommets $P_X = B_1 \times P_2$
@@ -651,7 +647,7 @@ avec les arêtes
 \end{figure}
 
 Les sommets du produit cartésien $T_1 \times T_2$, 
-se partionnent en quatre ensembles:
+se partitionnent en quatre ensembles:
 $B_1 \times B_2$, $P_1 \times P_2$, $B_1 \times P_2$ et $P_1 \times B_2$.
 Cette partition permet de construire les graphes de Tanner $T_X$ et $T_Z$.
 Le graphe $T_X$ possède alors les sommets $B_X = B_1 \times B_2 \cup P_1 \times P_2$
@@ -667,12 +663,12 @@ par définition du produit cartésien,
 deux sommets $(b_1, p_2) \in P_X$ et $(p_1, b_2) \in P_Z$ 
 ont comme uniques voisins communs potentiels les sommets $(b_1, b_2), (p_1, p_2) \in Q$.
 Cela est le cas si $\qty{b_1, p_1} \in A_1$ et $\qty{b_2, p_2} \in A_2$.
-Si ces deux conditions sont remplis,
+Si ces deux conditions sont remplies,
 les sommets $(b_1, p_2)$ et $(p_1, b_2)$ partagent deux voisins communs.
 Sinon,
 ils n'ont aucun voisin en commun.
 Ainsi, le voisinage commun de chaque paire de sommets $(p_X, p_z) \in P_X \times P_Z$
-contient soit deux ou zéro sommets de $Q$~\cite{tillich_quantum_2014}.
+contient soit deux ou zéro sommet de $Q$~\cite{tillich_quantum_2014}.
 Cette contrainte,
 qui implique l'orthogonalité de $H_X$ et $H_Z$,
 est également illustrée à la figure~\ref{fig:produit_hg}.
@@ -681,7 +677,7 @@ Les matrices $H_X$ et $H_Z$ du produit d'hypergraphes des matrices
 $H_1 \in \corpsfini{2}^{n_1 \times r_1}$
 et
 $H_2 \in \corpsfini{2}^{n_2 \times r_2}$
-s'exprime directement selon~\cite{tillich_quantum_2014}
+s'expriment directement selon~\cite{tillich_quantum_2014}
 \begin{align}
 	&H_X = (H_1 \otimes I_{n_2}\, \, \, I_{r_1} \otimes H_2^T),
 	&H_Z = (I_{n_1} \otimes H_2 \, \, \, H_1^T \otimes I_{r_2}),
@@ -703,13 +699,13 @@ soit que
 \end{align}
 La dernière égalité se justifie du fait que $1 + 1 = 0$ pour le corps $\corpsfini{2}$.
 
-Pour le reste de section,
+Pour le reste de cette section,
 je montrerai comment le produit d'hypergraphes permet de construire de bons codes CSS
 à partir de codes classiques expanseurs.
 Pour ce faire,
 je me limiterai aux produits de codes $C_1 = C_2 \equiv C$ 
 puisqu'il s'agit des codes utilisés dans l'article.
-Ce résultat est présenté plus détails par Leverrier et al~\cite{leverrier_quantum_2015}.
+Ce résultat est présenté plus en détail par Leverrier et al~\cite{leverrier_quantum_2015}.
 
 L'équation~\eqref{eq:prod_hg_mat} implique que les dimensions des matrices
 $H_X \in \corpsfini{2}^{r_X \times n_q}$ et $H_Z \in \corpsfini{2}^{r_Z \times n_q}$ 
@@ -724,7 +720,7 @@ Le nombre de qubits encodés est alors
 	= k_1 k_2.
 \end{align}
 Dans le cas où $n_1 = n_2 \equiv n$, $k_1 = k_2 \equiv k$ et $r_1 = r_2 \equiv r$,
-les paramètres du codes quantiques sont $[n_q = n^2 + r^2, k_q = k^2]$.
+les paramètres du code quantique sont $[n_q = n^2 + r^2, k_q = k^2]$.
 Ainsi,
 le code CSS résultant a un rendement $k_q / n_q$ constant lorsque le code linéaire utilisé 
 a également un rendement $k/n$ constant.
@@ -778,11 +774,11 @@ la distance minimale du produit d'hypergraphe d'un code expanseur est~\cite{leve
 \end{align}
 Cette approche permet ainsi de construire une famille de codes CSS tels que
 $k_q \sim n_q$ et $d_q \sim \sqrt{n_q}$.
-Puisque la nombre de qubits encodés et la distance minimale augmente avec le nombre 
-de qubits du codes,
+Puisque le nombre de qubits encodés et la distance minimale augmentent avec le nombre 
+de qubits du code,
 il est possible d'utiliser ces codes pour construire des systèmes tolérant aux fautes
 avec un surcout constant en qubits~\cite{gottesman_fault-tolerant_2013}.
-Les travaux de l'article de ce chapitre font en pas dans cette direction 
+Les travaux de l'article de ce chapitre avancent dans cette direction 
 en introduisant une mémoire quantique tolérante aux fautes construite
 à partir de codes de produit d'hypergraphes.
 
@@ -793,14 +789,14 @@ mais n'était toujours pas publié au moment de soumettre la thèse.
 
 Dans celui-ci,
 des circuits de mesure du syndrome de profondeurs constantes utilisables
-avec tous codes CSS LDPC sont présentés.
-La construire ce ces circuits reposent sur un algorithme de coloration des
+pour tous les codes CSS LDPC sont présentés.
+La construction de ces circuits repose sur un algorithme de coloration des
 arêtes des graphes de Tanner.
 De plus,
-il est montré comment réduire d'avantage la profondeur du circuit pour les codes 
+il est montré comment réduire davantage la profondeur du circuit pour les codes 
 de produits d'hypergraphes.
 Des mémoires quantiques sont simulées en utilisant ces circuits pour des 
-produit d'hypergraphes de codes linéaires $(3, 4)$-réguliers.
+produits d'hypergraphes de codes linéaires $(3, 4)$-réguliers.
 Les résultats obtenus montrent clairement que l'utilisation de cette approche
 réduit significativement le nombre de qubits nécessaires pour l'encodage
 en comparaison aux codes de surfaces,
@@ -809,15 +805,15 @@ où les graphes de Tanner sont limités à des connexions locales.
 
 L'article introduit également une architecture multiplanaire pour implémenter une telle mémoire
 en laboratoire.
-Bien qu'il reste du travail à faire pour que implémenter cette architecture
+Bien qu'il reste du travail à faire pour implémenter cette architecture
 dans des conditions de laboratoire réelles,
-la constuire cette dernière utilise une approche novatrice basée sur les algorithmes de tracage de
+la construction de cette dernière utilise une approche novatrice basée sur les algorithmes de traçage de
 graphe.
 
 J'ai effectué les travaux de cet article dans le cadre d'un stage 
 dans l'équipe de Microsoft.
 L'idée de voir le problème de construction de circuits de mesure du syndrome
-comme un problème de coloriage de graphes a été proposé par mes superviseurs.
+comme un problème de coloriage de graphes a été proposée par mes superviseurs.
 Par la suite,
 j'ai poussé cette idée plus loin dans le cadre des produits d'hypergraphes.
 De plus,
@@ -827,7 +823,7 @@ J'ai également conçu l'architecture multiplanaire et effectué les preuves de 
 Finalement,
 le travail de rédaction de l'article a été partagé également entre les trois auteurs.
 
-Les travaux que j'ai effectué lors du stage ont également menés à une seconde 
+Les travaux que j'ai effectués lors du stage ont également mené à une seconde 
 publication~\cite{delfosse_bounds_2021},
 qui n'est pas présentée dans cette thèse.
 
