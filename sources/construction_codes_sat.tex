@@ -9,7 +9,7 @@ je me suis intéressé à la correction des erreurs lors de la communication cla
 Pour la suite de la thèse,
 je quitterai ce régime pour m'intéresser au régime quantique.
 Dans ce chapitre, 
-je m'intéresserai plus particulièrement à la protection de l'information 
+j'aborderai plus particulièrement à la protection de l'information 
 dans un modèle quantique simplifié avant de présenter la conception d'une mémoire 
 quantique au prochain chapitre.
 Ce modèle simplifié ressemble au canal binaire symétrique présenté au premier chapitre
@@ -37,14 +37,14 @@ Par exemple,
 le bit 0 peut être associé à une valeur de 0 volt et le bit 1 à une valeur de 5 volts.
 Dans le cas où une valeur de 4.9 volts serait mesurée, il est fort probable que 
 la valeur désirée était le bit 1.
-Donc, en absence des perturbations externes présentent lors de la communication,
+Donc, en absence des perturbations externes présentes lors de la communication,
 l'information classique est relativement robuste.
 
 Au contraire, un système quantique est analogue puisqu'il existe une infinité d'états accessibles.
 Par exemple, toutes paires de nombres complexes $a$ et $b$ telles que $a^2 + b^2 = 1$
 représentent l'état d'un qubit.
 Ainsi, 
-une faible variation de ces paramètres représente un état différent
+une faible variation de ces paramètres engendre un état différent
 et distinguer l'état désiré d'un état corrompu est généralement impossible.
 De plus, l'accumulation de ces petites différences peut complètement
 changer le résultat d'un calcul.
@@ -64,7 +64,7 @@ protéger le système des erreurs comme c'est le cas pour la communication class
 Nous savons aujourd'hui comment contourner ces limitations. 
 Les premiers à avoir proposé une solution sont Calderbank, Shor et Steane~\cite{calderbank_good_1996, steane_multiple-particle_nodate}.
 D'ailleurs, à la prochaine section,
-je vais introduire une importante famille de codes correcteurs quantiques, les codes CSS, qui porte leur nom.
+je vais introduire une importante famille de codes correcteurs quantiques, les codes CSS, qui portent leur nom.
 En réponse à ce résultat, Gottesman~\cite{gottesman_stabilizer_1997} a introduit le formalisme des codes stabilisateurs
 que je vais utiliser dans ce chapitre pour décrire les codes correcteurs quantiques.
 
@@ -73,13 +73,13 @@ plusieurs familles de codes correcteurs quantiques ont été introduites.
 Les codes les plus étudiés sont sans aucun doute les codes de surfaces et 
 les codes toriques introduits par Kitaev~\cite{kitaev_fault-tolerant_2003}.
 Cependant,
-ces codes, bien qu'excellent pour protéger le système,
+ces codes, bien qu'excellents pour protéger le système,
 ne permettent pas d'encoder efficacement un grand nombre de qubits~\cite{bravyi_tradeoffs_2010}.
 Pour contrer ce problème,
 les codes quantiques d'opérateurs de parité à faible 
 densité~(LDPC, de l'anglais \textit{low-density parity-check})
 reçoivent de plus en plus d'attention.
-Cet intérêt est en partie stimuler par le succès des codes LDPC classiques introduits
+Cet intérêt est en partie stimulé par le succès des codes LDPC classiques introduits
 par Gallager~\cite{gallager_low-density_1962}.
 De plus, il a été montré par Gottesman~\cite{gottesman_fault-tolerant_2013}
 qu'il est possible d'utiliser des codes quantiques LDPC pour 
@@ -110,7 +110,7 @@ construire des codes correcteurs quantiques
 et des régimes pour lesquels la tâche est beaucoup plus ardue.
 Cela, bien que surprenant, est un comportement attendu pour ce type de problème.
 
-Je reviendrai sur cela après avoir présenté le formaliste des canaux bruités quantiques 
+Je reviendrai sur cela après avoir présenté le formalisme des canaux bruités quantiques 
 et des codes stabilisateurs.
 Finalement,
 je présenterai l'article expliquant la construction et 
@@ -142,7 +142,7 @@ avec la condition que
 \end{align}
 Cette dernière permet d'assurer que $\tr(\mathcal{E}(\rho)) = 1$.
 
-Dans leur excellent livre d'introduction à l'informatique quantique de 
+Dans leur excellent livre d'introduction à l'informatique quantique, 
 Neilsen et Chuang~\cite{nielsen_quantum_2010} motivent en détail 
 cette définition générale pour l'évolution d'un état quantique.
 Ainsi, je me limite à une justification intuitive de cette définition
@@ -154,7 +154,7 @@ sont $\qty{\ket{e_0}, \ket{e_1}, \ldots}$.
 Au début d'une expérience (ou d'un calcul),
 le système et l'environnement sont dans un état de produit tensoriel,
 soit un état sans intrication.
-De plus, il est suffisant de considérer que l'environnement est dans l'état 
+Aussi, il est suffisant de considérer que l'environnement est dans l'état 
 pur $\ket{e_0}$.
 En effet,
 si ce n'est pas le cas, il suffit de choisir un environnement plus grand jusqu'à 
@@ -187,7 +187,7 @@ Ainsi, l'état final du système est
 avec $E_k = \mel{e_k}{U}{e_0}$.
 Alors,
 l'application $\mathcal{E}$ représente la transformation de l'état d'un système quantique
-lorsque celui-ci interagit avec son environnement et que l'on ignore l'état final
+lorsque celui-ci interagit avec son environnement alors qu'on ignore l'état final
 de l'environnement.
 
 Une autre interprétation est qu'à la suite de l'application $\mathcal E$,
@@ -255,7 +255,7 @@ le canal s'écrit
   \mathcal E_p(\rho \times \op{0}) 
   = (1 - p) \rho \otimes \op{0} + p \frac{I}{2} \otimes \op{1}.
 \end{equation}
-Dans cet équation,
+Dans cette équation,
 l'opérateur $I/2$ est utilisé pour représenter un état maximalement mixé
 sans aucune information sur l'état initial $\rho$.
 Le second registre indique la présence de l'effacement.
@@ -349,7 +349,7 @@ les opérateurs $XX$ et $ZZ$.
 De même,
 les états $\ket 00$ et $\ket 11$ forment une base
 pour les états stabilisés par l'opérateur $ZZ$.
-Il est important de choisir des opérateurs qui commutent pour assurer 
+Il est important de choisir des opérateurs qui commutent pour s'assurer 
 que ceux-ci partagent les mêmes états propres.
 De plus, l'opérateur identité $I$ stabilise tous les états
 et l'opérateur $-I$ ne stabilise aucun état.
@@ -426,7 +426,7 @@ Formellement,
 tous les opérateurs $P \in \mathcal P_n$ de la même classe du groupe quotient $\mathcal P_n/\mathcal S$
 ont le même effet sur le code puisque $P\ket\psi = PS\ket\psi$ pour tout $S \in \mathcal S$.
 La classe d'un opérateur $P \in \mathcal P_n$ est l'ensemble $P\cdot \mathcal S = \qty{PS : S\in \mathcal S}$,
-soit l'ensemble des opérateurs équivalent après multiplication par un stabilisateur.
+soit l'ensemble des opérateurs équivalents après multiplication par un stabilisateur.
 De plus,
 comme $|\mathcal P_n| = 4^{n+1}$,
 le groupe quotient $\mathcal P_n/\mathcal S$ d'un code $[n, k]$ tel que $|\mathcal S| = 2^{n - k}$
@@ -459,7 +459,7 @@ les $4^{k+1}$ classes ayant ce syndrome sont reliées par les opérateurs logiqu
 
 On remarque que $\mathcal S \subset \mathcal L$.
 En effet, le groupe stabilisateur correspond à l'opérateur $I$ sur le code.
-De même, les classes $-\mathcal S$, $i\mathcal S$ et $-i\mathcal S$ correpondent
+De même, les classes $-\mathcal S$, $i\mathcal S$ et $-i\mathcal S$ correspondent
 aux opérateurs $-I$, $iI$ et $-iI$.
 La correspondance entre les autres opérateurs logiques et opérateurs de Pauli est
 arbitraire tant que les relations de commutations sont respectées.
@@ -469,7 +469,7 @@ $E \in \mathcal P_n$ en produit $LC$ où $C$ est un opérateur de même syndrome
 et $L$ est un opérateur logique.
 Il n'est pas nécessaire que $E = LC$, mais plutôt que $LC$ soit un élément de la classe $E \cdot \mathcal S$.
 Cette décomposition permet de construire une procédure de décodage optimale que l'on 
-nomme décodeur par maximum de vraissemblance (MV).
+nomme décodeur par maximum de vraisemblance (MV).
 À partir du syndrome de l'opérateur $E$, 
 le décodeur MV choisi d'abord aléatoirement une correction $C$ de même syndrome avant
 de choisir un opérateur logique selon
@@ -488,12 +488,12 @@ Ainsi, pour tout opérateur logique $L$, nous avons que
   \sum_{S\in \mathcal S} \Pr[LL^*SE].
 \end{align}
 Dans le cas typique,
-le poids de $E$ est faible puisque la probabilité d'un opérateur diminue avec son poid.
+le poids de $E$ est faible puisque la probabilité d'un opérateur diminue avec son poids.
 Ainsi, la somme est maximisée par $LL^* \in \mathcal S$ si le poids de chacun des opérateurs de
 $\mathcal L \setminus \mathcal S$ est élevé.
 Sinon,
 la somme est maximisée par $LL^* \equiv P \in \mathcal L \setminus \mathcal S$ 
-et l'application de cette correction laisse le système avec une erreur $L_{MV}CE = LL^*EE = P$ indectable.
+et l'application de cette correction laisse le système avec une erreur $L_{MV}CE = LL^*EE = P$ indédectable.
 
 Le décodeur échoue dans deux cas,
 soit si le poids de $E$ est élevé, ce qui est hors de notre contrôle,
@@ -505,22 +505,22 @@ il est important de construire des codes stabilisateurs pour lesquels la distanc
 \end{align}
 est élevée.
 Le décodeur MV permet de corriger toutes les erreurs dont le poids est inférieur à $d / 2$.
-Il n'est pas exclus que des erreurs de poids plus élevés soit corrigibles, 
+Il n'est pas exclu que des erreurs de poids plus élevés soit corrigibles, 
 mais les paramètres $n$, $k$ et $d$ d'un code permettent d'estimer rapidement la capacité
 de ce dernier à corriger les erreurs en fonction de son rendement $k/n$.
 Par exemple,
 la distance minimale du code de Shor est trois.
 Ainsi, ce code permet de corriger toutes les erreurs de poids un.
-Dans le cas où la probabilité d'un erreur de poids $w$ est proportionnelle $p^w$,
+Dans le cas où la probabilité d'une erreur de poids $w$ est proportionnelle $p^w$,
 le code de Shor réduit la probabilité d'erreur logique d'un facteur quadratique.
 
 Par contre,
-calculer la distance minimale d'un code requiert de comparer le poid d'un nombre exponentiel d'opérateurs.
+calculer la distance minimale d'un code requiert de comparer le poids d'un nombre exponentiel d'opérateurs.
 Il en est de même pour le calcul de $L_{MV}$ qui requiert généralement un nombre exponentiel de comparaisons.
-Une des exceptions à se grand cout pour le décodeur MV est pour le canal à effacement pour lequel
+Une des exceptions à ce grand cout pour le décodeur MV est pour le canal à effacement pour lequel
 le cout est  polynomial.
 Ainsi, dans les travaux de cette thèse,
-j'ai effectué dans simulations numériques du canal à effacement avec le décodeur MV pour estimer la
+j'ai effectué des simulations numériques du canal à effacement avec le décodeur MV pour estimer la
 capacité des codes que j'ai construits.
 Les codes étudiés dans l'article appartiennent 
 à la famille des codes CSS que je présente à la prochaine section.
@@ -535,7 +535,7 @@ L'avantage des codes CSS provient du fait qu'il est possible de décomposer n'im
 comme un produit d'un opérateur de type $X$ et d'un opérateur de type $Z$.
 Ainsi,
 la partie $X$ d'erreur sera détectée par les générateurs de type $Z$ et vice-versa.
-Cela permet alors de simplifier l'analyse et les décodeurs en sépérant le traitement des générateurs 
+Cela permet alors de simplifier l'analyse et les décodeurs en séparant le traitement des générateurs 
 et des erreurs de chaque type.
 Les générateurs $g(\mathcal S)$ du groupe stabilisateur $\mathcal S$
 code CSS sont donc partitionnés en deux sous-ensembles $g_X(\mathcal S)$ et $g_Z(\mathcal S)$,
@@ -570,7 +570,7 @@ la construction des codes par produits d'hypergraphes.
 La méthode de construction de codes présentée dans l'article de chapitre est en fait un algorithme
 de recherche d'ensemble d'opérateurs de Pauli qui commutent.
 Pour définir ce problème,
-j'utilise deux représentations alternatives des codes, soit les matrices de parités et les graphes de Tanner.
+j'utilise deux représentations alternatives des codes, à savoir les matrices de parités et les graphes de Tanner.
 Par simplicité,
 je limiterai ses représentations aux codes CSS,
 mais il est possible de les généraliser à tous les codes stabilisateurs.
@@ -623,7 +623,7 @@ ayant un nombre important d'arêtes.
 Cette recherche est analogue à un problème de coloration des arêtes du graphes initiales.
 On dit alors qu'un graphe admet un coloriage stabilisant s'il possède un graphe de Tanner comme sous-graphe.
 Cette connexion entre la construction de codes et la coloration de graphes permet 
-de représenter la construction de codes commme un problème de satisfaction de contraintes.
+de représenter la construction de codes comme un problème de satisfaction de contraintes.
 Je définirai ces problèmes à la section suivante.
 
 \section{Problèmes de satisfaction de contraintes}
@@ -710,7 +710,7 @@ tels régimes pour le problème de construction de codes.
 
 Les problèmes de satisfaisabilité booléennes,
 généralement abrégés à problèmes SAT,
-sont des problèmes de satisfactions de contraintes où le domaine de chaque variable
+sont des problèmes de satisfaction de contraintes où le domaine de chaque variable
 est $\mathbb B = \qty{\mathcal V, \mathcal F}$,
 soit les valeurs booléennes \textit{vrai} et \textit{faux}.
 Dans la formulation la plus standard,
@@ -756,9 +756,8 @@ on dit qu'il est dans la forme normale conjonctive
 et il est possible d'exprimer toutes formules booléennes constituées de négations,
 de disjonctions et de conjonctions sous cette forme~\cite{tseitin_complexity_1983}.
 
-
 Les problèmes SAT ont reçu beaucoup d’attention,
-entre autres puisqu’il s’agit de problèmes auxquels tous les problèmes de la classe NP
+notamment parce qu’il s’agit de problèmes auxquels tous les problèmes de la classe NP
 peuvent être réduit~\cite{cook_complexity_1971}.
 Résoudre un problème SAT arbitraire est donc généralement difficile.
 Par contre, il est possible de construire des instances beaucoup
@@ -864,28 +863,28 @@ Cet article soumis au journal Quantum à l'été 2022 a pour titre original
 \textit{Finite-rate sparse quantum codes aplenty}.
 Celui-ci était toujours en processus de révision lors de la soumission de cette thèse.
 
-Dans ce dernier, le problème de construction de codes est défini plus en détail
+Dans cet article, le problème de construction de codes est défini plus en détail
 et des évidences numériques que la valeur du seuil décroit avec le nombre de qubits sont présentées.
 Cela permet alors de faire une connexion avec les autres problèmes de satisfaction de contraintes
 et de conclure que lorsque le nombre d'arêtes est supérieur au seuil,
-il deviant facile de construire des codes correcteurs d'erreurs quantiques.
+il devient facile de construire des codes correcteurs d'erreurs quantiques.
 Ce résultat reste valide lorsque des contraintes supplémentaires sont imposées pour obtenir des codes LDPC.
 De même,
 des simulations numériques démontrent que les codes trouvés de cette manière
 ont des performances optimales pour la canal à effacement.
 
-Cette article est le résultat de la combinaison de l'expertise que j'ai développée avec David Poulin
+Cet article est le résultat de la combinaison de l'expertise que j'ai développée avec David Poulin
 et l'équipe de Microsoft sur la correction d'erreurs quantique et l'expertise de Stefanos Kourtis
 sur les problèmes de satisfaction de contraintes et les différents régimes de difficulté.
 C'est après avoir rejoint l'équipe de ce dernier pour terminer mon doctorat que nous avons 
 réalisé le lien entre ces deux domaines de recherche.
 J'ai ensuite implémenté un logiciel permettant de construire et résoudre diverses instances 
 de problèmes de recherche de codes.
-Grace à celui-ci,
+Grâce à celui-ci,
 j'ai pu explorer diverses définitions du problème jusqu'à trouver la version qui est étudiée plus
-en détails dans l'article.
+en détail dans l'article.
 J'ai également implémenté et effectué les simulations des codes avec le canal à effacement.
 Finalement, 
-j'ai écris l'article qui a été révisé et amélioré par Stefanos Kourtis et Guillaume Duclos-Cianci.
+j'ai écrit l'article qui a été révisé et amélioré par Stefanos Kourtis et Guillaume Duclos-Cianci.
 
 \includepdf[pages=-]{articles/sat_codes_construction.pdf}
