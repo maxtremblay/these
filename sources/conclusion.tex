@@ -3,6 +3,66 @@
 
 \Conclusion % Chapitre qui ne sera pas numéroté si IntroConcluSansNombre est Vrai
 
-%-----------------------------------------------------------------------------%
+Dans cette thèse,
+j'ai présenté trois projets de recherche effectués lors de mon doctorat.
+Tous ces projets traitent de la correction des erreurs,
+mais dans des modèles de calcul différents.
 
-\kant[15-17]
+Lors du premier projet,
+j'ai mesuré l'impact de divers paramètres sur la performance et le temps de décodage
+des codes polaires convolutifs.
+Cela a permis d'identifier que les codes de profondeur et largeur deux offrent les
+meilleures performances en fonction du temps de décodage.
+Ce résultat pousse donc plus loin les performances des codes polaires standards
+qui sont présentement utilisés dans le réseau de communication 5G.
+Bien que les considérations d'ingénierie d'un réseau de communication sortent du cadre de cette thèse,
+il est évident que toutes les améliorations à la correction d'erreurs peuvent réduire les 
+couts d'implémentation d'un tel réseau.
+En effet,
+comme le taux d'erreur dépend de la distance entre les antennes,
+un code qui permet de corriger plus d'erreurs permet également d'augmenter la distance
+entre les antennes ce qui engendre une réduction du nombre nécessaire.
+
+Le second projet que j'ai présenté est en réalité le dernier que j'ai effectué.
+Dans le cadre de celui-ci,
+je me suis intéressé à la construction de codes correcteurs quantiques.
+La contribution la plus importante de ce projet réside dans la connexion
+entre les problèmes de satisfaction de contraintes et la construction de codes.
+Cela a permis de numériquement démontrer l'existence d'un seuil de satisfaisabilité
+pour la probabilité d'inclusion d'une arête dans le graphe de support,
+au-delà duquel il est facile de trouver des codes.
+Il existe donc des régimes de paramètres pour lesquels il est aisé de construire des codes.
+De plus,
+j'ai poussé la méthode plus loin pour construire une famille de codes LDPC offrant des 
+performances optimales pour le canal à effacement.
+Il reste encore du chemin à faire,
+mais cette approche offre la possibilité de découvrir des codes correcteurs pouvant être
+adaptés aux contraintes physiques des ordinateurs quantiques à court et moyen terme.
+
+Le troisième projet dont j'ai traité s'intéresse à la réalisation d'une architecture
+permettant l'implémentation d'une mémoire quantique.
+Des simulations numériques montrent également que cette approche permet de réduire significativement
+le nombre de qubits nécessaires.
+Bien sûr,
+il reste de nombreux défis à résoudre pour implémenter cette architecture en laboratoire,
+notamment l'implémentation de connexions à longue portée entre les qubits.
+Tout de même,
+l'approche présentée permet d'éliminer les croisements entre les connexions en exploitant
+un petit nombre de couches dans la troisième dimension.
+De plus,
+les méthodes de traçage de graphes utilisées pour obtenir cette architecture 
+ont le potentiel d'être appliquées pour contourner d'autres limitations à l'implémentation
+du calcul tolérant aux fautes.
+
+Dans l'ensemble de ces projets,
+les modèles de bruits étudiés demeurent agnostiques de la technologie utilisée pour construire
+les qubits.
+Ce choix est fait puisqu'il est encore trop tôt pour choisir une technologie parmi toutes celles
+proposées.
+Il reste donc du travail à faire pour adapter les méthodes proposées dans cette thèse aux diverses 
+technologies de qubits.
+Cependant,
+les travaux de cette thèse démontrent bien comment il est possible d'utiliser divers outils,
+des réseaux de tenseurs aux méthodes de traçage de graphes en passant par les problèmes de satisfaction
+de contraintes,
+pour faciliter le design de systèmes quantiques tolérant aux fautes.
