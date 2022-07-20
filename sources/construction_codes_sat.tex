@@ -10,7 +10,7 @@ Pour la suite de la thèse,
 je quitterai ce régime pour m'intéresser au régime quantique.
 Dans ce chapitre, 
 j'aborderai plus particulièrement à la protection de l'information 
-dans un modèle quantique simplifié avant de présenter la conception d'une mémoire 
+dans un modèle de bruit quantique simplifié avant de présenter la conception d'une mémoire 
 quantique au prochain chapitre.
 Ce modèle simplifié ressemble au canal binaire symétrique présenté au premier chapitre
 et il permet d'étudier la construction de codes correcteurs d'erreurs quantiques sans prendre en compte les détails d'implémentation.
@@ -41,7 +41,7 @@ Donc, en absence des perturbations externes présentes lors de la communication,
 l'information classique est relativement robuste.
 
 Au contraire, un système quantique est analogue puisqu'il existe une infinité d'états accessibles.
-Par exemple, toutes paires de nombres complexes $a$ et $b$ telles que $a^2 + b^2 = 1$
+Par exemple, toutes paires de nombres complexes $a$ et $b$ telles que $|a|^2 + |b|^2 = 1$
 représentent l'état d'un qubit.
 Ainsi, 
 une faible variation de ces paramètres engendre un état différent
@@ -103,7 +103,8 @@ En fait,
 cette construction permet de générer n'importe quelle famille de codes stabilisateurs,
 dont les codes LDPC.
 
-Cette approche repose sur la résolution d'un problème de satisfaction de contraintes.
+Cette approche repose sur la résolution d'un problème de satisfaction de contraintes,
+un problème fondamental et très étudié de l'informatique classique~\cite{lecoutre_constraint_2009}.
 Bien que ce problème soit généralement difficile à résoudre,
 j'ai numériquement identifié des régimes pour lesquels il est aisé de
 construire des codes correcteurs quantiques
@@ -151,14 +152,11 @@ et j'invite les personnes intéressées à consulter le huitième chapitre de ce
 De façon générale,
 l'état $\rho$ évolue au sein d'un environnement dont les états de base 
 sont $\qty{\ket{e_0}, \ket{e_1}, \ldots}$.
-Au début d'une expérience (ou d'un calcul),
-le système et l'environnement sont dans un état de produit tensoriel,
+Sans perte de généralité,
+le système et l'environnement sont supposés dans un état de produit tensoriel,
 soit un état sans intrication.
 Aussi, il est suffisant de considérer que l'environnement est dans l'état 
 pur $\ket{e_0}$.
-En effet,
-si ce n'est pas le cas, il suffit de choisir un environnement plus grand jusqu'à 
-obtenir un état pur.
 Ainsi,
 l'état initial du système et de l'environnement est $\rho \otimes \op{e_0}$.
 
@@ -221,7 +219,7 @@ le canal s'écrit généralement comme
 \begin{align}
   \mathcal E(\rho) = \sum_{P \in \mathcal P_n} p_P P\rho P.
 \end{align}
-Le poids $|P|$ d'un opérateur de Pauli $P$ est le nombre d'opérateurs différent de $I$ qui le compose.
+Le poids $|P|$ d'un opérateur de Pauli $P$ est le nombre d'opérateurs différents de $I$ qui le composent.
 Par exemple, $|i\cdot XIYX| = 3$.
 Pour l'ensemble des canaux que je considèrerai,
 la probabilité d'une erreur $P \in \mathcal P_n$ diminue exponentiellement avec le poids 
@@ -242,8 +240,8 @@ En particulier,
 dans l'article de ce chapitre,
 j'utilise le canal d'effacement quantique pour évaluer la performance
 des codes correcteurs que je construis.
-Ce canal représente la situation où l'information contenue dans certains qubits,
-dont on connait la position, est complètement perdue.
+Ce canal représente la situation où l'information contenue dans certains qubits
+est complètement perdue et qu'il est possible d'identifier ces qubits.
 On dit alors que ces qubits sont effacés.
 En laboratoire, cela correspond par exemple à la défaillance d'une composante électronique
 ou à la perte d'un photon.
@@ -256,7 +254,7 @@ le canal s'écrit
   = (1 - p) \rho \otimes \op{0} + p \frac{I}{2} \otimes \op{1}.
 \end{equation}
 Dans cette équation,
-l'opérateur $I/2$ est utilisé pour représenter un état maximalement mixé
+l'opérateur $I/2$ est utilisé pour représenter un état complètement mixte
 sans aucune information sur l'état initial $\rho$.
 Le second registre indique la présence de l'effacement.
 Comme 
@@ -267,13 +265,13 @@ Comme
 \end{align}
 pour tout opérateur $\rho$\footnote{
   En notant $f(\rho) = I\rho I + X\rho X + Y \rho Y + Z \rho Z$,
-  on remarque que $f(I/2) = I$ et que $f(X) = f(Y) = f(Z) = 0$.
+  on remarque que $f(I/2) = 2I$ et que $f(X) = f(Y) = f(Z) = 0$.
   De plus,
   pour avoir une trace unité,
   une matrice densité se décompose comme $\rho = I/2 + aX + bY + cZ$,
   ce qui permet de conclure.
 },
-il est possible de réécrire le canal à l'aide d'opérateurs de Pauli à 2 qubits.
+il est possible de réécrire le canal à l'aide d'opérateurs de Pauli à deux qubits.
 Ainsi,
 \begin{equation}
   \mathcal E_p(\rho \times \op{0}) 
@@ -310,8 +308,6 @@ dans un sous-espace d'un espace de plus grande dimension.
 Dans le cas des qubits,
 les états de l'espace de Hilbert $\mathcal H_2^k$ sont encodés à l'aide d'un
 sous-espace $\code \subseteq \mathcal H_2^n$.
-Pour préserver la linéarité de la mécanique quantique,
-le code $\code$ doit être un espace linéaire.
 Ainsi,
 si $\ket\psi, \ket\phi \in \code$,
 alors $\alpha\ket\psi + \beta\ket\phi \in \code$ 
@@ -334,7 +330,7 @@ mais celui-ci illustre qu'il n'est pas pratique d'énumérer l'encodage des éta
 pour définir un code.
 D'abord,
 l'espace $\mathcal H_2^k$ requiert $2^k$ états de base
-et chacun de ceux-ci implique une superposition de $\mathcal O(2^n)$ 
+et chacun de ceux-ci implique une superposition de $\mathcal O(2^n)$ états
 si le code $\code$ est un sous-espace de l'espace de Hilbert à $n$ qubits.
 
 Le formalisme des stabilisateurs permet de contourner ce problème en offrant une 
@@ -347,7 +343,7 @@ Par exemple,
 l'état $\ket{00} + \ket{11}$ est l'unique état à deux qubits stabilisé par 
 les opérateurs $XX$ et $ZZ$. 
 De même,
-les états $\ket 00$ et $\ket 11$ forment une base
+les états $\ket{00}$ et $\ket{11}$ forment une base
 pour les états stabilisés par l'opérateur $ZZ$.
 Il est important de choisir des opérateurs qui commutent pour s'assurer 
 que ceux-ci partagent les mêmes états propres.
@@ -397,7 +393,7 @@ j'utiliserai la notation $[n, k]$ pour représenter un code stabilisateur arbitr
 encodant l'espace $\mathcal H_2^k$ dans un sous-ensemble $\code \subseteq \mathcal H_2^n$.
 
 Le syndrome d'une erreur $E \in \mathcal P_n$,
-qui affectent un état $\ket\psi$ quelconque d'un code $[n, k]$,
+qui affecte un état $\ket\psi$ quelconque d'un code $[n, k]$,
 est le résultat des mesures des générateurs du groupe stabilisateur.
 Puisque les opérateurs de Pauli commutent ou anticommutent,
 le résultat de chacune de ces mesures est $+1$ ou $-1$.
@@ -416,11 +412,11 @@ Conséquemment,
 une mesure du syndrome permet de détecter la présence d'erreurs sans corrompre l'état du système.
 À partir de cette information,
 un décodeur essaie de trouver une correction $F$ telle que $FE \in \mathcal S$, 
-soit que $FE\ket\psi = \ket\psi$ pour tout état code $\ket\psi$.
+soit une correction telle que $FE\ket\psi = \ket\psi$ pour tout état code $\ket\psi$.
 Le choix de la correction n'est pas unique, car, si $FE \in \mathcal S$,
 alors $(SF)E \in \mathcal S$ pour tous $S \in \mathcal S$.
 Ainsi,
-toutes corrections $F' = SF$ sont également valides.
+toutes corrections $F' = SF$ sont équivalentes.
 
 Formellement,
 tous les opérateurs $P \in \mathcal P_n$ de la même classe du groupe quotient $\mathcal P_n/\mathcal S$
@@ -440,10 +436,14 @@ Les opérateurs appartenant aux classes ayant le syndrome $\qty{+1, +1, \ldots, 
 sont des représentations à $n$ qubit des opérateurs de Pauli $\mathcal P_k$
 agissant sur le code~\cite{aaronson_improved_2004}.
 Ces opérateurs forment le groupe des opérateurs logiques $\mathcal L$ et correspondent
-au centralisateur,
+au centralisateur~\footnote{
+  Il est en réalité nécessaire de considérer le normalisateur du groupe stabilisateur,
+  mais pour un sous-groupe du groupe de Pauli,
+  le centralisateur et le normalisateur sont égaux.
+  J'utilise donc le centralisateur directement pour simplifier la présentation.
+},
 \begin{align}
-  C_{\mathcal P_n}(\mathcal S) 
-  = \qty{P \in \mathcal P_n : PS = SP, \forall S \in \mathcal S},
+  \qty{P \in \mathcal P_n : PS = SP, \forall S \in \mathcal S},
 \end{align}
 du groupe stabilisateur.
 Puisqu'un opérateur logique $L \in \mathcal L$ commute avec l'ensemble des stabilisateurs,
@@ -462,26 +462,26 @@ En effet, le groupe stabilisateur correspond à l'opérateur $I$ sur le code.
 De même, les classes $-\mathcal S$, $i\mathcal S$ et $-i\mathcal S$ correspondent
 aux opérateurs $-I$, $iI$ et $-iI$.
 La correspondance entre les autres opérateurs logiques et opérateurs de Pauli est
-arbitraire tant que les relations de commutations sont respectées.
+arbitraire tant que les relations de commutation sont respectées.
 
 La conséquence de tout cela est qu'il est possible de décomposer un opérateur
-$E \in \mathcal P_n$ en produit $LC$ où $C$ est un opérateur de même syndrome que $E$
+$E \in \mathcal P_n$ en produit $LT$ où $T$ est un opérateur de même syndrome que $E$
 et $L$ est un opérateur logique.
-Il n'est pas nécessaire que $E = LC$, mais plutôt que $LC$ soit un élément de la classe $E \cdot \mathcal S$.
+Il n'est pas nécessaire que $E = LT$, mais plutôt que $LT$ soit un élément de la classe $E \cdot \mathcal S$.
 Cette décomposition permet de construire une procédure de décodage optimale que l'on 
 nomme décodeur par maximum de vraisemblance (MV).
 À partir du syndrome de l'opérateur $E$, 
-le décodeur MV choisi d'abord aléatoirement une correction $C$ de même syndrome avant
+le décodeur MV choisi d'abord aléatoirement une correction $T$ de même syndrome avant
 de choisir un opérateur logique selon
 \begin{align}
-  L_{\text{MV}} = \arg\max_{L \in \mathcal L} \sum_{S \in \mathcal S} \Pr[LSC].
+  L_{\text{MV}} = \arg\max_{L \in \mathcal L} \sum_{S \in \mathcal S} \Pr[LST].
 \end{align}
-L'idée derrière le décodeur MV est qu'il existe un opérateur logique $L^*$ tel que $C = L^*E$.
+L'idée derrière le décodeur MV est qu'il existe un opérateur logique $L^*$ tel que $T = L^*E$.
 Alors, le décodage est un succès si $L_{MV}$ et $L^*$ ont la même classe,
-c'est-à-dire si $L_{MV}C = SE$ pour un certain stabilisateur $S \in \mathcal S$.
+c'est-à-dire si $L_{MV}T = SE$ pour un certain stabilisateur $S \in \mathcal S$.
 Ainsi, pour tout opérateur logique $L$, nous avons que 
 \begin{align}
-  \sum_{S\in \mathcal S} \Pr[LSC]
+  \sum_{S\in \mathcal S} \Pr[LST]
   =
   \sum_{S\in \mathcal S} \Pr[LSL^*E]
   =
@@ -493,7 +493,7 @@ Ainsi, la somme est maximisée par $LL^* \in \mathcal S$ si le poids de chacun d
 $\mathcal L \setminus \mathcal S$ est élevé.
 Sinon,
 la somme est maximisée par $LL^* \equiv P \in \mathcal L \setminus \mathcal S$ 
-et l'application de cette correction laisse le système avec une erreur $L_{MV}CE = LL^*EE = P$ indédectable.
+et l'application de cette correction laisse le système avec une erreur $L_{MV}TE = LL^*EE = P$ indédectable.
 
 Le décodeur échoue dans deux cas,
 soit si le poids de $E$ est élevé, ce qui est hors de notre contrôle,
@@ -505,7 +505,7 @@ il est important de construire des codes stabilisateurs pour lesquels la distanc
 \end{align}
 est élevée.
 Le décodeur MV permet de corriger toutes les erreurs dont le poids est inférieur à $d / 2$.
-Il n'est pas exclu que des erreurs de poids plus élevés soit corrigibles, 
+Il n'est pas exclu que des erreurs de poids plus élevé soit corrigibles, 
 mais les paramètres $n$, $k$ et $d$ d'un code permettent d'estimer rapidement la capacité
 de ce dernier à corriger les erreurs en fonction de son rendement $k/n$.
 Par exemple,
@@ -531,19 +531,19 @@ Un opérateur est de type $P$ pour $P \in {X, Y, Z}$ s'il est un produit tensori
 Les codes de Calderbank-Shor-Steane (CSS)~\cite{calderbank_good_1996, steane_multiple-particle_nodate},
 sont des codes stabilisateurs générés par un ensemble composé uniquement d'opérateurs de type $X$ et $Z$.
 Le code de Shor de l'équation~\ref{eq:code_shor} est un exemple de code CSS.
-L'avantage des codes CSS provient du fait qu'il est possible de décomposer n'importe quelle erreur
-comme un produit d'un opérateur de type $X$ et d'un opérateur de type $Z$.
+L'avantage des codes CSS provient du fait qu'il est possible de décomposer n'importe quelle opérateur
+de Pauli comme un produit d'un opérateur de type $X$ et d'un opérateur de type $Z$.
 Ainsi,
-la partie $X$ d'erreur sera détectée par les générateurs de type $Z$ et vice-versa.
+la partie $X$ d'une erreur sera détectée par les générateurs de type $Z$ et vice-versa.
 Cela permet alors de simplifier l'analyse et les décodeurs en séparant le traitement des générateurs 
 et des erreurs de chaque type.
 Les générateurs $g(\mathcal S)$ du groupe stabilisateur $\mathcal S$
 code CSS sont donc partitionnés en deux sous-ensembles $g_X(\mathcal S)$ et $g_Z(\mathcal S)$,
-où $g_p(\mathcal S)$ contient les générateurs de type $P$.
+où $g_P(\mathcal S)$ contient les générateurs de type $P$.
 
 Construire un code CSS, et par extension un code stabilisateur, n'est pas simple,
 puisque les stabilisateurs doivent commuter.
-Pour vérifier si deux opérateurs de Pauli commutent ou anticommute,
+Pour vérifier si deux opérateurs de Pauli commutent ou anticommutent,
 il est suffisant de vérifier la commutation sur chaque qubit individuellement.
 En effet,
 deux opérateurs parmi $\qty{I, X, Y, Z}$ agissant sur le même qubit commutent si l'un d'entre 
@@ -562,13 +562,13 @@ Cependant,
 les relations de commutations entre les opérateurs sont suffisantes pour comprendre
 les travaux présentés à la fin de ce chapitre.
 Je reviendrai plus en détail sur les codes CSS au prochain chapitre lorsque je présenterai
-la construction des codes par produits d'hypergraphes.
+la construction des codes par produit d'hypergraphes.
  
 \subsection{Représentations des codes stabilisateurs}
 \label{sec:representations_codes}
 
 La méthode de construction de codes présentée dans l'article de chapitre est en fait un algorithme
-de recherche d'ensemble d'opérateurs de Pauli qui commutent.
+de recherche d'ensembles d'opérateurs de Pauli qui commutent.
 Pour définir ce problème,
 j'utilise deux représentations alternatives des codes, à savoir les matrices de parités et les graphes de Tanner.
 Par simplicité,
@@ -585,27 +585,31 @@ Comme un stabilisateur peut être représenté par un opérateur de parité,
 il est possible de représenter les générateurs $g_P(\mathcal S)$ d'un code CSS
 par une matrice $H_P$ dont la rangée $i$ est l'opérateur de parité du
 générateur $S_{P, i}$.
-Les matrices $H_X$ et $H_Z$ sont les matrices densités du code.
+Les matrices $H_X$ et $H_Z$ sont les matrices de parité du code.
 Ces dernières doivent respecter la condition $H_X^t H_Z = 0$ pour 
 que les stabilisateurs commutent.
 
 Un code est éparse si le nombre de 1 dans chacune des matrices est faible.
-Les codes éparses forment la famille des codes LDPC,
-de l'anglais \textit{Low-Density Parity-Check} qui se traduit par
+Formellement,
+une famille de codes est éparse si le ratio entre le nombre de 1 
+et le nombre total d'éléments de ces matrices de parité tend vers zéro 
+lorsque la taille du code augmente.
+Les codes éparses sont également nommés codes LDPC,
+de l'anglais \textit{Low-Density Parity-Check} se traduisant par
 \textit{opérateurs de parité à faible densité}.
 Comme je le présenterai à la section suivante,
 les codes LDPC sont particulièrement importants puisqu'il est possible de construire
-des circuits de mesures du syndrome avec un faible surcout
+des circuits de mesure du syndrome avec un faible surcout
 constant en nombre de qubits~\cite{gottesman_fault-tolerant_2013}.
 Ainsi,
-ces circuits de faible taille limitent la propagation en plus d'être plus simple à 
+ces circuits de faible taille limitent la propagation des erreurs en plus d'être plus simple à 
 implémenter en laboratoire.
 Un point fort de la méthode présentée dans l'article de ce chapitre est qu'elle permet 
 de générer de tels codes.
 
-Les matrices densités permettent également d'obtenir une représentation graphique d'un code.
+Les matrices de parité permettent également d'obtenir une représentation graphique d'un code.
 Pour ce faire, la matrice de parité $H_P$ est associée à la matrice d'adjacence d'un
-graphe bipartie $T_P = (Q \cup g_P(\mathcal S), A_P)$,
+graphe biparti $T_P = (Q \cup g_P(\mathcal S), A_P)$,
 où $Q = \qty{q_1, \dots, q_n}$ est l'ensemble des qubits
 et $\qty{q_i, S_{P, j}} \in A_P$ si et seulement si $H_{P, i, j} = 1$.
 Les graphes $T_X$ et $T_Z$ sont les graphes de Tanner de $g_X(\mathcal S)$ et $g_Z(\mathcal S)$.
@@ -617,13 +621,16 @@ pour obtenir le graphe de Tanner de $g(\mathcal S) = g_X(\mathcal S) \cup g_Z(\m
 La première figure de l'article de ce chapitre illustre le graphe de Tanner du code de Shor.
 
 D'un point de vue haut niveau,
-la méthode de construction de codes présentée dans cette thèse,
-cherche un graphe de Tanner comme le sous-graphe d'un graphe bipartie
-ayant un nombre important d'arêtes.
-Cette recherche est analogue à un problème de coloration des arêtes du graphes initiales.
+la méthode de construction de codes présentée dans cette thèse
+débute avec un graphe biparti ayant un nombre important d'arête.
+Ensuite, elle cherche un graphe de Tanner comme sous-graphe de ce graphe.
+Cette recherche est analogue à un problème de coloration des arêtes du graphe initiale.
 On dit alors qu'un graphe admet un coloriage stabilisant s'il possède un graphe de Tanner comme sous-graphe.
-Cette connexion entre la construction de codes et la coloration de graphes permet 
-de représenter la construction de codes comme un problème de satisfaction de contraintes.
+
+Les problèmes de coloriage de graphes figurent parmi les problèmes de satisfaction de contraintes.
+Ainsi,
+il est possible de construire des codes stabilisateurs en utilisant les méthodes 
+de résolutions des problèmes de statisfaction de contraintes.
 Je définirai ces problèmes à la section suivante.
 
 \section{Problèmes de satisfaction de contraintes}
@@ -664,8 +671,8 @@ un ensemble de domaines $D = \qty{d_1, \ldots, d_n}$
 et un ensemble de contraintes $C = \qty{c_1, \ldots, c_m}$.
 Chaque variable $v_i$ prend les valeurs du domaine $d_i$
 et chaque contrainte $c_j$ est une paire $(T_j, R_j)$
-telle que $T_j$ est un sous-ensemble ordonné de contraintes et $R_j$
-est un sous-ensemble des domaines correspondants.
+telle que $T_j$ est un sous-ensemble ordonné de variables et $R_j$
+est un sous-ensemble du produit des domaines correspondants.
 Une assignation $a: V \to D$ satisfait une contrainte $(T, R)$ 
 si $(a(v) : v \in T) \in R$.
 Un PSC est satisfiable s'il existe une assignation 
@@ -708,11 +715,11 @@ tels régimes pour le problème de construction de codes.
 
 \subsection{Seuil de satisfaisabilité}
 
-Les problèmes de satisfaisabilité booléennes,
+Les problèmes de satisfaisabilité booléenne,
 généralement abrégés à problèmes SAT,
 sont des problèmes de satisfaction de contraintes où le domaine de chaque variable
 est $\mathbb B = \qty{\mathcal V, \mathcal F}$,
-soit les valeurs booléennes \textit{vrai} et \textit{faux}.
+soient les valeurs booléennes \textit{vrai} et \textit{faux}.
 Dans la formulation la plus standard,
 un problème SAT avec les $n$ variables $V = \qty{v_1,\ldots, v_n}$
 est représenté par une conjonction de disjonctions des variables $V$ et de leur négation 
@@ -728,7 +735,7 @@ La négation est définie selon
   \bar v = 
   \begin{cases}
     \mathcal F, &\text{si } v = \mathcal V, \\
-    \mathcal V, &\text{s} v = \mathcal F,
+    \mathcal V, &\text{si } v = \mathcal F,
   \end{cases}
 \end{align}
 alors que la disjonction est définie selon
@@ -752,13 +759,13 @@ où la conjonction est définie selon
   \end{cases}
 \end{align}
 Lorsque le problème s'exprime comme une conjonction de disjonctions,
-on dit qu'il est dans la forme normale conjonctive
-et il est possible d'exprimer toutes formules booléennes constituées de négations,
+on dit qu'il est dans la forme normale conjonctive.
+Il est possible d'exprimer toutes formules booléennes constituées de négations,
 de disjonctions et de conjonctions sous cette forme~\cite{tseitin_complexity_1983}.
 
 Les problèmes SAT ont reçu beaucoup d’attention,
 notamment parce qu’il s’agit de problèmes auxquels tous les problèmes de la classe NP
-peuvent être réduit~\cite{cook_complexity_1971}.
+peuvent être réduits~\cite{cook_complexity_1971}.
 Résoudre un problème SAT arbitraire est donc généralement difficile.
 Par contre, il est possible de construire des instances beaucoup
 plus faciles à résoudre~\cite{cheeseman_where_1991}.
@@ -774,8 +781,8 @@ De plus,
 il est supposé que pour construire une instance aléatoire de problème $k$-SAT sur $n$ variables,
 chaque disjonction est choisie uniformément parmi les $\binom{2n}{k}$ possibilités.
 Pour $n$ et $k$ fixés, je note $D_{n,k}$ l'ensemble de ces disjonctions.
-Ainsi, une instance est définie par un sous-ensemble de $D_{n, k}$ et $\mathbb S_{n,k,m}$ 
-est la variable aléatoire des sous-ensembles de $m$ contraintes de $D_{n, k}$.
+Ainsi, une instance est définie par un sous-ensemble $S_{n,k,m}$ de $m$ contraintes de $D_{n, k}$.
+Le sous-ensemble $S_{n, k, m}$ est échantilloné de manière uniforme. 
 
 Pour un sous-ensemble $S \subseteq D_{n, k}$,
 la propriété $\mathcal P(S)$ est vraie lorsque le problème SAT correspond à $S$
@@ -787,13 +794,13 @@ En effet,
 si une assignation satisfait $S$, elle satisfait également $S'$.
 De plus,
 \begin{align}
-  \Pr[\mathcal P(\mathbb S_{n, k, m})] \leq 
-  \Pr[\mathcal P(\mathbb S_{n, k, m'})],
+  \Pr[\mathcal P(S_{n, k, m})] \leq 
+  \Pr[\mathcal P(S_{n, k, m'})],
 \end{align}
 si $m \geq m'$,
 puisque $\mathcal P$ est une propriété monotone décroissante 
 de $D_{n, k}$~\cite{bollobas_threshold_1987}.
-Finalement, la propriété $\mathcal P$ est non-trivial puisque
+Finalement, la propriété $\mathcal P$ est non triviale puisque
 $\mathcal P(S)$ est vraie lorsque $S$ est vide et fausse lorsque $S = D_{n, k}$,
 car $D_{n, k}$ contient les $2^k$ contraintes
 sur les variables $v_1, \ldots, v_k$ et leur négation
@@ -807,16 +814,16 @@ autour d'une valeur seuil et non de façon progressive.
 Formellement,
 une fonction $\mu(n)$ est un seuil pour $\mathcal P$ si 
 \begin{align}
-  \lim_{n \to \infty} \Pr[\mathcal P(\mathbb S_{n,k,m})] 
+  \lim_{n \to \infty} \Pr[\mathcal P(S_{n,k,m})] 
   =
   \begin{cases}
     1, \text{si } m / \mu \to 0, \\
-    0, \text{si } m / \mu \to 1.
+    0, \text{si } m / \mu \to \infty.
   \end{cases}
 \end{align}
-Un seuil est aigu lorsque la condition est relaxée à
+Un seuil est aigu lorsque la condition est 
 \begin{align}
-  \lim_{n \to \infty} \Pr[\mathcal P(\mathbb S_{n,k,m})] 
+  \lim_{n \to \infty} \Pr[\mathcal P(S_{n,k,m})] 
   =
   \begin{cases}
     1, \text{si } m / \mu < 1 - \epsilon, \\
@@ -824,7 +831,7 @@ Un seuil est aigu lorsque la condition est relaxée à
   \end{cases}
 \end{align}
 pour tout $\epsilon > 0$.
-Il est montré que toutes fonctions monotones décroissantes
+Il est montré que toutes propriétés monotones décroissantes
 possèdent un seuil~\cite{bollobas_threshold_1987}.
 
 Dans le cas des problèmes $k$-SAT pour $k \geq 3$,
@@ -848,7 +855,7 @@ admettant une certaine coloration des arêtes.
 L'existence d'un tel sous-graphe
 en une propriété monotone croissante avec le nombre d'arêtes du graphe initial.
 Ainsi,
-il existe également un seuil pour cette propriété à l'exception que celui-ci à la comportement 
+il existe également un seuil pour cette propriété à l'exception que celui-ci a le comportement 
 inverse au problème $k$-SAT.
 En effet,
 bien que les expériences numériques effectuées ne permettent pas de confirmer si le seuil 
