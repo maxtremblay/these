@@ -6,32 +6,32 @@
 L'ordinateur et l'internet figurent parmi les technologies qui ont le plus impacté
 notre mode de vie et l'organisation de nos sociétés.
 En effet,
-il est désormais possible d'accéder à une quantité phénoménale de connaissance,
+il est désormais possible d'accéder à une quantité phénoménale de connaissances,
 de connecter avec une personne de l'autre côté du globe
-et d'automatiser les taches du quotidient.
+et d'automatiser les tâches du quotidien.
 Tout cela avec une efficience qui peut sembler sans limite.
 
 Cependant, 
-bien que ces technologies offrent des performances impressionantes,
-il existe des taches pour lesquelles le temps nécessaire peut s'approche ou
-dépasse l'age actuel de l'univers.
-Bien sur,
-le temps d'exécution dépend de la taille de la tache a effectuer.
+bien que ces technologies offrent des performances impressionnantes,
+il existe des tâches pour lesquelles le temps nécessaire s'approche ou
+dépasse l'âge actuel de l'univers.
+Bien sûr,
+le temps d'exécution dépend de la taille de la tâche à effectuer.
 Par contre, 
-la difficulté de différentes taches n'augmente pas de manière similaire.
+la difficulté de différentes tâches n'augmente pas de manière similaire.
 
 Par exemple,
 il sera deux fois plus long pour un ordinateur d'inverser l'ordre d'une liste 
 si la longueur de cette dernière est doublée.
 Par contre,
-il ne suffit que d'ajouter un chiffre à un nombre pour que celui-ci soit deux 
+il suffit d'ajouter un chiffre à un nombre pour que celui-ci soit deux 
 fois plus long à factoriser~\cite{arora_computational_2009}.
 Formellement,
 on dit que la complexité du premier problème augmente linéairement avec la taille de l'entrée,
 alors que celle du second problème augmente exponentiellement.
 
-Les problèmes dont la complexité augmente exponentiellement requierent donc un temps de calcul
-hors de porté, et ce, même pour des instances de tailles modestes.
+Les problèmes dont la complexité augmente exponentiellement requièrent donc un temps de calcul
+hors de portée, et ce, même pour des instances de tailles modestes.
 Par contre,
 cette façon de calculer la complexité suppose un modèle de calcul dit classique,
 soit le modèle utilisé par les ordinateurs actuels.
@@ -43,17 +43,108 @@ L'idée du calcul quantique est attribuée à Ed Fredkin et Richard Feynman et
 c'est ce dernier qui aurait présenté cette possibilité en 1981 lors d'une conférence au MIT~\cite{hoofnagle_birth_2021}.
 Depuis,
 le calcul quantique a fait beaucoup de chemin,
-nottament après une publication de Peter Shor dans laquelle il introduit un 
-algorithme pouvant factoriser un nombre avec une complixité polynomiale selon
+notamment après une publication de Peter Shor dans laquelle il introduit un 
+algorithme pouvant factoriser un nombre avec une complexité polynomiale selon
 le nombre de chiffres à l'aide d'un ordinateur quantique~\cite{shor_algorithms_1994}.
 Dans ce cas,
-doubler la longueur du nombre de fait que multiplier par huit le temps de calcul.
-Cela est beaucoup plus efficace que la croissance exponentielle requise par un ordinateur classique.
+doubler la longueur du nombre ne fait que multiplier par huit le temps de calcul.
+Cela est beaucoup plus efficient que la croissance exponentielle requise par un ordinateur classique.
 
-Bien que ce résultat ne permet de résoudre tous les problèmes dont la complexité classique
+Bien que ce résultat ne permette pas de résoudre tous les problèmes dont la complexité classique
 est exponentielle,
-il démontre tout de même que certains problèmes qui semblaient hors d'atteintes des ordinateurs
-classiques seraient en théorie résolubles, en un temps raisonnable, par un ordinateur quantique.
+il démontre tout de même que certains problèmes,
+qui semblaient hors d'atteintes des ordinateurs classiques,
+sont en théorie résolubles, en un temps raisonnable, par un ordinateur quantique.
+Cela a bien sûr suscité un fort engouement pour l'information quantique et
+il existe aujourd'hui des applications dans plusieurs domaines comme
+la cryptographie~\cite{bennett_quantum_2014, gisin_quantum_2002}, 
+la chimie~\cite{lanyon_towards_2010, mcardle_quantum_2020, cao_quantum_2019} 
+et l'optimisation~\cite{montanaro_quantum_2016, grover_quantum_1997}.
+En plus de cela,
+il existe fort probablement plusieurs autres applications qui nous sont encore inconnues.
 
+Ainsi,
+l'informatique quantique a le potentiel de repousser les frontières de ce qui est aujourd’hui
+possible pour la recherche scientifique.
+Cependant,
+pour réaliser de telles promesses,
+il faut d'abord construire un ordinateur quantique capable d'exécuter ces nouveaux algorithmes quantiques.
+Et cela,
+bien évidemment,
+n'est pas une tâche simple.
 
+Plusieurs technologies sont proposées pour construire les ordinateurs quantiques.
+Que ce soit les circuits supraconducteurs~\cite{wallraf_strong_2004, krantz_quantum_2019}
+la photonique quantique~\cite{obrien_photonic_2009, kok_linear_2007},
+les points quantiques~\cite{pioro-ladriere_electrically_2008, loss_quantum_1998}
+ou l'une des nombreuses autres approches proposées,
+toutes ces technologies apportent leur lot de défis.
+Plusieurs de ces enjeux,
+comme le choix des matériaux ou
+des méthodes de couplage et de contrôle,
+sont uniques a une ou quelques approches.
+Cependant,
+un obstacle majeur auquel toutes ces technologies sont confrontées
+est la décohérence des systèmes quantiques~\cite{unruh_maintaining_1995, palma_quantum_1996}.
 
+La décohérence apparait lorsqu'un système quantique peut interagir avec son environnement
+et elle se manifeste sous plusieurs formes, 
+comme la perte de photons ou la relaxation du système vers un état d'énergie inférieure.
+Cela engendre donc des erreurs lors du calcul quantique,
+ce qui éloigne les résultats obtenus de ceux désirés.
+Puisqu'il est essentiel d'interagir avec un système quantique pour exécuter les diverses 
+opérations nécessaires à l'informatique quantique,
+la présence des erreurs est inévitable.
+
+Heureusement,
+il est possible de corriger les erreurs plus vites qu'elles apparaissent~\cite{aharonov_fault-tolerant_1999}.
+La correction des erreurs lors du calcul quantique est le sujet de cette thèse.
+Dans celle-ci,
+je présenterai les résultats de trois projets adressant cet enjeu.
+L'ordre de présentation des résultats suit l'augmentation du réalisme du modèle étudié à chaque section.
+
+Dans le premier chapitre,
+je présenterai un projet sur la correction d'erreurs dans les systèmes classiques.
+L'étude des systèmes classiques permet de développer une intuition qui est également
+applicable aux systèmes quantiques.
+De plus, il s'agit de problèmes ayant plusieurs applications en télécommunication.
+Notamment,
+les systèmes que j'ai étudiés,
+soient les codes polaires convolutifs,
+sont une généralisation des codes polaires,
+une méthode au coeur des technologies de communication de cinquième génération (5G)~\cite{arikan_rate_2009, bioglio_design_2021}.
+Les travaux que j'ai effectués ont permis d'identifier les paramètres qui maximisent la réduction des erreurs
+en fonction du temps de calcul nécessaire pour la correction.
+
+Dans le deuxième chapitre,
+je ferai en premier pas vers le régime quantique.
+Dans celui-ci,
+j'utiliserai un modèle simplifier de génération des erreurs sur un système quantique.
+Cela permet de se concentrer sur la construction de codes correcteurs,
+un outil essentiel à la réalisation du calcul quantique protégé des erreurs.
+Ainsi,
+je montrerai dans ce chapitre une nouvelle approche de construction de codes correcteurs
+basée sur des méthodes de résolution de problèmes de satisfaction de contraintes,
+des méthodes d'informatique théorique classique grandement étudiées~\cite{arora_computational_2009, noauthor_minizinc_nodate, noauthor_sat_nodate, achlioptas_rigorous_2005}.
+Cette approche permet alors d'identifier des régimes pour lesquels il est beaucoup plus simple qu'espéré
+de construire des codes correcteurs.
+De plus,
+les résultats numériques présentés montrent que les codes construits de cette manière
+sont optimaux pour le modèle de bruit étudié.
+
+Dans le troisième chapitre,
+j'introduirai un modèle de calcul quantique,
+soit la réalisation d'une mémoire quantique.
+En effet,
+sans avoir à effectuer des opérations précises,
+il est déjà difficile de protéger un système quantique lorsque celui-ci est inactif.
+Ce modèle,
+d'apparence simple,
+permet tout de même de développer et d'étudier plusieurs outils qui seront nécessaires
+au calcul quantique plus général.
+Dans ce chapitre,
+j'utiliserai des méthodes de la théorie des graphes pour réaliser une architecture 
+permettant d'implémenter une mémoire quantique en laboratoire.
+De plus,
+je montrerai que les approches proposées minimisent le nombre d'opérations nécessaires
+et qu'elles permettent de construire des ordinateurs quantiques de grandes échelles.
