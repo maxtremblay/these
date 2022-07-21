@@ -30,10 +30,80 @@
 \chapter{Théorie des groupes}
 \label{chap:theo_groupes}
 
+Un \textbf{groupe} $(G, *)$ est un ensemble $G$ avec une opération $* : G \times G \to G$
+satisfaisant les trois conditions suivantes.
+L'opération $*$ est associative.
+Il existe un élément identité $e$ tel que $e * g = g * e = g$ pour tous $g \in G$.
+Chaque élement $g \in G$ a un inverse $g^{-1} \in G$ tel que $g * g^{-1} = g^{-1} * g = e$.
+Par exemple $(\mathbb Z, +)$ est le groupe des nombres entiers avec l'opérateur d'addition.
+De plus, un groupe est \textbf{abélien} si l'opération est commutative.
+
+Les groupes considérés dans la thèse sont tous des groupes multiplicatifs.
+Dans ce cas, l'opérateur est noté $\cdot$ et régulièrement omis.
+Ainsi, $gh$ et $g \cdot h$ sont deux notations équivalentes pour la multiplication 
+de deux éléments d'un groupe.
+Comme l'opération est sous-entendu,
+il est commun de noter un groupe $(G, \cdot)$ seulement à partir de l'ensemble $G$.
+
+La \textbf{cardinalité} $|G|$ d'un groupe $G$ est le nombre d'éléments du celui-ci.
+Les groupes considérés dans la thèse ont tous une cardinalité finie.
+Un \textbf{sous-groupe} est un sous-ensemble $H \subseteq G$ satisfaisant les trois conditions
+d'un groupe.
+Je note alors $H \sqsubseteq G$.
+Un sous-ensemble $S \subseteq G$ est un \textbf{générateur} d'un sous-groupe $H$ si $H$ est le plus petit
+sous-groupe contenant $S$.
+J'utilise $g(H)$ pour représenter un générateur de $H$ 
+et $\langle S \rangle$ pour représenter le sous-groupe généré par $S$.
+Les éléments d'un sous-ensemble $S \subseteq G$ sont \textbf{indépendants} si 
+$|\langle T \rangle| > |\langle S \rangle|$ pour tous $T \subset S$.
+
+Pour $H \sqsubseteq G$,
+la \textbf{classe à gauche} d'un élément $g \in G$ est
+\begin{align}
+  gH = \qty{gh : h \in H}.
+\end{align}
+De même,
+la \textbf{classe à droite} de $g$ est 
+\begin{align}
+  Hg = \qty{hg : h \in H}.
+\end{align}
+Si $Hg = gH$ pour tous $g \in G$,
+alors $H$ est un \textbf{sous-groupe normal} et,
+pour tous $f, g \in G$,
+\begin{align}
+  (fH)\cdot(gH) = (fg)H
+\end{align}
+défini une opération respectant la définition d'un groupe pour les classes de $H$.
+Cela permet de former le \textbf{groupe quotient} 
+\begin{align}
+  G / H = \qty{gH : g \in G}.
+\end{align}
+
+La \textbf{conjugaison} de $g \in G$ et $H \sqsubseteq G$ est 
+\begin{align}
+  gHg^{-1} = \qty{ghg^{-1} : h \in H}.
+\end{align}
+Le \textbf{normalisateur} de $H$ est l'ensemble des éléments qui laisse $H$
+invariant après conjugaison.
+C'est-à-dire, l'ensemble
+\begin{align}
+  \mathcal{N}_G(H) = \qty{g \in G : gHg^{-1} = H}.
+\end{align}
+Le \textbf{centralisateur} de $H$ est l'ensemble des éléments qui commute avec
+tous les éléments de $H$, soit
+\begin{align}
+  \mathcal{C}_G(H) = \qty{g \in G : gh = hg,\, h \in H}.
+\end{align}
+Il est toujours vrai que $\mathcal{C}_G(H) \subseteq \mathcal{N}_G(H)$ puisque
+si $g \in \mathcal{C}_G(H)$ alors $ghg^{-1} = hgg^{-1} = h$.
+
+
+
 
 \begin{itemize}
   \item Définition
-  \item Centralisateur
+  \item Centralisateur / Normalisateur
+  \item Classe et groupe quotient
 \end{itemize}
 
 
