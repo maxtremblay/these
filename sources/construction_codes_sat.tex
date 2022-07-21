@@ -481,7 +481,12 @@ de choisir un opérateur logique selon
   L_{\text{MV}} = \arg\max_{L \in \mathcal L} \sum_{S \in \mathcal S} \Pr[LST].
 \end{align}
 L'idée derrière le décodeur MV est qu'il existe un opérateur logique $L^*$ tel que $T = L^*E$.
-Alors, le décodage est un succès si $L_{MV}$ et $L^*$ ont la même classe,
+Alors, le décodage est un succès si $L_{MV}$ et $L^*$ ont la même classe\footnote{
+  En fait, puisque la phase globale d'un opérateur n'est pas importante,
+  il est suffisant que les opérateurs appartiennent à des classes qui ne différent
+  que d'une phase.
+  Cependant, ce détail ne change en rien l'argument présenté.
+},
 c'est-à-dire si $L_{MV}T = SE$ pour un certain stabilisateur $S \in \mathcal S$.
 Ainsi, pour tout opérateur logique $L$, nous avons que 
 \begin{align}
