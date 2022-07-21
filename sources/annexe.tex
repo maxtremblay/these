@@ -7,25 +7,211 @@
 \chapter{Complexité de calcul}
 \label{chap:complexite_calcul}
 
-\begin{itemize}
-  \item Notation $O(\cdot)$ et $\Omega(\cdot)$
-\end{itemize}
+Dans cette section,
+la rigueur des définitions est variable.
+Définir formellement la complexité de calcul demande d'introduire un modèle de 
+calcul comme la machine de Turing.
+Cependant,
+cela sort de beaucoup du cadre de cette thèse
+et je me contente de définitions qui sont suffisantes à la compréhension du contenu de la thèse
+et j'évite plusieurs détails.
+
+Un \textbf{problème de calcul} est représenté par une relation $R \subseteq X \times Y$, 
+où $X$ est l'ensemble des \textbf{entrées} et $Y$ est l'ensemble des \textbf{solutions}.
+Les solutions de $x \in X$ sont les éléments de l'ensemble $Y_R(x) = \qty{y \in Y : (x, y)\in R}$.
+Un \textbf{algorithme} $a: X \to Y$ résout $R$ si $a(x) \in Y_R(x)$ pour tous $x \in X$.
+
+Un algorithme se décompose en une série d'opérations $a_1, \ldots a_c \in \mathcal A$ telle
+que $a(x) = (a_c \circ \ldots \circ a_1)(x)$ où $\circ$ représente la composition
+de fonctions.
+Cette décomposition de $a$ varie en fonction de la taille de $x$
+et dépend également des opérations accessibles $\mathcal A$.
+Plus précisément,
+il est supposé que les entrées $X$ sont décrites par des listes de tailles variées
+d'éléments d'un alphabet $\mathcal X$.
+Ainsi,
+$X \subseteq \mathcal X^* = \cup_{n=0}^\infty \mathcal X^n$ et
+une entrée $x \in X$ a une taille $n$ si $x \in \mathcal X^n$.
+
+La \textbf{complexité} d'un algorithme est le nombre $c(n)$ d'opérations nécessaires
+pour calculer $a(x)$ selon la taille $n$ de $x$.
+Il est souvent difficile et peut pertinent de calculer la valeur exacte de $c(n)$
+et il est généralement suffisant de connaitre le comportement général de $c(n)$.
+Pour ce faire,
+nous utilisons la \textbf{notation grand $\mathcal O$}.
+Une fonction $f(n)$ à la complexité $\mathcal O(g(n))$ s'il existe
+une constante $k$ telle que $f(n) \leq k g(n)$.
+Généralement,
+les complexités considérées sont les complexités \textbf{logarithmiques} $\mathcal O(\log n)$,
+\textbf{linéaire} $\mathcal O(n)$,
+\textbf{polynomiale} $\mathcal O(n^t)$ pour un entier $t > 0$
+et \textbf{exponentielle} $\mathcal O(2^n)$.
+
+Par exemple,
+le problème du tri d'une liste d'entiers est défini par la relation
+$R \subseteq \mathbb Z^* \times \mathbb Z^*$
+où chaque paire $(x, y) \in R$ est une liste $x$ et sa version triée $y$.
+Les opérations disponibles pour trier une liste sont la permutation et
+la comparaison de deux éléments.
+Comme il y a $n(n-1)/2$ paires de nombre,
+un algorithme naif de tri a une complexité $\mathcal O(n^2)$.
+
+Dans cette thèse,
+je m'utilise trois classes de complexité de problème importantes.
+Premièrement,
+la \textbf{classe P} est l'ensemble des problèmes
+pour lesquels il existe un algorithme de complexité polynomiale.
+Deuxièmement,
+la \textbf{classe NP} est l'ensemble des problèmes
+pour lesquels il existe un algorithme de complexité polynomiale
+qui permet de vérifier qu'une paire $(x, y)$ satisfait la relation.
+La différence avec la classe P est qu'il n'est pas nécessaire qu'un 
+algorithme de complexité polynomial soit en mesure de trouver $y \in Y_R(x)$,
+mais seulement qu'un algorithme soit en mesure de vérifier que $y$ est une solution
+de $x$.
+Troisièmement,
+un problème de la \textbf{classe $\sharp$P} est défini à partir d'un problème
+$R = (X, Y)$ de la classe NP.
+Le problème $N = (X, Y_R(X))$ de $\sharp$P correspondant est le problème de
+recherche du nombre de solutions dans $R$ d'une entrée $x \in X$.
+
+Évidemment, $\text{P} \subseteq \text{NP}$.
+Par contre, 
+il est toujours une question ouverte de déterminer si
+$\text{P} \subset \text{NP}$ ou si $\text{P} = \text{NP}$.
+Par contre,
+la conjecture la plus acceptée est que $\text{P} \subset \text{NP}$.
+
+Un problème $R = (X_R, Y)$ est \textbf{complet} pour une classe de complexité
+si pour tout problème $S = (X_S, Y)$ de cette classe il existe une fonction 
+$f: X_S \to X_R$ de complexité polynomiale.
+En particulier,
+un problème $R$ est \textbf{NP-complet} si un algorithme $A$ pour $R$
+permet de construire, avec un surcout polynomial,
+un algorithme pour résoudre un problème arbitraire de NP.
+
+
 
 \chapter{Théorie des graphes}
 \label{chap:theo_graphe}
 
-\begin{itemize}
-  \item Définition
-  \item Graphes biparties et hypergraphes
-\end{itemize}
+Un \textbf{graphe} est une paire $(S, A)$ telle que 
+\begin{align}
+  A \subseteq \qty{\qty{s, t} : s,t \in S}.
+\end{align}
+Les éléments de $S$ se nomment \textbf{sommets}
+et les éléments de $A$ se nomment \textbf{arêtes}.
+Deux sommets $s, t \in S$ sont \textbf{connectés} si $\qty{s, t} \in A$.
+Le \textbf{voisinage} d'un sommet $s$ est l'ensemble des arêtes contenant $s$,
+soit 
+\begin{align}
+  \eta(s) = \qty{a \in A : s \in a}.
+\end{align}
+Le \textbf{degré} d'un sommet est la taille de son voisinage.
+
+Un \textbf{graphe biparti} est un graphe pour lequel il existe une 
+partition des sommets $S = U \cup V$ telle que 
+\begin{align}
+  A \subseteq \qty{\qty{u, v} : u \in U,\, v \in V}.
+\end{align}
+Ainsi, les arêtes sont restreintes entre les paires de sommets n'appartenant pas
+au même ensemble.
+Un \textbf{hypergraphe} est une généralisation d'un graphe
+où le nombre de sommets par arête est arbitraire.
+Ainsi,
+un hypergraphe est une paire $(S, A)$ telle que
+\begin{align}
+  A \subseteq \qty{X \subseteq S}.
+\end{align}
+Le voisinage et le degré d'un sommet sont définis de façon similaire à un graphe.
+De plus, le poids $|a|$ de $a \in A$ est le nombre de sommets de cette arête.
+
+Il existe une correspondance entre les graphes bipartis et les hypergraphes.
+Pour un hypergraphe $H = (S, A)$,
+la fonction 
+\begin{align}
+  \phi(H) = (S \cup A, B),
+\end{align}
+avec $\qty{s, a} \in B$ si $s \in a$,
+est bijective et associe à chaque hypergraphe un unique graphe biparti.
+
+Un \textbf{cycle} de longueur $n$ est un graphe $C_n = (S, A)$
+avec $S = \qty{s_1, s_2, \ldots, s_n}$ et 
+$A = \qty{\qty{s_1, s_2}, \qty{s_2, s_3}, \ldots, \qty{s_n, s_1}}$.
+Un cycle de longueur paire est un graphe biparti.
+
+Soit deux graphes $G = (S, A)$ et $H = (T, B)$,
+le \textbf{produit cartésien} $G \times H$ est un graphe $(S \times T, C)$
+tel que $\qty{(s_1, t_1), (s_2, t_2)} \in C$ si 
+$s_1 = s_2$ et $\qty{t_1, t_2} \in B$ ou si $t_1 = t_2$ et $\qty{s_1, s_2} \in A$.
+Le produit cartésien de deux graphes contenant chacun deux sommets et une arête reliant ces
+sommets est un cycle de longueur quatre.
+Ainsi,
+pour le produit cartésien $G \times H$,
+chaque paire d'arêtes $a \in A$ et $b \in B$ engendre un cycle de longueur quatre dans $C$.
 
 \chapter{Théorie de l'information}
 \label{chap:theo_info}
 
-\begin{itemize}
-  \item Entropie
-  \item Information mutuelle
-\end{itemize}
+Considérant une variable aléatoire $X$ dont les valeurs possibles sont les éléments de $\mathcal X$
+avec probabilité $\Pr: \mathcal X \to [0, 1]$,
+la quantité d'information acquise après une réalisation $x \in \mathcal X$ de cette variable
+est $\log(1/\Pr(x))$.
+L'\textbf{entropie de Shannon} est l'espérance de cette valeur, soit 
+\begin{align}
+  H(X) = \mathbb E\qty(\log\qty(\frac{1}{\Pr(X)})) = -\sum_{x\in\mathcal X}\Pr(x) \log(\Pr (x)).
+\end{align}
+Dans cette définition,
+il est considéré que $p\log(p) = 0$ lorsque $p = 0$.
+
+Pour deux variables aléatoires $X, Y$ de domaines $\mathcal X, \mathcal Y$,
+l'\textbf{entropie conjointe} est 
+\begin{align}
+  H(X, Y) 
+  = \mathbb E\qty(\log\qty(\frac{1}{\Pr(X, Y)})) 
+  = -\sum_{x\in\mathcal X, y \in\mathcal Y}\Pr(x, x) \log(\Pr(x, y))
+\end{align}
+et l'\textbf{entropie conditionnelle} est
+\begin{align}
+  H(X | Y) 
+  = \mathbb E\qty(\log\qty(\frac{1}{\Pr(X|Y)})) 
+  = -\sum_{x\in\mathcal X, y \in\mathcal Y}\Pr(x, x) \log(\Pr(x|y)).
+\end{align}
+Il est aisé de vérifier que 
+\begin{align}
+  H(X, Y) = H(X | Y) + H(Y) = H(Y | X) + H(X).
+\end{align}
+Ainsi,
+l'information acquise après la réalisation simultanée de deux variables aléatoires
+est équivalente à la somme de l'information acquise en réalisant la première 
+et de l'information acquise en réalisant la seconde en connaissant la valeur de la première.
+
+L'\textbf{information mutuelle} entre deux variables aléatoires $X, Y$ est
+l'information que révèle une réalisation d'une des variables sur l'autre variable.
+L'information mutuelle se mesure en comparant la probabilité conjointe de $X, Y$
+aux probabilités marginales, soit
+\begin{align}
+  I(X ; Y) 
+  &= \mathbb E\qty(
+    \log\qty(\frac{1}{\Pr(X)\Pr(Y)})
+    -
+    \log\qty(\frac{1}{\Pr(X, Y)})
+  ) \notag \\
+  &= -\sum_{x\in\mathcal X, y \in\mathcal Y}\Pr(x, x) \log(\frac{\Pr(X, Y)}{\Pr(X)\Pr(Y)}).
+\end{align}
+Cette définition est symétrique,
+c'est-à-dire $I(X ; Y) = I(Y ; X)$.
+De plus,
+l'information mutuelle est reliée aux diverses entropies selon
+\begin{align}
+  I(X;Y)
+  = H(X) - H(X | Y)
+  = H(Y) - H(Y | X)
+  = H(X) + H(Y) - H(X, Y).
+\end{align}
+Le première équation illustre bien que l'information mutuelle correspond à la différence
+d'information acquise par une réalisation de $X$ lorsque $Y$ est inconnue ou connue.
+
 
 \chapter{Théorie des groupes}
 \label{chap:theo_groupes}
@@ -69,27 +255,28 @@ la \textbf{classe à droite} de $g$ est
 \end{align}
 Si $Hg = gH$ pour tous $g \in G$,
 alors $H$ est un \textbf{sous-groupe normal} et,
-pour tous $f, g \in G$,
+pour tous $f, g \in G$, l'opération
 \begin{align}
   (fH)\cdot(gH) = (fg)H
 \end{align}
-défini une opération respectant la définition d'un groupe pour les classes de $H$.
+entre les classes de $H$ respecte la définition d'un groupe.
 Cela permet de former le \textbf{groupe quotient} 
 \begin{align}
-  G / H = \qty{gH : g \in G}.
+  G / H = \qty{gH : g \in G},
 \end{align}
+soit le groupe des classes de $H$.
 
 La \textbf{conjugaison} de $g \in G$ et $H \sqsubseteq G$ est 
 \begin{align}
   gHg^{-1} = \qty{ghg^{-1} : h \in H}.
 \end{align}
-Le \textbf{normalisateur} de $H$ est l'ensemble des éléments qui laisse $H$
+Le \textbf{normalisateur} de $H$ est l'ensemble des éléments de $G$ qui laisse $H$
 invariant après conjugaison.
 C'est-à-dire, l'ensemble
 \begin{align}
   \mathcal{N}_G(H) = \qty{g \in G : gHg^{-1} = H}.
 \end{align}
-Le \textbf{centralisateur} de $H$ est l'ensemble des éléments qui commute avec
+Le \textbf{centralisateur} de $H$ est l'ensemble des éléments de $G$ qui commutent avec
 tous les éléments de $H$, soit
 \begin{align}
   \mathcal{C}_G(H) = \qty{g \in G : gh = hg,\, h \in H}.
@@ -97,13 +284,12 @@ tous les éléments de $H$, soit
 Il est toujours vrai que $\mathcal{C}_G(H) \subseteq \mathcal{N}_G(H)$ puisque
 si $g \in \mathcal{C}_G(H)$ alors $ghg^{-1} = hgg^{-1} = h$.
 
-
-
-
-\begin{itemize}
-  \item Définition
-  \item Centralisateur / Normalisateur
-  \item Classe et groupe quotient
-\end{itemize}
-
-
+Soit un groupe $G$ tel que $fg = \pm gf$ pour tous $f,g \in G$
+et $H \sqsubseteq G$ tel que $h \in H \implies -h \not\in H$,
+alors $\mathcal{N}_G(H) = \mathcal{C}_G(H)$ puisque
+\begin{align}
+  ghg^{-1} = \pm hgg^{-1} = \pm h = h
+\end{align}
+pour tous $h \in H$.
+Ceci est le cas pour le groupe stabilisateur présenté au chapitre~\ref{chap:construction_codes}
+de cette thèse.
