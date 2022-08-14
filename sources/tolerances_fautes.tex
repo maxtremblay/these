@@ -303,7 +303,7 @@ par une seule erreur à la fin du circuit.
 
 Le groupe de Clifford est généré par l'opérateur de Hadamard $H$,
 l'opérateur de phase $S$ et l'opérateur de non-contrôlé $\text{CNOT}$
-et inclus, entre autres, les opérateurs de Pauli.
+et inclut, entre autres, les opérateurs de Pauli.
 Parmi ces opérateurs,
 la porte $\text{CNOT}$,
 inversant le deuxième qubit si le premier est dans l'état $\ket{1}$,
@@ -506,7 +506,7 @@ La matrice $H$ est construite telle que le syndrome d'une erreur $\vb e$ de norm
 correspond à la représentation en binaire du numéro de la colonne.
 Par exemple,
 le syndrome de $\vb e = \begin{pmatrix} 0 & 0 & 0 & 1 & 0 & 0 & 0 \end{pmatrix}^T$
-est $\sigma(\vb e) = \begin{pmatrix} 0 & 1 & 1 \end{pmatrix}^T$,
+est $\sigma(\vb e) = \begin{pmatrix} 1 & 0 & 0 \end{pmatrix}^T$,
 ce qui correspond à la représentation binaire du nombre 4.
 Cela permet ainsi d'identifier que l'erreur affecte le quatrième bit et 
 il suffit de renverser ce dernier pour retrouver le mot code initial.
@@ -539,11 +539,8 @@ Pour se limiter aux graphes de Tanner à faible densité,
 $\Delta_B$ et $\Delta_P$ sont fixés indépendamment du nombre de qubits $n$.
 Les codes considérés sont donc des codes LDPC.
 
-Intuitivement,
-un code permet de corriger une erreur si cette dernière anticommute avec un nombre 
-considérable de générateurs du groupe stabilisateur.
-Plus formellement,
-cette propriété se mesure par l'expansion du graphe du Tanner.
+Une mesure importante de la capacité d'un code à corriger les erreurs
+est l'expansion du graphe du Tanner.
 Un graphe biparti $G = (B\cup P, A)$, $(\Delta_B, \Delta_P)$-régulier,
 est $(\alpha_B, \beta_B)$-expanseur à gauche si,
 pour tout $S \subseteq B$ tel que $|S| \leq \alpha_B |B|$,
@@ -618,7 +615,7 @@ Le produit d'hypergraphes de deux codes linéaires $C_1$ et $C_2$
 s'obtient à partir du produit cartésien des graphes de 
 Tanner~\footnote{Le nom de \textit{produit d'hypergraphes} peut sembler étrange à première
 vue puisque les graphes de Tanner sont des graphes bipartis. Cependant, les hypergraphes et les graphes
-bipartis sont équivalent. Je me limite donc à la représentation par graphes bipartis.
+bipartis sont équivalents. Je me limite donc à la représentation par graphes bipartis.
 Voir annexe~\ref{chap:theo_graphe}.} correspondants.
 Le produit cartésien des graphes de Tanner $T_i = (B_i \cup P_i, A_i)$,
 associés aux codes $C_i$, 

@@ -8,12 +8,12 @@
 \label{chap:theo_info}
 
 Considérant une variable aléatoire $X$ dont les valeurs possibles sont les éléments de $\mathcal X$
-avec probabilité $\Pr: \mathcal X \to [0, 1]$,
+avec probabilité $p_X: \mathcal X \to [0, 1]$,
 la quantité d'information acquise après une réalisation $x \in \mathcal X$ de cette variable
-est $\log(1/\Pr(x))$.
+est $\log(1/p_X(x))$.
 L'\textbf{entropie de Shannon} est l'espérance de cette valeur, soit 
 \begin{align}
-  H(X) = \mathbb E\qty(\log\qty(\frac{1}{\Pr(X)})) = -\sum_{x\in\mathcal X}\Pr(x) \log(\Pr (x)).
+  H(X) = \expec_{x \in \mathcal X}\qty(\log\qty(\frac{1}{p_X(x)})) = -\sum_{x\in\mathcal X}p_X(x) \log(p_X (x)).
 \end{align}
 Dans cette définition,
 il est considéré que $p\log(p) = 0$ lorsque $p = 0$.
@@ -22,14 +22,20 @@ Pour deux variables aléatoires $X, Y$ de domaines $\mathcal X, \mathcal Y$,
 l'\textbf{entropie conjointe} est 
 \begin{align}
   H(X, Y) 
-  = \mathbb E\qty(\log\qty(\frac{1}{\Pr(X, Y)})) 
-  = -\sum_{x\in\mathcal X, y \in\mathcal Y}\Pr(x, y) \log(\Pr(x, y))
+  = \expec_{x\in \mathcal X, y \in \mathcal Y}
+    \qty(\log\qty(\frac{1}{p_{X,Y}(x, y)})) 
+  = -\sum_{x\in\mathcal X, y \in\mathcal Y}p_{X,Y}(x, y) \log(p_{X, Y}(x, y)),
 \end{align}
-et l'\textbf{entropie conditionnelle} est
+où $p_{X, Y}(x, y)$ est la \textbf{probabilité conjointe},
+soit la probabilité d'obtenir les valeurs $x$ et $y$ simultanéments.
+De même,
+l'\textbf{entropie conditionnelle} est
+définie à partir de la \textbf{probabilité conditionnelle} $p_{X | Y}(x | y) = p_{X, Y}(x, y) / p_Y(y)$
+selon
 \begin{align}
   H(X | Y) 
-  = \mathbb E\qty(\log\qty(\frac{1}{\Pr(X|Y)})) 
-  = -\sum_{x\in\mathcal X, y \in\mathcal Y}\Pr(x, y) \log(\Pr(x|y)).
+  = \expec_{x\in\mathcal X, y \in\mathcal Y}\qty(\log\qty(\frac{1}{p_{X|Y}(x|y)})) 
+  = -\sum_{x\in\mathcal X, y \in\mathcal Y}p_{X, Y}(x, y) \log(p_{X|Y}(x|y)).
 \end{align}
 Il est aisé de vérifier que 
 \begin{align}
@@ -46,12 +52,12 @@ L'information mutuelle se mesure en comparant la probabilité conjointe de $X, Y
 aux probabilités marginales, soit
 \begin{align}
   I(X ; Y) 
-  &= \mathbb E\qty(
-    \log\qty(\frac{1}{\Pr(X)\Pr(Y)})
+  &= \expec_{x\in\mathcal X, y\in\mathcal Y}\qty(
+    \log\qty(\frac{1}{p_X(x)p_Y(y)})
     -
-    \log\qty(\frac{1}{\Pr(X, Y)})
+    \log\qty(\frac{1}{p_{X, Y}(x, y)})
   ) \notag \\
-  &= -\sum_{x\in\mathcal X, y \in\mathcal Y}\Pr(x, y) \log(\frac{\Pr(X, Y)}{\Pr(X)\Pr(Y)}).
+  &= -\sum_{x\in\mathcal X, y \in\mathcal Y}p_{X, Y}(x, y) \log(\frac{p_{X, Y}(x, y)}{p_X(x)p_Y(y)}).
 \end{align}
 Cette définition est symétrique,
 c'est-à-dire $I(X ; Y) = I(Y ; X)$.
@@ -65,6 +71,8 @@ l'information mutuelle est reliée aux diverses entropies selon
 \end{align}
 Le première équation illustre bien que l'information mutuelle correspond à la différence
 d'information acquise par une réalisation de $X$ lorsque $Y$ est inconnue ou connue.
+Finalement, l'information mutuelle est nulle lorsque $X$ et $Y$ sont indépendantes,
+c'est-à-dire si $p_X(x)p_Y(y) = p_{X,Y}(x,y)$ pour tous $x, y$.
 
 
 \chapter{Théorie des graphes}
@@ -161,7 +169,7 @@ et il est généralement suffisant de connaitre le comportement général de $c(
 Pour ce faire,
 nous utilisons la \textbf{notation grand $\mathcal O$}.
 Une fonction $f(n)$ a la complexité $\mathcal O(g(n))$ s'il existe
-une constante $k$ telle que $f(n) \leq k g(n)$.
+une constante $k > 0$ telle que $f(n) \leq k g(n)$.
 Généralement,
 les complexités considérées sont les complexités \textbf{logarithmiques} $\mathcal O(\log n)$,
 \textbf{linéaire} $\mathcal O(n)$,

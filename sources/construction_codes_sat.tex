@@ -29,7 +29,7 @@ Cette importance accrue des erreurs dans les systèmes quantiques s'explique
 principalement du fait qu'il s'agit de systèmes analogues plutôt que digitaux.
 Un système est digital lorsque chacun de ses éléments peut prendre un nombre fini
 de valeurs. 
-Dans le cas des ordinateurs classiques,
+Dans le cas des ordinateurs classiques standards,
 chaque bit prend soit la valeur 0 ou la valeur 1.
 Ainsi,
 une quantité continue comme une différence de potentiel représente physiquement un bit tout en le protégeant des erreurs.
@@ -103,7 +103,7 @@ En fait,
 cette construction permet théoriquement de générer n'importe quelle famille de codes stabilisateurs,
 dont les codes LDPC.
 De plus,
-les résultats des expériences numériques suggèrent que de nombreuses famille de codes peuvent 
+les résultats des expériences numériques suggèrent que de nombreuses familles de codes peuvent 
 être générées efficacement avec cette approche.
 
 Cette approche repose sur la résolution d'un problème de satisfaction de contraintes,
@@ -253,7 +253,7 @@ permettant de marquer les qubits effacés.
 Dans le cas d'un seul qubit avec une probabilité d'effacement $p$,
 le canal s'écrit
 \begin{equation}
-  \mathcal E_p(\rho \times \op{0}) 
+  \mathcal E_p(\rho \otimes \op{0}) 
   = (1 - p) \rho \otimes \op{0} + p \frac{I}{2} \otimes \op{1}.
 \end{equation}
 Dans cette équation,
@@ -277,7 +277,7 @@ pour tout opérateur $\rho$\footnote{
 il est possible de réécrire le canal à l'aide d'opérateurs de Pauli à deux qubits.
 Ainsi,
 \begin{equation}
-  \mathcal E_p(\rho \times \op{0}) 
+  \mathcal E_p(\rho \otimes \op{0}) 
   = \qty(1 -  p) \rho \otimes \op{0} + \frac{p}{4} \qty(\rho + X \rho X + Y \rho Y + Z \rho Z)\otimes \qty(X\op{0}X).
 \end{equation}
 
@@ -478,8 +478,9 @@ nomme décodeur par maximum de vraisemblance (MV).
 le décodeur MV choisi d'abord aléatoirement une correction $T$ de même syndrome avant
 de choisir un opérateur logique selon
 \begin{align}
-  L_{\text{MV}} = \arg\max_{L \in \mathcal L} \sum_{S \in \mathcal S} \Pr[LST].
+  L_{\text{MV}} = \arg\max_{L \in \mathcal L} \sum_{S \in \mathcal S} p(LST),
 \end{align}
+où $p(LST)$ est la probabilité d'obtenir l'erreur $LST$ selon le canal utilisé.
 L'idée derrière le décodeur MV est qu'il existe un opérateur logique $L^*$ tel que $T = L^*E$.
 Alors, le décodage est un succès si $L_{MV}$ et $L^*$ ont la même classe\footnote{
   En fait, puisque la phase globale d'un opérateur n'est pas importante,
@@ -490,17 +491,19 @@ Alors, le décodage est un succès si $L_{MV}$ et $L^*$ ont la même classe\foot
 c'est-à-dire si $L_{MV}T = SE$ pour un certain stabilisateur $S \in \mathcal S$.
 Ainsi, pour tout opérateur logique $L$, nous avons que 
 \begin{align}
-  \sum_{S\in \mathcal S} \Pr[LST]
+  \sum_{S\in \mathcal S} p(LST)
   =
-  \sum_{S\in \mathcal S} \Pr[LSL^*E]
+  \sum_{S\in \mathcal S} p(LSL^*E)
   =
-  \sum_{S\in \mathcal S} \Pr[LL^*SE].
+  \sum_{S\in \mathcal S} p(LL^*SE).
 \end{align}
 Dans le cas typique,
 le poids de $E$ est faible puisque la probabilité d'un opérateur diminue avec son poids.
 Ainsi, la somme est maximisée par $LL^* \in \mathcal S$ si le poids de chacun des opérateurs de
 $\mathcal L \setminus \mathcal S$ est élevé.
-Sinon,
+En effet, la probabilité d'un opérateur décroit exponentiellement avec la taille de celui-ci
+et la valeur de la somme est dominée par les termes de faibles poids.
+Dans le cas contraire,
 la somme est maximisée par $LL^* \equiv P \in \mathcal L \setminus \mathcal S$ 
 et l'application de cette correction laisse le système avec une erreur $L_{MV}TE = LL^*EE = P$ indédectable.
 
@@ -514,13 +517,13 @@ il est important de construire des codes stabilisateurs pour lesquels la distanc
 \end{align}
 est élevée.
 Le décodeur MV permet de corriger toutes les erreurs dont le poids est inférieur à $d / 2$.
-Il n'est pas exclu que des erreurs de poids plus élevé soit corrigibles, 
+Il n'est pas exclu que des erreurs de poids plus élevé soient corrigibles, 
 mais les paramètres $n$, $k$ et $d$ d'un code permettent d'estimer rapidement la capacité
 de ce dernier à corriger les erreurs en fonction de son rendement $k/n$.
 Par exemple,
 la distance minimale du code de Shor est trois.
 Ainsi, ce code permet de corriger toutes les erreurs de poids un.
-Dans le cas où la probabilité d'une erreur de poids $w$ est proportionnelle $p^w$,
+Dans le cas où la probabilité d'une erreur de poids $w$ est proportionnelle à $p^w$,
 le code de Shor réduit la probabilité d'erreur logique d'un facteur quadratique.
 
 Par contre,
@@ -546,7 +549,7 @@ Ainsi,
 la partie $X$ d'une erreur sera détectée par les générateurs de type $Z$ et vice-versa.
 Cela permet alors de simplifier l'analyse et les décodeurs en séparant le traitement des générateurs 
 et des erreurs de chaque type.
-Les générateurs $g(\mathcal S)$ du groupe stabilisateur $\mathcal S$
+Les générateurs $g(\mathcal S)$ du groupe stabilisateur $\mathcal S$ d'un
 code CSS sont donc partitionnés en deux sous-ensembles $g_X(\mathcal S)$ et $g_Z(\mathcal S)$,
 où $g_P(\mathcal S)$ contient les générateurs de type $P$.
 
@@ -559,7 +562,7 @@ deux opérateurs parmi $\qty{I, X, Y, Z}$ agissant sur le même qubit commutent 
 eux est trivial ($I$) ou s'ils sont égaux.
 Sinon, ils anticommutent.
 Conséquemment,
-deux opérateurs à plusieurs qubits commute si et seulement si ils anticommutent sur un nombre 
+deux opérateurs à plusieurs qubits commutent si et seulement si ils anticommutent sur un nombre 
 pair de qubits.
 Pour les codes CSS, 
 un opérateur de type $X$ commute avec un opérateur de type $Z$ si le nombre de qubits où les deux
@@ -576,7 +579,7 @@ la construction des codes par produit d'hypergraphes.
 \subsection{Représentations des codes stabilisateurs}
 \label{sec:representations_codes}
 
-La méthode de construction de codes présentée dans l'article de chapitre est en fait un algorithme
+La méthode de construction de codes présentée dans l'article de ce chapitre est en fait un algorithme
 de recherche d'ensembles d'opérateurs de Pauli qui commutent.
 Pour définir ce problème,
 j'utilise deux représentations alternatives des codes, à savoir les matrices de parités et les graphes de Tanner.
@@ -589,13 +592,14 @@ où $\vb p \in \corpsfini{2}^{n}$ est ce que l'on nomme un opérateur de parité
 Dans cette représentation,
 une paire d'opérateurs de Pauli de type $X$ et $Z$ ayant respectivement les opérateurs de parité $\vb x$ 
 et $\vb z$ commutent si $\vb x^T \vb z = 0$,
-soit lorsque $\vb x$ et $\vb z$ sont orthogonaux.
+soit lorsque $\vb x$ et $\vb z$ sont orthogonaux~\footnote{Je rappel que pour le corps $\bit$, 
+l'addition est telle que $1 + 1 = 0$.}.
 Comme un stabilisateur peut être représenté par un opérateur de parité,
 il est possible de représenter les générateurs $g_P(\mathcal S)$ d'un code CSS
 par une matrice $H_P$ dont la rangée $i$ est l'opérateur de parité du
 générateur $S_{P, i}$.
 Les matrices $H_X$ et $H_Z$ sont les matrices de parité du code.
-Ces dernières doivent respecter la condition $H_X^t H_Z = 0$ pour 
+Ces dernières doivent respecter la condition $H_X^T H_Z = 0$ pour 
 que les stabilisateurs commutent.
 
 Un code est éparse si le nombre de 1 dans chacune des matrices est faible.
@@ -631,7 +635,7 @@ La première figure de l'article de ce chapitre illustre le graphe de Tanner du 
 
 D'un point de vue haut niveau,
 la méthode de construction de codes présentée dans cette thèse
-débute avec un graphe biparti ayant un nombre important d'arête.
+débute avec un graphe biparti ayant un nombre important d'arêtes.
 Ensuite, elle cherche un graphe de Tanner comme sous-graphe de ce graphe.
 Cette recherche est analogue à un problème de coloration des arêtes du graphe initiale.
 On dit alors qu'un graphe admet un coloriage stabilisant s'il possède un graphe de Tanner comme sous-graphe.
@@ -639,7 +643,7 @@ On dit alors qu'un graphe admet un coloriage stabilisant s'il possède un graphe
 Les problèmes de coloriage de graphes figurent parmi les problèmes de satisfaction de contraintes.
 Ainsi,
 il est possible de construire des codes stabilisateurs en utilisant les méthodes 
-de résolutions des problèmes de statisfaction de contraintes.
+de résolution des problèmes de satisfaction de contraintes.
 Je définirai ces problèmes à la section suivante.
 
 \section{Problèmes de satisfaction de contraintes}
@@ -684,7 +688,7 @@ telle que $T_j$ est un sous-ensemble ordonné de variables et $R_j$
 est un sous-ensemble du produit des domaines correspondants.
 Une assignation $a: V \to D$ satisfait une contrainte $(T, R)$ 
 si $(a(v) : v \in T) \in R$.
-Un PSC est satisfiable s'il existe une assignation 
+Un PSC est satisfaisable s'il existe une assignation 
 satisfaisant toutes les contraintes simultanément.
 
 Pour le coloriage d'un graphe $G = (S, A)$,
@@ -795,7 +799,7 @@ Le sous-ensemble $S_{n, k, m}$ est échantilloné de manière uniforme.
 
 Pour un sous-ensemble $S \subseteq D_{n, k}$,
 la propriété $\mathcal P(S)$ est vraie lorsque le problème SAT correspond à $S$
-admet une instance satisfiable.
+admet une assignation satisfiable.
 Cette propriété est monotone décroissante,
 c'est-à-dire que si $\mathcal P(S)$ est vraie,
 alors $\mathcal P(S')$ est vraie pour tout $S' \subseteq S$.
@@ -816,7 +820,7 @@ sur les variables $v_1, \ldots, v_k$ et leur négation
 qui ne peuvent être toutes satisfaites par la même assignation.
 
 Comme $\mathcal P$ est une propriété monotone décroissante non triviale,
-il est intuitif que la probabilité que $\mathbb S_{n,k,m}$ satisfait 
+il est intuitif que la probabilité que $S_{n,k,m}$ satisfait 
 $\mathcal P$ diminue avec $m$.
 Ce qui est plus surprenant est que cette variation ce fait brusquement 
 autour d'une valeur seuil et non de façon progressive.
