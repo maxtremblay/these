@@ -4,9 +4,9 @@
 \chapter{Circuits pour la tolérance aux fautes quantique}
 
 Pour terminer le récit de ma thèse,
-j'ajoute un niveau de réalisme au modèle de correction d'erreurs quantique
+j'enrichie le modèle de correction d'erreurs quantique
 du chapitre précédent pour présenter la conception d'une mémoire quantique.
-Une mémoire quantique est un système quantique permettant de stocker
+Il s'agit d'un système quantique permettant de stocker
 de l'information pour une durée indéterminée.
 Cependant,
 comme mentionné au chapitre précédent,
@@ -27,7 +27,7 @@ une mémoire quantique,
 mais certains ont des propriétés plus favorables.
 D'abord,
 il est difficile de mettre à l'échelle un code correcteur dont le graphe
-de Tanner est local, soit un graphe où la distance entre chaque paire de sommets 
+de Tanner est local, c'est-à-dire un graphe où la distance entre chaque paire de sommets 
 connectés par une arête est bornée indépendamment du nombre de sommets.
 Plus précisément,
 Bravyi, Poulin et Terhal~\cite{bravyi_tradeoffs_2010}
@@ -43,7 +43,7 @@ la distance minimale est bornée par une constante.
 De plus,
 pour avoir une distance minimale raisonnable,
 le nombre de qubits encodés $k$ 
-ne doit pas ou très peu augmenter avec $n$.
+ne doit pas, ou très peu, augmenter avec $n$.
 
 Ce résultat implique que pour un grand $n$,
 soit peu de qubits sont encodés,
@@ -51,16 +51,16 @@ soit ces derniers sont mal protégés des erreurs.
 Il est donc difficile d'utiliser ces codes pour construire une mémoire 
 quantique de grande taille.
 Cependant,
-lorsque la contrainte de localité du graphe de Tanner est abandonnée,
+lorsque la contrainte de localité du graphe de Tanner est levée,
 Gottesman~\cite{gottesman_fault-tolerant_2013} a montré qu'il est possible 
-de construire une mémoire quantique protégeant efficacement les erreurs,
+de construire une mémoire quantique protégeant efficacement des erreurs,
 avec $\frac{k}{n}$ constant, en utilisant des codes LDPC.
 Conséquemment,
 il est possible d'utiliser des codes LDPC pour construire 
-des mémoires quantiques de grandes échelles.
+des mémoires quantiques à grandes échelles.
 
 D'un point de vue expérimental,
-les codes LDPC ont l'avantages de pouvoir être implémentés de sorte que 
+les codes LDPC ont l'avantage de pouvoir être implémentés de sorte que 
 chaque qubit soit connecté à un nombre borné d'autres qubits.
 Comme je le présenterai plus tard lorsque j'introduirai les circuits
 de mesures de syndromes,
@@ -72,7 +72,8 @@ indépendamment de la distance qui les sépare.
 Comme les couplages à longue portée sont difficiles pour plusieurs technologies de qubits,
 il est tentant d'essayer d'implémenter des codes dont le graphe de Tanner est non local
 à l'aide d'une architecture de qubits interagissant localement,
-quitte à payer un léger surcout.
+quitte à payer un léger surcout, c'est-à-dire utiliser des qubits supplémentaires
+pour compenser le manque de connectivité.
 Cependant,
 dans un article qui n'est pas présenté dans cette thèse~\cite{delfosse_bounds_2021},
 Nicolas Delfosse, Michael Beverland et moi-même avons montré que le cout de cette approche
@@ -101,9 +102,12 @@ il s'agit d'un premier pas dans la bonne direction puisque les croisements
 entre les couplages sont une limitation importante aux connexions plus longues
 pour plusieurs technologies de
 qubits~\cite{sarovar_detecting_2020, debnath_demonstration_2016, neill_blueprint_2018, ash-saki_analysis_2020}.
+Par exemple, 
+les impressions de cuivre d'un circuit imprimé conventionnel ne peuvent pas se croisées
+pour des raisons évidentes.
 De plus,
-l'approche utilisée repose sur des algorithmes de tracé de graphes,
-régulièrement utilisés pour l'intégration à très grande échelle de composante électronique
+l'approche utilisée repose sur des algorithmes de traçage de graphes,
+régulièrement utilisés pour l'intégration à très grande échelle de composantes électroniques
 sur des puces classiques~\cite{leighton_complexity_1983},
 mais jusqu'alors peu ou pas utilisés pour le design de systèmes quantiques.
 Comme des expériences numériques démontrent le potentiel de cette approche pour la réduction
@@ -115,7 +119,7 @@ Pour le reste de ce chapitre,
 je présenterai d'abord les notions nécessaires de tolérance aux fautes et les modèles 
 de bruits correspondant à une mémoire quantique.
 Par la suite,
-j'introduirai les codes de produits d'hypergraphes,
+j'introduirai les codes de produit d'hypergraphes,
 les codes LDPC utilisés dans les expériences numériques,
 avant de présenter l'article.
 
@@ -187,7 +191,7 @@ le canal
 	+ \frac{p}{15}\sum_{P \in \mathcal P_2^*\setminus \qty{II}} P\rho P
 \end{align}
 est appliqué,
-où $\mathcal P_2^*$ est le groupe de Pauli à 2 qubits sans les phases.
+où $\mathcal P_2^*$ est le groupe de Pauli à deux qubits sans les phases.
 Finalement,
 à la suite d'une mesure d'un opérateur de Pauli,
 le résultat est renversé avec probabilité $p$.
@@ -201,7 +205,7 @@ En effet,
 bien que celui-ci comporte trois qubits,
 seul le troisième peut avoir un état arbitraire en entrée et un seul qubit reste à la sortie.
 L'ensemble des circuits que je considèrerai ont cette forme,
-c'est-à-dire qu'ils transforment $s$ qubits vers $s'$ de manière 
+c'est-à-dire qu'ils transforment $s$ qubits vers $s'$ qubits de manière 
 potentiellement non unitaire à l'aide de diverses opérations classiques et quantiques
 et de qubits supplémentaires.
 Je noterai $N$ le nombre total de qubits du circuit et $\tau$
@@ -223,11 +227,13 @@ et un décodeur optimal $\mathcal D$,
 un circuit $T$ est une adaptation tolérante aux fautes de $C$ si,
 avec forte probabilité,
 \begin{align}
-	\mathcal D\qty(T \cdot \mathcal E_1^{n}\qty(\op{\bar \psi}) \cdot T^{\dag})
-	= \ket{\bar \phi},
+	\mathcal D\qty(\mathcal E_T\qty(\op{\bar \psi}) )
+	= \op{\bar \phi},
 	\label{eq:tol_faute_condition}
 \end{align}
-où $\ket{\bar \phi}$ est la version encodée de $\ket{\phi} = C \ket\psi$.
+où $\ket{\bar \phi}$ est la version encodée de $\ket{\phi} = C \ket\psi$
+et $\mathcal E_T$ est obtenu en ajoutant une canal bruité après chaque opération
+de $T$ comme à la figure~\ref{fig:teleportation_bruit}.
 
 Il n'est pas évident qu'il est possible de construire des circuits tolérants aux fautes
 puisque l'encodage demande d'utiliser un plus grand nombre de qubits,
@@ -271,16 +277,19 @@ Il est plutôt commun de choisir un décodeur sous-optimal,
 mais trouvant une correction en temps polynomial.
 Dans ce cas,
 on suppose que le temps de décodage est nul 
-et qu'aucune erreur n'apparait lors du décodage.
+et qu'aucune erreur n'apparait lors du traitement classique.
 
 Dans le cadre de cette thèse,
 je ne m'intéresse pas aux décodeurs et je me contente des algorithmes de décodage standards.
 Cela me permet de me concentrer sur les circuits de mesure du syndrome.
 Dans le cas idéal,
-un circuit de mesure du syndrome prend en entrée un état arbitraire et retourne ce même état,
-en plus d'une séquence de bits correspondant au syndrome de l'état.
+un circuit de mesure du syndrome prend en entrée un état arbitraire et 
+retourne une séquence de bits correspondant au syndrome de l'état résultant 
+à la fin du circuit.
+Il s'agit donc d'une mesure projective d'une superposition arbitraire
+d'états de syndromes différents vers un sous-espace d'états de même syndrome.
 
-Les mesures du syndrome se font à l'aide d'opérations appartenant au groupe de Clifford,
+Les mesures se font à l'aide d'opérations appartenant au groupe de Clifford,
 de préparation des états propres de $X$ et $Z$ et de la mesure de ces opérateurs
 pour un seul qubit.
 Le groupe de Clifford est l'ensemble des transformations unitaires $U$ telles que,
@@ -292,10 +301,10 @@ par une erreur appliquée après.
 Cela permet ainsi de remplacer toutes les erreurs affectant un circuit composé d'opérateurs de Clifford,
 par une seule erreur à la fin du circuit.
 
-Le groupe de Clifford est généré par l'opérateur d'Hadamard $H$,
+Le groupe de Clifford est généré par l'opérateur de Hadamard $H$,
 l'opérateur de phase $S$ et l'opérateur de non-contrôlé $\text{CNOT}$
 et inclus, entre autres, les opérateurs de Pauli.
-Parmi ceux-ci,
+Parmi ces opérateurs,
 la porte $\text{CNOT}$,
 inversant le deuxième qubit si le premier est dans l'état $\ket{1}$,
 est l'unique opérateur utilisé pour la construction des circuits de mesure du syndrome 
@@ -334,7 +343,7 @@ une opération CNOT est faite à partir de chacun des qubits supportant le stabi
 vers le qubit de mesure.
 Finalement,
 ce qubit est mesuré dans la base de l'opérateur $Z$.
-Telle que mentionnée à l'équation~\ref{eq:cnot_pauli},
+Tel que mentionné à l'équation~\ref{eq:cnot_pauli},
 une erreur $X$ affectant le premier qubit du CNOT est remplacée
 par une erreur $X$ sur ce même qubit et sur le qubit de mesure.
 Dans le cas contraire,
@@ -344,7 +353,7 @@ Ainsi,
 comme illustré à la figure~\ref{fig:mesure_syndrome},
 après l'application des portes CNOT,
 le qubit de mesure se retrouve dans l'état $X^r\ket{0}$ où 
-$r$ est le nombre de qubits affecté par une erreur $X$ à l'entrée du circuit.
+$r$ est le nombre de qubits affectés par une erreur $X$ à l'entrée du circuit.
 Une mesure dans la base $Z$ permet donc de mesurer la parité de $r$.
 Comme les erreurs $Z$ n'ont aucun impact sur la valeur de la mesure,
 cela complète le circuit.
@@ -359,20 +368,21 @@ Encore une fois,
 il est possible de valider ce circuit avec les relations de l'équation~\ref{eq:cnot_pauli}.
 
 Le circuit pour mesurer la totalité du syndrome est obtenu 
-en chainant les circuits pour mesurer la parité de chacun des
+en enchainant les circuits pour mesurer la parité de chacun des
 générateurs du groupe stabilisateur.
 De prime abord,
-cette approche à deux problèmes majeurs.
+cette approche a deux problèmes majeurs.
 Premièrement,
 la profondeur du circuit total augmente linéairement avec le nombre 
 de générateurs.
 Deuxièmement,
-en cas d'erreurs dans les circuits individuels,
-la valeur du syndrome ne correspond plus à l'erreur résiduelle sur le système.
+comme chaque opération est bruitée,
+il est possible que le syndrome mesuré ne correspondent pas à l'état à la sortie 
+du circuit.
 
 Les travaux de ce chapitre traitent de ces deux problèmes.
 D'abord,
-il est montré qu'il est possible d'effectuer des mesures de syndromes en parallèle
+il est montré qu'il est possible d'effectuer des mesures de syndrome en parallèle
 pour tous les codes CSS.
 Cela permet de réduire la profondeur du circuit à une constante qui ne dépend que
 du degré du graphe de Tanner,
@@ -380,7 +390,7 @@ soit le nombre d'arêtes du sommet avec le plus de connexions.
 Ensuite,
 des simulations numériques ont montré que même avec cette approche simple
 de mesure du syndrome,
-le seuil de tolérance aux fautes obtenu avec les codes de produits d'hypergraphe
+le seuil de tolérance aux fautes obtenu avec les codes de produit d'hypergraphes
 est du même ordre de grandeur que les meilleurs seuils connus.
 Ainsi,
 remplacer les circuits de mesure de chaque générateur par des circuits
@@ -388,10 +398,10 @@ naturellement plus tolérants aux fautes ne peut qu'améliorer les résultats qu
 Il s'agit d'ailleurs d'une avenue intéressante pour de futurs travaux de recherche.
 
 Dans la prochaine section,
-je vais introduire les codes de produits d'hypergraphes, 
+je vais introduire les codes de produit d'hypergraphes, 
 la famille de codes LDPC qui a été étudiée plus en détail dans l'article.
 
-\section{Codes de produits d'hypergraphes et codes expanseurs}
+\section{Codes de produit d'hypergraphes et codes expanseurs}
 
 Les codes de produit d'hypergraphes introduits par Tillich et Zémor~\cite{tillich_quantum_2014}
 figurent parmi les codes LDPC les plus étudiés~\cite{grospellier_combining_2020, grospellier_numerical_2018, leverrier_quantum_2015, kovalev_improved_2012, kovalev_numerical_2018}.
@@ -405,7 +415,7 @@ dans cette section,
 je présenterai d'abord un formalisme pour les codes correcteurs classiques
 différent de celui présenté au chapitre~\ref{chap:codes_polaires},
 avant d'utiliser ce formalisme pour introduire formellement les codes
-de produits d'hypergraphes.
+de produit d'hypergraphes.
 
 \subsection{Codes linéaires}
 
@@ -518,7 +528,7 @@ Ce résultat repose sur une représentation graphique des codes linéaires sous 
 
 Comme au chapitre précédent,
 le graphe de Tanner d'une matrice de parité $H$,
-est le graphe bipartie $T = (B \cup P, A)$
+est le graphe biparti $T = (B \cup P, A)$
 où les sommets $B = \qty{b_1, \ldots, b_n}$ correspondent aux $n$ bits
 et les sommets $P = \qty{p_1, \ldots, p_{n - k}}$ aux $n - k$ rangées de la matrice de parité.
 L'arête $\qty{b_i, p_j} \in A$ si et seulement si $H_{ji} = 1$.
@@ -548,7 +558,7 @@ pour tout $S \subseteq P$ tel que $|S| \leq \alpha_P |P|$,
 	|\eta(S)| \geq (1 - \beta_P) \Delta_P |S|.
 \end{align}
 Finalement,
-le graphe est $(\alpha_B, \beta_B, \alpha_P, \beta_B)$-expanseur
+le graphe est $(\alpha_B, \beta_B, \alpha_P, \beta_P)$-expanseur
 s'il est $(\alpha_B, \beta_B)$-expanseur à gauche
 et $(\alpha_P, \beta_P)$-expanseur à droite.
 
@@ -582,13 +592,13 @@ j'aborderai comment utiliser une paire de graphes de Tanner expanseurs classique
 pour construire de bons codes correcteurs quantiques.
 Cela complètera les notions nécessaires pour comprendre l'article du chapitre.
 
-\subsection{Produits d'hypergraphes}
+\subsection{Produit d'hypergraphes}
 
 Au chapitre~\ref{chap:construction_codes},
 j'ai présenté une méthode novatrice pour construire des codes CSS.
 Pour les travaux de ce chapitre,
-j'utilise plutôt une famille existante de code CSS,
-les codes de produits d'hypergraphes~\cite{tillich_quantum_2014}.
+j'utilise plutôt une famille existante de codes CSS,
+les codes de produit d'hypergraphes~\cite{tillich_quantum_2014}.
 
 D'abord,
 je rappelle qu'un code CSS est un code stabilisateur pour lequel les générateurs du groupe
@@ -609,7 +619,7 @@ s'obtient à partir du produit cartésien des graphes de
 Tanner~\footnote{Le nom de \textit{produit d'hypergraphes} peut sembler étrange à première
 vue puisque les graphes de Tanner sont des graphes bipartis. Cependant, les hypergraphes et les graphes
 bipartis sont équivalent. Je me limite donc à la représentation par graphes bipartis.
-Voir annexe~\ref{chap:theo_graphe}} correspondant.
+Voir annexe~\ref{chap:theo_graphe}.} correspondants.
 Le produit cartésien des graphes de Tanner $T_i = (B_i \cup P_i, A_i)$,
 associés aux codes $C_i$, 
 est le graphe 
@@ -785,17 +795,18 @@ en introduisant une mémoire quantique tolérante aux fautes construite
 
 \section{Article}
 
-L'article a été accepté par la revue \textit{Physical Review Letters} a l'été 2022,
-mais n'était toujours pas publié au moment de soumettre la thèse.
+L'article a été accepté et publié par la revue \textit{Physical Review Letters} a l'été 2022.
 
 Dans celui-ci,
 des circuits de mesure du syndrome de profondeurs constantes utilisables
 pour tous les codes CSS LDPC sont présentés.
+Au meilleur de ma connaissance,
+il s'agissait alors de la première présentation concrète de tels circuits.
 La construction de ces circuits repose sur un algorithme de coloration des
 arêtes des graphes de Tanner.
 De plus,
 il est montré comment réduire davantage la profondeur du circuit pour les codes 
-de produits d'hypergraphes.
+de produit d'hypergraphes.
 Des mémoires quantiques sont simulées en utilisant ces circuits pour des 
 produits d'hypergraphes de codes linéaires $(3, 4)$-réguliers.
 Les résultats obtenus montrent clairement que l'utilisation de cette approche
@@ -809,7 +820,7 @@ en laboratoire.
 Bien qu'il reste du travail à faire pour implémenter cette architecture
 dans des conditions de laboratoire réelles,
 la construction de cette dernière utilise une approche novatrice basée sur les algorithmes de traçage de
-graphe.
+graphes.
 
 J'ai effectué les travaux de cet article dans le cadre d'un stage 
 dans l'équipe de Microsoft.

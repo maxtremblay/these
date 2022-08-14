@@ -23,13 +23,13 @@ l'\textbf{entropie conjointe} est
 \begin{align}
   H(X, Y) 
   = \mathbb E\qty(\log\qty(\frac{1}{\Pr(X, Y)})) 
-  = -\sum_{x\in\mathcal X, y \in\mathcal Y}\Pr(x, x) \log(\Pr(x, y))
+  = -\sum_{x\in\mathcal X, y \in\mathcal Y}\Pr(x, y) \log(\Pr(x, y))
 \end{align}
 et l'\textbf{entropie conditionnelle} est
 \begin{align}
   H(X | Y) 
   = \mathbb E\qty(\log\qty(\frac{1}{\Pr(X|Y)})) 
-  = -\sum_{x\in\mathcal X, y \in\mathcal Y}\Pr(x, x) \log(\Pr(x|y)).
+  = -\sum_{x\in\mathcal X, y \in\mathcal Y}\Pr(x, y) \log(\Pr(x|y)).
 \end{align}
 Il est aisé de vérifier que 
 \begin{align}
@@ -51,7 +51,7 @@ aux probabilités marginales, soit
     -
     \log\qty(\frac{1}{\Pr(X, Y)})
   ) \notag \\
-  &= -\sum_{x\in\mathcal X, y \in\mathcal Y}\Pr(x, x) \log(\frac{\Pr(X, Y)}{\Pr(X)\Pr(Y)}).
+  &= -\sum_{x\in\mathcal X, y \in\mathcal Y}\Pr(x, y) \log(\frac{\Pr(X, Y)}{\Pr(X)\Pr(Y)}).
 \end{align}
 Cette définition est symétrique,
 c'est-à-dire $I(X ; Y) = I(Y ; X)$.
@@ -133,7 +133,7 @@ la rigueur des définitions est variable.
 Définir formellement la complexité de calcul demande d'introduire un modèle de 
 calcul comme la machine de Turing.
 Cependant,
-cela sort de beaucoup du cadre de cette thèse
+cela sort beaucoup du cadre de cette thèse
 et je me contente de définitions qui sont suffisantes à la compréhension du contenu de la thèse
 et j'évite plusieurs détails.
 
@@ -156,11 +156,11 @@ une entrée $x \in X$ a une taille $n$ si $x \in \mathcal X^n$.
 
 La \textbf{complexité} d'un algorithme est le nombre $c(n)$ d'opérations nécessaires
 pour calculer $a(x)$ selon la taille $n$ de $x$.
-Il est souvent difficile et peut pertinent de calculer la valeur exacte de $c(n)$
+Il est souvent difficile et peu pertinent de calculer la valeur exacte de $c(n)$
 et il est généralement suffisant de connaitre le comportement général de $c(n)$.
 Pour ce faire,
 nous utilisons la \textbf{notation grand $\mathcal O$}.
-Une fonction $f(n)$ à la complexité $\mathcal O(g(n))$ s'il existe
+Une fonction $f(n)$ a la complexité $\mathcal O(g(n))$ s'il existe
 une constante $k$ telle que $f(n) \leq k g(n)$.
 Généralement,
 les complexités considérées sont les complexités \textbf{logarithmiques} $\mathcal O(\log n)$,
@@ -178,7 +178,7 @@ Comme il y a $n(n-1)/2$ paires de nombre,
 un algorithme naif de tri a une complexité $\mathcal O(n^2)$.
 
 Dans cette thèse,
-je m'utilise trois classes de complexité de problème importantes.
+j'utilise trois classes de complexité importantes.
 Premièrement,
 la \textbf{classe P} est l'ensemble des problèmes
 pour lesquels il existe un algorithme de complexité polynomiale.
@@ -229,7 +229,7 @@ de deux éléments d'un groupe.
 Comme l'opération est sous-entendu,
 il est commun de noter un groupe $(G, \cdot)$ seulement à partir de l'ensemble $G$.
 
-La \textbf{cardinalité} $|G|$ d'un groupe $G$ est le nombre d'éléments du celui-ci.
+La \textbf{cardinalité} $|G|$ d'un groupe $G$ est le nombre d'éléments de celui-ci.
 Les groupes considérés dans la thèse ont tous une cardinalité finie.
 Un \textbf{sous-groupe} est un sous-ensemble $H \subseteq G$ satisfaisant les trois conditions
 d'un groupe.
@@ -239,7 +239,7 @@ sous-groupe contenant $S$.
 J'utilise $g(H)$ pour représenter un générateur de $H$ 
 et $\langle S \rangle$ pour représenter le sous-groupe généré par $S$.
 Les éléments d'un sous-ensemble $S \subseteq G$ sont \textbf{indépendants} si 
-$|\langle T \rangle| > |\langle S \rangle|$ pour tous $T \subset S$.
+$|\langle T \rangle| < |\langle S \rangle|$ pour tous $T \subset S$.
 
 Pour $H \sqsubseteq G$,
 la \textbf{classe à gauche} d'un élément $g \in G$ est
