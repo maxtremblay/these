@@ -8,7 +8,7 @@ notre mode de vie et l'organisation de nos sociétés.
 En effet,
 il est désormais possible d'accéder à une quantité phénoménale de connaissance,
 de connecter avec une personne de l'autre côté du globe
-et d'automatiser les taches du quotidient.
+et d'automatiser les taches du quotidien.
 Tout cela avec une efficience qui peut sembler sans limite.
 
 Cependant, 
@@ -47,7 +47,7 @@ nottament après une publication de Peter Shor dans laquelle il introduit un
 algorithme pouvant factoriser un nombre avec une complexité polynomiale selon
 le nombre de chiffres à l'aide d'un ordinateur quantique~\cite{shor_algorithms_1994}.
 Dans ce cas,
-doubler la longueur du nombre de fait que multiplier par huit le temps de calcul.
+doubler la longueur du nombre ne fait que multiplier par huit le temps de calcul.
 Cela est beaucoup plus efficace que la croissance exponentielle requise par un ordinateur classique.
 
 Bien que ce résultat ne permet pas de résoudre tous les problèmes dont la complexité classique
@@ -64,17 +64,16 @@ En plus de cela,
 il existe fort probablement plusieurs autres applications qui nous sont encore inconnues.
 
 Ainsi,
-l'informatique quantique a le potentiel de repousser les frontières de ce qui est ajourd'hui
-possible pour le recherche scientifique.
+l'informatique quantique a le potentiel de repousser les frontières de ce qui est aujourd'hui
+possible pour la recherche scientifique.
 Cependant,
-pour réaliser de tels promesses,
+pour réaliser de telles promesses,
 il faut d'abord construire un ordinateur quantique capable d'exécuter ces nouveaux algorithmes quantiques.
-Et cela,
-bien évidemment,
-n'est pas une tache simple.
+Comme j'en discuterai dans l'ensemble de cette thèse,
+cela n'est pas une tache simple.
 
 Plusieurs technologies sont proposées pour construire les ordinateurs quantiques.
-Que ce soit les circuits supraconducteurs~\cite{wallraf_strong_2004, krantz_quantum_2019}
+Que ce soit les circuits supraconducteurs~\cite{wallraff_strong_2004, krantz_quantum_2019}
 la photonique quantique~\cite{obrien_photonic_2009, kok_linear_2007},
 les points quantiques~\cite{pioro-ladriere_electrically_2008, loss_quantum_1998}
 ou l'une des nombreuses autres approches proposées,
@@ -92,12 +91,12 @@ et elle se manifeste sous plusieurs formes,
 comme la perte de photons ou la relaxation du système vers un état d'énergie inférieure.
 Cela engendre donc des erreurs lors du calcul quantique,
 ce qui éloigne les résultats obtenus de ceux désirés.
-Puisqu'il essentiel d'intéragir avec un système quantique pour exécuter les diverses 
+Puisqu'il est essentiel d'intéragir avec un système quantique pour exécuter les diverses 
 opérations nécessaires à l'informatique quantique,
 la présence des erreurs est inévitable.
 
 Heureusement,
-il est possible de corriger les erreurs plus vites qu'elles apparaissent~\cite{aharonov_fault-tolerant_1999}.
+il est possible de corriger les erreurs plus vite qu'elles apparaissent~\cite{aharonov_fault-tolerant_1999}.
 La correction des erreurs lors du calcul quantique est le sujet de cette thèse.
 Dans celle-ci,
 je présenterai les résultats de trois projets adressant cet enjeu.
@@ -110,7 +109,7 @@ applicable aux systèmes quantiques.
 De plus, il s'agit de problèmes ayant plusieurs applications en télécommunication.
 Nottament,
 les systèmes que j'ai étudiés,
-soient les codes polaires convolutifs,
+c'est-à-dire, les codes polaires convolutifs,
 sont une généralisation des codes polaires,
 une méthode au coeur des technologies de communication de cinquième génération (5G)~\cite{arikan_rate_2009, bioglio_design_2021}.
 Les travaux que j'ai effectué ont permis d'identifier les paramètres qui maximisent la réduction des erreurs
@@ -119,9 +118,9 @@ en fonction du temps de calcul nécessaire pour la correction.
 Dans le deuxième chapitre,
 je ferai en premier pas vers le régime quantique.
 Dans celui-ci,
-j'utiliserai un modèle simplifier de génération des erreurs sur un système quantique.
+j'utiliserai un modèle simplifié de génération des erreurs sur un système quantique.
 Cela permet de se concentrer sur la construction de codes correcteurs,
-un outil essentiel à la réalisation du calcul quantique protégé des erreurs.h
+un outil essentiel à la réalisation du calcul quantique protégé des erreurs.
 Ainsi,
 je montrerai dans ce chapitre une nouvelle approche de construction de codes correcteurs
 basée sur des méthodes de résolution de problèmes de satisfaction de contraintes,
@@ -136,7 +135,7 @@ Dans le troisième chapitre,
 j'introduirai un modèle de calcul quantique,
 soit la réalisation d'une mémoire quantique.
 En effet,
-sans avoir a effectué des opérations précises,
+sans avoir à effectuer des opérations précises,
 il est déjà difficile de protéger un système quantique lorsque celui-ci est inactif.
 Ce modèle,
 d'apparence simple,
@@ -157,7 +156,7 @@ Il est encore tôt pour sélectionner la meilleure technologie qui sera utilisé
 tous les ordinateurs quantiques.
 Ainsi, il est pertinent de développer des modèles et méthodes universelles.
 Deuxièmement,
-bien qu'il reste beaucoup de défis à relevés pour implémenter physiquement des méthodes
+bien qu'il reste beaucoup de défis à relever pour implémenter physiquement des méthodes
 de correction d'erreurs sur des ordinateurs quantiques,
 des résultats récents montrent qu'il est possible d'adapter les méthodes agnostiques
 aux choix technologiques.
@@ -169,7 +168,7 @@ semble généralement améliorer les performances des méthodes de correction de
 
 Les chapitres de la thèse se présentent tous de la même façon.
 Il débute par une introduction haut niveau au modèle de bruit qui sera étudié.
-Cette introduction est suivit d'une exposition des outils mathématiques nécessaires à
+Cette introduction est suivie d'une exposition des outils mathématiques nécessaires à
 la compréhension des résultats.
 Les résultats sont présentés à la fin de chaque chapitre sous la forme d'un article.
 Au premier et troisième chapitre,
