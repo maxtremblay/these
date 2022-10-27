@@ -4,7 +4,7 @@
 \chapter{Circuits pour la tolérance aux fautes quantique}
 
 Pour terminer le récit de ma thèse,
-j'enrichie le modèle de correction d'erreurs quantique
+j'enrichis le modèle de correction d'erreurs quantique
 du chapitre précédent pour présenter la conception d'une mémoire quantique.
 Il s'agit d'un système quantique permettant de stocker
 de l'information pour une durée indéterminée.
@@ -97,13 +97,13 @@ ce qui réduit significativement la qualité de la mémoire.
 L'article présenté dans ce chapitre introduit une nouvelle architecture pour une mémoire quantique
 qui permet d'implémenter des circuits pour de bons codes LDPC sans qu'il y ait de
 croisement entre les couplages.
-Bien que cela ne permet pas de régler le problème des couplages à longue portée,
+Bien que cela ne permette pas de régler le problème des couplages à longue portée,
 il s'agit d'un premier pas dans la bonne direction puisque les croisements
 entre les couplages sont une limitation importante aux connexions plus longues
 pour plusieurs technologies de
 qubits~\cite{sarovar_detecting_2020, debnath_demonstration_2016, neill_blueprint_2018, ash-saki_analysis_2020}.
 Par exemple, 
-les impressions de cuivre d'un circuit imprimé conventionnel ne peuvent pas se croisées
+les impressions de cuivre d'un circuit imprimé conventionnel ne peuvent pas se croiser
 pour des raisons évidentes.
 De plus,
 l'approche utilisée repose sur des algorithmes de traçage de graphes,
@@ -148,7 +148,7 @@ ces imperfections dans les opérations sont représentées en ajoutant,
 à la suite de chaque opération parfaite,
 un canal bruité tel qu'illustré à la figure~\ref{fig:teleportation_bruit}.
 De plus,
-comme les circuits considérés inclus du traitement classique,
+comme les circuits considérés incluent du traitement classique,
 il est supposé que les bits sont parfaits,
 ce qui est assez près de la réalité.
 
@@ -204,7 +204,7 @@ constitue dans son ensemble une transformation (non unitaire) à un qubit.
 En effet,
 bien que celui-ci comporte trois qubits,
 seul le troisième peut avoir un état arbitraire en entrée et un seul qubit reste à la sortie.
-L'ensemble des circuits que je considèrerai ont cette forme,
+L'ensemble des circuits que je considérerai ont cette forme,
 c'est-à-dire qu'ils transforment $s$ qubits vers $s'$ qubits de manière 
 potentiellement non unitaire à l'aide de diverses opérations classiques et quantiques
 et de qubits supplémentaires.
@@ -293,7 +293,7 @@ Les mesures se font à l'aide d'opérations appartenant au groupe de Clifford,
 de préparation des états propres de $X$ et $Z$ et de la mesure de ces opérateurs
 pour un seul qubit.
 Le groupe de Clifford est l'ensemble des transformations unitaires $U$ telles que,
-pour tous opérateurs de Pauli $P \in \mathcal P$,
+pour tout opérateur de Pauli $P \in \mathcal P$,
 il existe un $Q \in \mathcal P$ pour lequel $PU = UQ$.
 Comme les erreurs sont décomposées sur la base des opérateurs de Pauli,
 il est possible de remplacer une erreur appliquée avant un opérateur de Clifford
@@ -425,7 +425,7 @@ Ainsi,
 pour un code linéaire encodant $k$ bits avec $n$ bits,
 il existe une matrice $G \in \corpsfini{2}^{n \times k}$,
 nommée matrice génératrice,
-dont les rangées forment une base de $\code$.
+dont les colonnes forment une base de $\code$.
 Le code est alors le sous-espace
 \begin{align}
 	\code(G) = \qty{
@@ -481,7 +481,7 @@ de parité est
 \end{align}
 et la matrice génératrice est 
 \begin{align}
-	G = \begin{pmatrix}
+	G^T = \begin{pmatrix}
 		1 & 1 & 1 & 0 & 0 & 0 & 0 \\
 		1 & 0 & 0 & 1 & 1 & 0 & 0 \\
 		0 & 1 & 0 & 1 & 0 & 1 & 0 \\
@@ -489,7 +489,7 @@ et la matrice génératrice est
 	\end{pmatrix}
 \end{align}
 En calculant les $2^4 = 16$ combinaisons linéaires possibles des 
-rangées de $G$,
+rangées de $G^T$,
 l'on obtient une distance minimale de trois pour le code de Hamming.
 Ainsi,
 ce code permet de corriger toutes les erreurs de norme un.
@@ -523,7 +523,7 @@ il est désirable que
 le rendement $k/n$ et la distance relative $d/n$ d'une famille de codes
 soient bornés inférieurement.
 Un résultat étonnant est qu'une matrice de parité avec une faible densité de 1
-choisi aléatoirement répond à ces critères avec forte probabilité~\cite{sipser_expander_1996}.
+choisie aléatoirement répond à ces critères avec forte probabilité~\cite{sipser_expander_1996}.
 Ce résultat repose sur une représentation graphique des codes linéaires sous forme de graphe de Tanner.
 
 Comme au chapitre précédent,
@@ -607,7 +607,7 @@ la condition $H_X H_Z^T = 0$ est imposée.
 Comme discuté au chapitre précédent,
 il est difficile de construire une paire de codes linéaires
 respectant cette condition.
-Le produit d'hypergraphe est en fait une méthode pour construire
+Le produit d'hypergraphes est en fait une méthode pour construire
 une telle paire de codes à partir d'une seconde paire de codes linéaires
 ne respectant pas nécessairement la condition.
 
@@ -665,7 +665,7 @@ le graphe de Tanner $T_Z$ possède les sommets $B_Z = B_X \equiv Q$
 et $P_Z = P_1 \times B_2$.
 Un exemple de produit d'hypergraphe est illustré à la figure~\ref{fig:produit_hg}.
 
-Le produit d'hypergraphe assure l'orthogonalité de $H_X$ et $H_Z$.
+Le produit d'hypergraphes assure l'orthogonalité de $H_X$ et $H_Z$.
 En effet,
 par définition du produit cartésien,
 deux sommets $(b_1, p_2) \in P_X$ et $(p_1, b_2) \in P_Z$ 
@@ -723,7 +723,7 @@ Le nombre de qubits encodés est alors
 \begin{align}
 	k_q 
 	= 
-	n - r_X - r_Z
+	n_q - r_X - r_Z
 	= (n_1 - r_1)(n_2 - r_2)
 	= k_1 k_2.
 \end{align}
@@ -734,14 +734,14 @@ le code CSS résultant a un rendement $k_q / n_q$ constant lorsque le code liné
 a également un rendement $k/n$ constant.
 
 La distance minimale $d_q$ d'un code CSS construit avec les codes linéaires $C_X$ et $C_Z$ 
-ayant respectivement une distance minimale $d_X$ et $d_Z$ est~\cite{calderbank_good_1996}
+ayant respectivement des distances minimales $d_X$ et $d_Z$ est~\cite{calderbank_good_1996}
 \begin{align}
 	d_q = \min(d_X, d_Z).
 \end{align}
-Cela découle du fait que pour des stabilisateurs $S_X$ et $S_Z$ respectivement de type $X$ et $Z$,
-le poids du produit $S_X S_Z$ est au moins $\min(|S_X|, |S_Z|)$.
+Cela découle du fait que pour des opérateurs $L_X$ et $L_Z$ respectivement de type $X$ et $Z$,
+le poids du produit $L_X L_Z$ est au moins $\min(|L_X|, |L_Z|)$.
 
-Lorsque $H_1 = H_1 \equiv H$,
+Lorsque $H_1 = H_2 \equiv H$,
 l'équation~\eqref{eq:prod_hg_mat} devient
 \begin{align}
 	&H_X = (H \otimes I_{n}\, \, \, I_{r} \otimes H^T),
@@ -763,9 +763,9 @@ Ainsi,
 \begin{align}
 	d_X = \min(d, d^T),
 \end{align}
-avec $d^T$ la distance minimale du code de matrice de parité $H^T$.
+où $d^T$ est la distance minimale du code de matrice de parité $H^T$.
 Un argument similaire s'applique pour $d_Z$.
-La distance minimale de code CSS est donc~\cite{tillich_quantum_2014}
+La distance minimale d'un code CSS est donc~\cite{tillich_quantum_2014}
 \begin{align}
 	d_q = \min(d_X, d_Z) = \min(d, d^T).
 \end{align}
@@ -776,7 +776,7 @@ distance minimale $d \geq \alpha_B n$.
 En transposant le graphe de Tanner associé,
 on conclut que $d^T \geq \alpha_P r$.
 Ainsi,
-la distance minimale du produit d'hypergraphe d'un code expanseur est~\cite{leverrier_quantum_2015}
+la distance minimale du produit d'hypergraphes d'un code expanseur est~\cite{leverrier_quantum_2015}
 \begin{align}
 	d_q \geq \min(\alpha_B n, \alpha_P r).
 \end{align}
@@ -784,15 +784,15 @@ Cette approche permet ainsi de construire une famille de codes CSS tels que
 $k_q \sim n_q$ et $d_q \sim \sqrt{n_q}$.
 Puisque le nombre de qubits encodés et la distance minimale augmentent avec le nombre 
 de qubits du code,
-il est possible d'utiliser ces codes pour construire des systèmes tolérant aux fautes
-avec un surcout constant en qubits~\cite{gottesman_fault-tolerant_2013}.
+il est possible d'utiliser ces codes pour construire des systèmes tolérants aux fautes
+avec un surcoût constant en qubits~\cite{gottesman_fault-tolerant_2013}.
 Les travaux de l'article de ce chapitre avancent dans cette direction 
 en introduisant une mémoire quantique tolérante aux fautes construite
 à partir de codes de produit d'hypergraphes.
 
 \section{Article}
 
-L'article a été accepté et publié par la revue \textit{Physical Review Letters} a l'été 2022.
+L'article a été accepté et publié par la revue \textit{Physical Review Letters} à l'été 2022.
 
 Dans celui-ci,
 des circuits de mesure du syndrome de profondeurs constantes utilisables
