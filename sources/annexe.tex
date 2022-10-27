@@ -27,7 +27,7 @@ l'\textbf{entropie conjointe} est
   = -\sum_{x\in\mathcal X, y \in\mathcal Y}p_{X,Y}(x, y) \log(p_{X, Y}(x, y)),
 \end{align}
 où $p_{X, Y}(x, y)$ est la \textbf{probabilité conjointe},
-soit la probabilité d'obtenir les valeurs $x$ et $y$ simultanéments.
+soit la probabilité d'obtenir les valeurs $x$ et $y$ simultanément.
 De même,
 l'\textbf{entropie conditionnelle} est
 définie à partir de la \textbf{probabilité conditionnelle} $p_{X | Y}(x | y) = p_{X, Y}(x, y) / p_Y(y)$
@@ -57,7 +57,7 @@ aux probabilités marginales, soit
     -
     \log\qty(\frac{1}{p_{X, Y}(x, y)})
   ) \notag \\
-  &= -\sum_{x\in\mathcal X, y \in\mathcal Y}p_{X, Y}(x, y) \log(\frac{p_{X, Y}(x, y)}{p_X(x)p_Y(y)}).
+  &= \sum_{x\in\mathcal X, y \in\mathcal Y}p_{X, Y}(x, y) \log(\frac{p_{X, Y}(x, y)}{p_X(x)p_Y(y)}).
 \end{align}
 Cette définition est symétrique,
 c'est-à-dire $I(X ; Y) = I(Y ; X)$.
@@ -72,7 +72,7 @@ l'information mutuelle est reliée aux diverses entropies selon
 Le première équation illustre bien que l'information mutuelle correspond à la différence
 d'information acquise par une réalisation de $X$ lorsque $Y$ est inconnue ou connue.
 Finalement, l'information mutuelle est nulle lorsque $X$ et $Y$ sont indépendantes,
-c'est-à-dire si $p_X(x)p_Y(y) = p_{X,Y}(x,y)$ pour tous $x, y$.
+c'est-à-dire si $p_X(x)p_Y(y) = p_{X,Y}(x,y)$ pour tout $x, y$.
 
 
 \chapter{Théorie des graphes}
@@ -171,7 +171,7 @@ nous utilisons la \textbf{notation grand $\mathcal O$}.
 Une fonction $f(n)$ a la complexité $\mathcal O(g(n))$ s'il existe
 une constante $k > 0$ telle que $f(n) \leq k g(n)$.
 Généralement,
-les complexités considérées sont les complexités \textbf{logarithmiques} $\mathcal O(\log n)$,
+les complexités considérées sont les complexités \textbf{logarithmique} $\mathcal O(\log n)$,
 \textbf{linéaire} $\mathcal O(n)$,
 \textbf{polynomiale} $\mathcal O(n^t)$ pour un entier $t > 0$
 et \textbf{exponentielle} $\mathcal O(2^n)$.
@@ -183,7 +183,7 @@ où chaque paire $(x, y) \in R$ est une liste $x$ et sa version triée $y$.
 Les opérations disponibles pour trier une liste sont la permutation et
 la comparaison de deux éléments.
 Comme il y a $n(n-1)/2$ paires de nombre,
-un algorithme naif de tri a une complexité $\mathcal O(n^2)$.
+un algorithme naïf de tri a une complexité $\mathcal O(n^2)$.
 
 Dans cette thèse,
 j'utilise trois classes de complexité importantes.
@@ -234,7 +234,7 @@ Les groupes considérés dans la thèse sont tous des groupes multiplicatifs.
 Dans ce cas, l'opérateur est noté $\cdot$ et régulièrement omis.
 Ainsi, $gh$ et $g \cdot h$ sont deux notations équivalentes pour la multiplication 
 de deux éléments d'un groupe.
-Comme l'opération est sous-entendu,
+Comme l'opération est sous-entendue,
 il est commun de noter un groupe $(G, \cdot)$ seulement à partir de l'ensemble $G$.
 
 La \textbf{cardinalité} $|G|$ d'un groupe $G$ est le nombre d'éléments de celui-ci.
@@ -271,7 +271,6 @@ Cela permet de former le \textbf{groupe quotient}
   G / H = \qty{gH : g \in G},
 \end{align}
 soit le groupe des classes de $H$.
-
 La \textbf{conjugaison} de $g \in G$ et $H \sqsubseteq G$ est 
 \begin{align}
   gHg^{-1} = \qty{ghg^{-1} : h \in H}.
