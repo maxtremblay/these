@@ -26,7 +26,7 @@ l'histoire ne s'arrête pas là,
 puisque lors de la transmission du signal dans l'atmosphère,
 il est fort probable que celui-ci soit corrompu en raison d'une interaction indésirée.
 Entre autres, 
-cela peut être causé par la présence d'autres ondes ou d'un obstacle sur le trajet du signal.
+cela peut être causé par la dispersion ou la présence d'un obstacle sur le trajet du signal.
 La solution à ce problème est alors de transmettre une séquence de nombres binaires
 plus longue que ce qui est nécessaire en espérant que l'information supplémentaire
 nous aide à retrouver le message initial malgré la présence d'erreurs.
@@ -37,11 +37,11 @@ Par la suite,
 je vais présenter les réseaux de tenseurs,
 un outil mathématique qui va m'être très utile pour décrire les codes polaires 
 ainsi qu'une généralisation de ces derniers, les codes polaires convolutifs.
-Ces codes sont très importants puisque les codes polaires sont au cœur 
+Ces codes sont très importants puisque les codes polaires sont au coeur 
 de la technologie de communication 5G~\cite{bioglio_design_2021}
-et que toutes améliorations de ceux-ci a un grand potentiel d'application.
+et que toute amélioration de ceux-ci a un grand potentiel d'application.
 Conséquemment,
-le chapitre se termine par une présentation d'un article scientifique dans lequel
+le chapitre se termine par un article scientifique dans lequel
 j'identifie les régimes où les performances des codes polaires convolutifs sont les plus impressionnantes.
 
 \section{Communication classique et correction d'erreurs}
@@ -106,7 +106,7 @@ et un élément de $C$ est nommé mot-code.
 \end{table}
 
 Le tableau~\ref{tab:exemple_encodage} illustre un exemple de code correcteur
-encodant  bits logiques à l'aide de six bits physiques.
+encodant deux bits logiques à l'aide de six bits physiques.
 Avec ce code correcteur,
 Béatrice est en mesure de retrouver le message initial qu'Arthur lui a
 envoyé s'il y a au plus une erreur qui affecte les six bits transmis. 
@@ -121,7 +121,7 @@ L'opération qui consiste à essayer de retrouver le message original à partir
 de la séquence reçue se nomme décodage 
 et une erreur logique est une erreur à la suite du décodage.
 
-Pour cet exemple,
+Dans cet exemple,
 la probabilité de transmettre un message de deux bits sans encodage avec succès 
 est de $(1 - p)^2$. 
 En comparaison,
@@ -141,13 +141,13 @@ nombre de bits du code.
 C'est en 1948 que Claude Shannon a démontré la plus grande valeur 
 de rendement pouvant être transmise via un canal bruité~\cite{shannon_mathematical_1948}.
 Plus précisément,
-la capacité $\capacite$ d'un canal bruité corresponda au rendement maximum 
+la capacité $\capacite$ d'un canal bruité est le rendement maximum 
 que peuvent transmettre plusieurs copies du canal telle que la probabilité d'une 
 erreur logique tende vers 0 lorsque $n \to \infty$.
 Autrement dit,
 pour tout rendement $R \leq \capacite $, 
 il existe une famille de codes 
-telle que pour toute pour toute valeur $\epsilon > 0$ arbitrairement petite, 
+telle que pour toutes valeurs $\epsilon > 0$ arbitrairement petites, 
 la probabilité d'une erreur de décodage est inférieure à $\epsilon$ si le 
 nombre de bits du code est assez grand.
 
@@ -177,7 +177,7 @@ La capacité est alors
 \begin{equation}
   \capacite(\canal_p) = 1 - H_2(p)
 \end{equation}
-avec l'entropie binaire $H_2(p) = -p \log(p) - (1 - p)\log(1 - p)$~\footnote{
+où $H_2(p)$ l'entropie binaire $-p \log(p) - (1 - p)\log(1 - p)$~\footnote{
   Pour alléger le texte, je n'inclus pas les preuves qui se retrouvent facilement 
   dans la littérature.
 }. 
@@ -364,7 +364,7 @@ Cette technique permet de convertir deux canaux bruités similaires en un canal 
 et un canal plus bruité.
 Ainsi,
 un ensemble de canaux presque sans bruit et un ensemble presque inutilisable
-sont obtenues en répétant itérativement cette approche à partir de plusieurs canaux similaires.
+sont obtenus en répétant itérativement cette approche à partir de plusieurs canaux similaires.
 Ce qui est remarquable est que la fraction de canaux de faible bruit créés ainsi
 tend vers la capacité des canaux initiaux.
 En combinant cela au fait qu'il existe un algorithme efficace de décodage des codes polaires,
@@ -396,7 +396,7 @@ Ces canaux sont construits en deux étapes.
 D'abord, 
 plusieurs copies du canal binaire symétrique sont utilisées pour transmettre un ensemble de bits.
 Par la suite,
-chacun des bits transmis est décodé indépendemment ce qui génére différents canaux de la
+chacun des bits transmis est décodé indépendamment, ce qui génére différents canaux de la
 forme $W(\vb y | x)$.
 
 Plus formellement,
@@ -614,10 +614,10 @@ la construction des codes polaires convolutifs étudiés dans l'article associé
 Pour la suite, 
 je définis un code polaire en fonction du nombre de niveaux de polarisation $m$
 et d'un ensemble de bits $\mathcal F$ dont la valeur est fixée à 0.
-Chacun des $n = 2^m$ bits d'un tel code sont décodés de manière successive.
+Les $n = 2^m$ bits d'un tel code sont décodés de manière successive.
 Alors, 
 après avoir reçu le message $\vb y$,
-pour trouver la séquence de bit $\vb u$ la plus probable,
+pour trouver la séquence de bits $\vb u$ la plus probable,
 le bit $u_1$ est décodé, suivi du bit $u_2$ et ainsi de suite jusqu'à décoder le bit $u_n$.
 Dans le cas où $i \in \mathcal F$, 
 il est inutile de décoder le bit $u_i$ et il suffit de lui assigner la valeur fixe $0$.
@@ -673,7 +673,7 @@ Les éléments de ses vecteurs sont tous des nombres réels et non des élément
 \end{figure}
 
 Pour $y_i \in \qty{0, 1}$,
-la fonction de poids $W_1$ s'obtient par la contraction
+la fonction de poi,ds $W_1$ s'obtient par la contraction
 \begin{equation}
   \vcenter{\hbox{\includegraphics{figures/contraction_y_w.pdf}}}
   =
@@ -716,7 +716,7 @@ Le vecteur
 \end{equation}
 est connecté aux indices ouverts des bits $\vb u_{i+1}^{n}$ pour sommer
 sur les valeurs encore inconnues.
-Ce vecteur ne prend pas en compte la normalisation,
+Ce vecteur ne tient pas compte de la normalisation,
 mais cela ne fait que multiplier les éléments du réseau de tenseur
 contracté par une constante globale n'ayant pas d'impact sur le calcul de
 la valeur maximale.
@@ -737,7 +737,7 @@ L'avantage des réseaux de tenseurs en forme d'arbre est qu'il est possible de
 les contracter efficacement~\cite{arad_quantum_2010}.
 Dans le cas présent,
 il suffit de contracter le réseau de tenseur en partant du premier niveau de polarisation
-vers le dernier comme illustré à la figure~\ref{fig:contraction_codes_polaires}.
+vers le dernier, comme illustré à la figure~\ref{fig:contraction_codes_polaires}.
 Le coût de cette contraction est de $\bigO(2^m)$.
 Ainsi,
 le coût total du décodage pour un code de $n = 2^m$ est au plus $\bigO(n^2)$ puisque 
@@ -769,8 +769,8 @@ le coût du décodage devient $\bigO(n\log(n))$~\cite{ferris_branching_2014, ari
 
 Le coût du décodeur par réseaux de tenseurs est équivalent au décodeur par annulations successives
 introduit en même temps que les codes polaires.
-Ces décodeurs combinés au fait qu'il est possible de transmettre de l'information à 
-un rendement $1 - H_2(p)$ font des codes polaires les premiers codes correcteurs permettant 
+Ces décodeurs, combinés au fait qu'il est possible de transmettre de l'information à 
+un rendement $1 - H_2(p)$, font des codes polaires les premiers codes correcteurs permettant 
 d'atteindre la capacité d'un canal tout en étant efficacement décodable.
 
 \section{Comparaison de la profondeur et de la largeur des codes polaires convolutifs}
@@ -824,21 +824,21 @@ se compare à l'augmentation des performances
 afin d'estimer s'il est rentable de généraliser ces codes.
 
 Je réponds à cette question en montrant d'abord que la performance des codes 
-augmentes avec la profondeur et diminue avec la largeur.
+augmente avec la profondeur et diminue avec la largeur.
 Suite à cela, une étude du coût de décodage permet de conclure qu'il est optimal
 d'utiliser des codes de profondeur et de largeur deux puisque le gain de performance 
 pour des profondeurs plus élevées est moins appréciable.
 
 \section{Article}
 
-Cet article ayant pour titre original \textit{Depth versus Breadth in Convolutional Polar Codes}
+Cet article, ayant pour titre original \textit{Depth versus Breadth in Convolutional Polar Codes},
 a été publié en 2018 dans la cadre de la conférence \textit{IEEE Information Theory Workshop}.
 Dans le cadre du projet,
 j'ai implémenté, 
 assisté de Benjamin Bourassa alors étudiant à la maitrise,
 un logiciel qui permet de simuler le décodage des codes polaires convolutifs.
 Par la suite,
-j'ai effectué les simulations Monte Carlo qui ont permis d'évaluer la performance
+j'ai effectué les simulations Monte-Carlo qui ont permis d'évaluer la performance
 des divers codes correcteurs et j'ai fait l'analyse de ces résultats.
 J'ai également écrit l'article avec l'aide du professeur David Poulin
 qui a supervisé l'ensemble du projet.
