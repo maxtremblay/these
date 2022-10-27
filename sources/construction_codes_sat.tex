@@ -9,7 +9,7 @@ je me suis intéressé à la correction des erreurs lors de la communication cla
 Pour la suite de la thèse,
 je quitterai ce régime pour m'intéresser au régime quantique.
 Dans ce chapitre, 
-j'aborderai plus particulièrement à la protection de l'information 
+j'aborderai plus particulièrement la protection de l'information 
 dans un modèle de bruit quantique simplifié avant de présenter la conception d'une mémoire 
 quantique au prochain chapitre.
 Ce modèle simplifié ressemble au canal binaire symétrique présenté au premier chapitre
@@ -40,7 +40,7 @@ la valeur désirée était le bit 1.
 Donc, en absence des perturbations externes présentes lors de la communication,
 l'information classique est relativement robuste.
 
-Au contraire, un système quantique est analogue puisqu'il existe une infinité d'états accessibles.
+Au contraire, un système quantique est analogique puisqu'il existe une infinité d'états accessibles.
 Par exemple, toutes paires de nombres complexes $a$ et $b$ telles que $|a|^2 + |b|^2 = 1$
 représentent l'état d'un qubit.
 Ainsi, 
@@ -185,7 +185,7 @@ Ainsi, l'état final du système est
   = \sum_k \bra{e_k}U(\rho \otimes \op{e_0}) U^\dag \ket{e_k}
   = \sum_k E_k \rho E_k^\dag
 \end{equation}
-avec $E_k = \mel{e_k}{U}{e_0}$.
+où $E_k = \mel{e_k}{U}{e_0}$.
 Alors,
 l'application $\mathcal{E}$ représente la transformation de l'état d'un système quantique
 lorsque celui-ci interagit avec son environnement alors qu'on ignore l'état final
@@ -224,7 +224,7 @@ le canal s'écrit généralement comme
 \end{align}
 Le poids $|P|$ d'un opérateur de Pauli $P$ est le nombre d'opérateurs différents de $I$ qui le composent.
 Par exemple, $|i\cdot XIYX| = 3$.
-Pour l'ensemble des canaux que je considèrerai,
+Pour l'ensemble des canaux que je considérerai,
 la probabilité d'une erreur $P \in \mathcal P_n$ diminue exponentiellement avec le poids 
 de celle-ci.
 
@@ -344,7 +344,7 @@ soit lorsque $\ket \phi$ est un état propre de valeur propre $+1$ de $U$.
 Un état ou un sous-espace est alors représenté par les opérateurs qui le stabilisent.
 Par exemple,
 l'état $\ket{00} + \ket{11}$ est l'unique état à deux qubits stabilisé par 
-les opérateurs $XX$ et $ZZ$. 
+les opérateurs $X_1X_2$ et $Z_1Z_2$. 
 De même,
 les états $\ket{00}$ et $\ket{11}$ forment une base
 pour les états stabilisés par l'opérateur $ZZ$.
@@ -384,6 +384,7 @@ par le groupe généré par les opérateurs
     Z_1 Z_2, \quad Z_4 Z_5, \quad Z_7 Z_8, \notag \\
     X_4 X_5 X_6 X_7 X_8 X_9, \quad
     Z_2 Z_3, \quad Z_5 Z_6, \quad Z_8 Z_9.
+    \label{eq:shor_stab}
 \end{gather}
 Dans ce cas précis,
 le formalisme stabilisateur peut sembler légèrement encombrant,
@@ -532,8 +533,8 @@ Il en est de même pour le calcul de $L_{MV}$ qui requiert généralement un nom
 Une des exceptions à ce grand cout pour le décodeur MV est pour le canal à effacement pour lequel
 le cout est  polynomial.
 Ainsi, dans les travaux de cette thèse,
-j'ai effectué des simulations numériques du canal à effacement avec le décodeur MV pour estimer la
-capacité des codes que j'ai construits.
+j'ai effectué des simulations numériques du canal à effacement avec le décodeur MV pour estimer les
+performances des codes que j'ai construits.
 Les codes étudiés dans l'article appartiennent 
 à la famille des codes CSS que je présente à la prochaine section.
 
@@ -542,8 +543,8 @@ Les codes étudiés dans l'article appartiennent
 Un opérateur est de type $P$ pour $P \in {X, Y, Z}$ s'il est un produit tensoriel de $I$ et $P$ exclusivement.
 Les codes de Calderbank-Shor-Steane (CSS)~\cite{calderbank_good_1996, steane_multiple-particle_nodate},
 sont des codes stabilisateurs générés par un ensemble composé uniquement d'opérateurs de type $X$ et $Z$.
-Le code de Shor de l'équation~\ref{eq:code_shor} est un exemple de code CSS.
-L'avantage des codes CSS provient du fait qu'il est possible de décomposer n'importe quelle opérateur
+Le code de Shor de l'équation~\ref{eq:shor_stab} est un exemple de code CSS.
+L'avantage des codes CSS provient du fait qu'il est possible de décomposer n'importe quel opérateur
 de Pauli comme un produit d'un opérateur de type $X$ et d'un opérateur de type $Z$.
 Ainsi,
 la partie $X$ d'une erreur sera détectée par les générateurs de type $Z$ et vice-versa.
@@ -610,12 +611,12 @@ lorsque la taille du code augmente.
 Les codes éparses sont également nommés codes LDPC,
 de l'anglais \textit{Low-Density Parity-Check} se traduisant par
 \textit{opérateurs de parité à faible densité}.
-Comme je le présenterai à la section suivante,
+Comme je le présenterai au prochain chapitre,
 les codes LDPC sont particulièrement importants puisqu'il est possible de construire
 des circuits de mesure du syndrome avec un faible surcout
 constant en nombre de qubits~\cite{gottesman_fault-tolerant_2013}.
 Ainsi,
-ces circuits de faible taille limitent la propagation des erreurs en plus d'être plus simple à 
+ces circuits de faible taille limitent la propagation des erreurs en plus d'être plus simples à 
 implémenter en laboratoire.
 Un point fort de la méthode présentée dans l'article de ce chapitre est qu'elle permet 
 de générer de tels codes.
@@ -637,7 +638,7 @@ D'un point de vue haut niveau,
 la méthode de construction de codes présentée dans cette thèse
 débute avec un graphe biparti ayant un nombre important d'arêtes.
 Ensuite, elle cherche un graphe de Tanner comme sous-graphe de ce graphe.
-Cette recherche est analogue à un problème de coloration des arêtes du graphe initiale.
+Cette recherche est analogue à un problème de coloration des arêtes du graphe initial.
 On dit alors qu'un graphe admet un coloriage stabilisant s'il possède un graphe de Tanner comme sous-graphe.
 
 Les problèmes de coloriage de graphes figurent parmi les problèmes de satisfaction de contraintes.
@@ -700,7 +701,7 @@ où $D^*$ est l'ensemble des paires de couleurs différentes.
 Une assignation satisfait l'ensemble des contraintes 
 si chaque paire de sommets d'une même arête a deux couleurs différentes.
 Pour l'exemple de la figure~\ref{fig:quebec},
-le problème est satisfiable si et seulement si quatre couleurs 
+le problème est satisfaisable si et seulement si quatre couleurs 
 ou plus sont disponibles ~\cite{kubale_graph_2004}.
 
 La méthode de construction de codes proposée est une variation 
@@ -776,16 +777,16 @@ on dit qu'il est dans la forme normale conjonctive.
 Il est possible d'exprimer toutes formules booléennes constituées de négations,
 de disjonctions et de conjonctions sous cette forme~\cite{tseitin_complexity_1983}.
 
-Les problèmes SAT ont reçu beaucoup d’attention,
-notamment parce qu’il s’agit de problèmes auxquels tous les problèmes de la classe NP
+Les problèmes SAT ont reçu beaucoup d'attention,
+notamment parce qu'il s'agit de problèmes auxquels tous les problèmes de la classe NP
 peuvent être réduits~\cite{cook_complexity_1971}.
 Résoudre un problème SAT arbitraire est donc généralement difficile.
 Par contre, il est possible de construire des instances beaucoup
 plus faciles à résoudre~\cite{cheeseman_where_1991}.
-On peut alors se demander quelle est la probabilité qu’un problème SAT construit
+On peut alors se demander quelle est la probabilité qu'un problème SAT construit
 aléatoirement soit facilement résoluble.
 Dans le reste de cette section, je montrerai comment cette probabilité varie brusquement
-avec l’augmentation du nombre de contraintes.
+avec l'augmentation du nombre de contraintes.
 
 D'abord,
 l'analyse se limite aux problèmes $k$-SAT,
@@ -798,8 +799,8 @@ Ainsi, une instance est définie par un sous-ensemble $S_{n,k,m}$ de $m$ contrai
 Le sous-ensemble $S_{n, k, m}$ est échantilloné de manière uniforme. 
 
 Pour un sous-ensemble $S \subseteq D_{n, k}$,
-la propriété $\mathcal P(S)$ est vraie lorsque le problème SAT correspond à $S$
-admet une assignation satisfiable.
+la propriété $\mathcal P(S)$ est vraie lorsque le problème SAT correspondant à $S$
+admet une assignation satisfaisable.
 Cette propriété est monotone décroissante,
 c'est-à-dire que si $\mathcal P(S)$ est vraie,
 alors $\mathcal P(S')$ est vraie pour tout $S' \subseteq S$.
@@ -809,7 +810,7 @@ De plus,
 \begin{align}
   \Pr[\mathcal P(S_{n, k, m})] \leq 
   \Pr[\mathcal P(S_{n, k, m'})],
-\end{align}
+e\end{align}
 si $m \geq m'$,
 puisque $\mathcal P$ est une propriété monotone décroissante 
 de $D_{n, k}$~\cite{bollobas_threshold_1987}.
@@ -820,9 +821,9 @@ sur les variables $v_1, \ldots, v_k$ et leur négation
 qui ne peuvent être toutes satisfaites par la même assignation.
 
 Comme $\mathcal P$ est une propriété monotone décroissante non triviale,
-il est intuitif que la probabilité que $S_{n,k,m}$ satisfait 
+il est intuitif que la probabilité que $S_{n,k,m}$ satisfasse 
 $\mathcal P$ diminue avec $m$.
-Ce qui est plus surprenant est que cette variation ce fait brusquement 
+Ce qui est plus surprenant est que cette variation se fait brusquement 
 autour d'une valeur seuil et non de façon progressive.
 Formellement,
 une fonction $\mu(n)$ est un seuil pour $\mathcal P$ si 
@@ -851,10 +852,10 @@ Dans le cas des problèmes $k$-SAT pour $k \geq 3$,
 il a été montré que le seuil est aigu et que sa valeur se
 situe entre $n(2^k \ln 2 - k)$ et $n(2^k \ln 2)$~\cite{achlioptas_rigorous_2005}.
 Ainsi, si $n$ est assez grand et que le nombre d'arêtes est inférieur au seuil,
-il est fort probable qu'une instance aléatoire $\mathbb S_{n,k,m}$ soit satisfiable.
+il est fort probable qu'une instance aléatoire $S_{n,k,m}$ soit satisfaisable.
 De même,
 dès que le nombre d'arêtes est supérieur au seuil,
-il est fort probable que $\mathbb S_{n, k, m}$ soit non satisfiable.
+il est fort probable que $S_{n, k, m}$ soit insatisfaisable.
 De plus, il a été montré que les seules instances qui sont réellement difficiles
 à résoudre sont celles pour lesquelles $m$ est près du seuil.
 Pour tous les autres cas,
